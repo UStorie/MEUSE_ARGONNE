@@ -18,54 +18,100 @@
     return { post: clean(raw.post), name: clean(raw.name) };
   };
 
-  const splash = document.getElementById("splashScreen");
-  if (splash) splash.style.display = "none";
-  const backgroundImage = splash?.querySelector(".splash-image") || null;
+  document.getElementById("splashScreen")?.remove();
+
   const viewport = document.getElementById("treeViewport");
-  if (backgroundImage && viewport) {
-    backgroundImage.className = "scheme-background";
-    backgroundImage.alt = "";
-    backgroundImage.setAttribute("aria-hidden", "true");
-    viewport.prepend(backgroundImage);
+  if (viewport && !document.getElementById("schemeBackground")) {
+    const image = document.createElement("img");
+    image.id = "schemeBackground";
+    image.className = "scheme-background";
+    image.src = "novaris-background.svg?v=1";
+    image.alt = "";
+    image.setAttribute("aria-hidden", "true");
+    viewport.prepend(image);
   }
-  splash?.remove();
 
   const style = document.createElement("style");
   style.textContent = `
     .splash-screen{display:none!important}
-    .tree-viewport{position:relative!important;isolation:isolate;background:rgba(255,255,255,.012)!important}
-    .scheme-background{position:absolute;z-index:0;top:20px;left:50%;width:min(1120px,92vw);height:auto;transform:translateX(-50%);opacity:.26;pointer-events:none;user-select:none;filter:saturate(1.16) contrast(1.07);mix-blend-mode:screen}
+    .tree-viewport{position:relative!important;isolation:isolate;background:#0d0813!important}
+    .scheme-background{
+      position:absolute;z-index:0;top:28px;left:50%;width:min(1280px,92vw);height:auto;
+      transform:translateX(-50%);opacity:.26;pointer-events:none;user-select:none;
+      filter:saturate(1.2) contrast(1.08);object-fit:contain
+    }
     .forest{position:relative;z-index:1}
-    body.client-view .forest{gap:10px!important;padding:8px 8px 110px!important}
-    body.client-view .branch{min-width:190px!important}
-    body.client-view .children{gap:5px!important;padding-top:62px!important}
-    body.client-view .children::before{top:30px!important;width:calc(100% - 190px)!important}
-    body.client-view .children>.branch::before{top:-33px!important;height:34px!important}
-    body.client-view .visitor-card{width:184px!important;min-height:88px!important;padding:10px 8px!important;gap:4px!important}
-    body.client-view .visitor-card.root{width:218px!important}
-    body.client-view .visitor-box-title{font-size:.82rem!important;font-weight:950!important;line-height:1.1!important}
-    body.client-view .visitor-function{font-size:.72rem!important;line-height:1.1!important}
-    body.client-view .visitor-name{margin-top:0!important;font-size:.7rem!important;line-height:1.12!important}
-    body.client-view .visitor-players{display:grid!important;gap:4px!important;width:100%!important;margin-top:4px!important;padding-top:5px!important;border-top:1px solid rgba(255,255,255,.16)!important}
-    body.client-view .visitor-player-item{padding:4px!important;border:1px solid rgba(255,255,255,.12)!important;border-radius:7px!important;background:rgba(0,0,0,.12)!important}
-    body.client-view .visitor-player-post{font-size:.64rem!important;font-weight:850!important;color:color-mix(in srgb,var(--card-a) 60%,white)!important}
-    body.client-view .visitor-player-name{margin-top:2px!important;font-size:.67rem!important;font-weight:750!important}
+
+    body.client-view .forest{
+      gap:18px!important;padding:10px 6px 140px!important;align-items:flex-start!important
+    }
+    body.client-view .forest>.branch{margin-inline:24px!important}
+    body.client-view .branch{min-width:158px!important}
+
+    body.client-view .children{
+      gap:4px!important;padding-top:72px!important;position:relative!important
+    }
+    body.client-view .forest>.branch>.children{
+      gap:36px!important
+    }
+    body.client-view .children::before{
+      content:""!important;position:absolute!important;top:35px!important;left:50%!important;
+      width:calc(100% - 158px)!important;min-width:2px!important;height:2px!important;
+      transform:translateX(-50%)!important;
+      background:linear-gradient(90deg,rgba(168,85,247,.2),#a855f7,rgba(168,85,247,.2))!important;
+      opacity:1!important
+    }
+    body.client-view .children::after{
+      content:""!important;position:absolute!important;top:0!important;left:50%!important;
+      width:2px!important;height:36px!important;transform:translateX(-50%)!important;
+      background:linear-gradient(#a855f7,#a855f7)!important;opacity:1!important
+    }
+    body.client-view .children>.branch::before{
+      content:""!important;position:absolute!important;top:-37px!important;left:50%!important;
+      width:2px!important;height:38px!important;transform:translateX(-50%)!important;
+      background:linear-gradient(#a855f7,#a855f7)!important;opacity:1!important
+    }
+
+    body.client-view .visitor-card{
+      width:152px!important;min-height:84px!important;padding:9px 7px!important;
+      gap:3px!important;border-radius:11px!important;text-align:center!important
+    }
+    body.client-view .visitor-card.root{width:184px!important}
+    body.client-view .visitor-box-title{font-size:.76rem!important;font-weight:950!important;line-height:1.08!important}
+    body.client-view .visitor-function{font-size:.66rem!important;line-height:1.08!important}
+    body.client-view .visitor-name{margin-top:0!important;font-size:.65rem!important;line-height:1.1!important}
+    body.client-view .visitor-players{
+      display:grid!important;gap:3px!important;width:100%!important;margin-top:4px!important;
+      padding-top:4px!important;border-top:1px solid rgba(255,255,255,.18)!important
+    }
+    body.client-view .visitor-player-item{
+      padding:3px!important;border:1px solid rgba(255,255,255,.13)!important;
+      border-radius:6px!important;background:rgba(0,0,0,.16)!important
+    }
+    body.client-view .visitor-player-post{font-size:.59rem!important;font-weight:850!important}
+    body.client-view .visitor-player-name{margin-top:1px!important;font-size:.62rem!important;font-weight:750!important}
+
     .player-fields{display:grid!important;gap:5px!important}
     .players{grid-template-columns:1fr!important}
-    #editCurrentButton{border-color:rgba(59,130,246,.58);background:linear-gradient(135deg,#1d4ed8,#3b82f6);font-weight:800}
+    #editCurrentButton{
+      border-color:rgba(59,130,246,.58)!important;
+      background:linear-gradient(135deg,#1d4ed8,#3b82f6)!important;font-weight:800!important
+    }
     @media(max-width:850px){
-      .scheme-background{top:55px;width:96vw;opacity:.24}
-      body.client-view .branch{min-width:174px!important}
-      body.client-view .visitor-card{width:168px!important}
-      body.client-view .visitor-card.root{width:198px!important}
-      body.client-view .children::before{width:calc(100% - 174px)!important}
+      .scheme-background{top:70px;width:96vw;opacity:.24}
+      body.client-view .forest>.branch{margin-inline:10px!important}
+      body.client-view .branch{min-width:146px!important}
+      body.client-view .visitor-card{width:140px!important}
+      body.client-view .visitor-card.root{width:170px!important}
+      body.client-view .children::before{width:calc(100% - 146px)!important}
+      body.client-view .forest>.branch>.children{gap:18px!important}
     }
   `;
   document.head.append(style);
   document.body.classList.add("client-view");
 
   const core = document.createElement("script");
-  core.src = "app-core.js?v=5";
+  core.src = "app-core.js?v=6";
   core.onload = () => {
     const originalNormalizeNode = normalizeNode;
     normalizeNode = function(raw, used) {
@@ -133,8 +179,7 @@
       appendLine(card, "visitor-function", node.roleTitle);
       appendLine(card, "visitor-name", node.holderName);
 
-      const visiblePlayers = (node.players || [])
-        .map(normalizePlayer)
+      const visiblePlayers = (node.players || []).map(normalizePlayer)
         .filter(item => shown(item.post) || shown(item.name));
       if (visiblePlayers.length) {
         const list = document.createElement("div");
@@ -199,9 +244,7 @@
     const originalRender = render;
     render = function() {
       originalRender();
-      requestAnimationFrame(() => {
-        document.body.classList.toggle("client-view", !isAdmin);
-      });
+      requestAnimationFrame(() => document.body.classList.toggle("client-view", !isAdmin));
     };
 
     loadOfficial();
