@@ -1,7 +1,7 @@
 {
   "serverName": "NOVARISRP",
   "serverSubtitle": "Organigramme officiel du gouvernement",
-  "zoom": 0.33,
+  "zoom": 0.25,
   "roots": [
     {
       "id": "916bd7a2-7a5a-4386-b04d-57f8f862f50e",
@@ -215,7 +215,16 @@
               "boxTitle": "Soumis a fiscalitée",
               "roleTitle": "",
               "holderName": "",
-              "players": [],
+              "players": [
+                {
+                  "post": ".",
+                  "name": "."
+                },
+                {
+                  "post": ".",
+                  "name": "."
+                }
+              ],
               "children": [
                 {
                   "id": "af067567-05b7-4d37-ad35-1e45bc216356",
@@ -224,7 +233,11 @@
                   "holderName": "",
                   "players": [
                     {
-                      "post": "entreprise civil",
+                      "post": ".",
+                      "name": "."
+                    },
+                    {
+                      "post": ".",
                       "name": "."
                     },
                     {
@@ -236,32 +249,28 @@
                       "name": "."
                     },
                     {
-                      "post": "",
-                      "name": ""
+                      "post": ".",
+                      "name": "."
                     },
                     {
-                      "post": "",
-                      "name": ""
+                      "post": ".",
+                      "name": "."
                     },
                     {
-                      "post": "",
-                      "name": ""
+                      "post": ".",
+                      "name": "."
                     },
                     {
-                      "post": "",
-                      "name": ""
+                      "post": ".",
+                      "name": "."
                     },
                     {
-                      "post": "",
-                      "name": ""
+                      "post": ".",
+                      "name": "."
                     },
                     {
-                      "post": "",
+                      "post": ".",
                       "name": ""
-                    },
-                    {
-                      "post": "",
-                      "name": "declarée et soumis a control"
                     }
                   ],
                   "children": [
@@ -287,14 +296,6 @@
                         {
                           "post": "rouleur de cigar=",
                           "name": "Jean mouloud"
-                        },
-                        {
-                          "post": "vendeur =",
-                          "name": "germaine"
-                        },
-                        {
-                          "post": "afficheur =",
-                          "name": "georege"
                         }
                       ],
                       "children": [],
@@ -479,7 +480,7 @@
           "holderName": "Sigfried salomon",
           "players": [],
           "children": [],
-          "color": "gold"
+          "color": "orange-red"
         }
       ],
       "color": "purple"
