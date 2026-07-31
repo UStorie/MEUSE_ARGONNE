@@ -1,21 +1,31 @@
 {
   "serverName": "NOVARISRP",
   "serverSubtitle": "Organigramme officiel du gouvernement",
-  "zoom": 0.25,
+  "zoom": 0.65,
   "roots": [
     {
       "id": "916bd7a2-7a5a-4386-b04d-57f8f862f50e",
       "boxTitle": "Présidence",
       "roleTitle": "Président",
       "holderName": "John Rambo",
-      "players": [],
+      "players": [
+        {
+          "post": "Rachide Abdoul",
+          "name": "secraitaire "
+        }
+      ],
       "children": [
         {
           "id": "3ec7cc98-86d6-4f71-a8c7-03e60156b676",
           "boxTitle": "Ministère des Armées",
           "roleTitle": "GENERAL ARMEE",
           "holderName": "wilson mouloud",
-          "players": [],
+          "players": [
+            {
+              "post": "Bernard saint brice",
+              "name": "Secretaire"
+            }
+          ],
           "children": [
             {
               "id": "9074529b-2c3c-42cf-9f92-76b976087051",
@@ -32,11 +42,11 @@
                   "players": [
                     {
                       "post": "Remond bill",
-                      "name": "sergent (specialité radar) "
+                      "name": "sergent (specialité radar)"
                     },
                     {
                       "post": "alphone brown",
-                      "name": "1er classe (pilote) "
+                      "name": "1er classe (pilote)"
                     },
                     {
                       "post": "",
@@ -118,24 +128,60 @@
         {
           "id": "93980cba-f77b-45be-a5d9-5c57718010cf",
           "boxTitle": "Ministère des Services publics",
-          "roleTitle": "Ministre des Services publics",
-          "holderName": "Nom à définir",
+          "roleTitle": "colonel",
+          "holderName": "Flexxi moumoute",
           "players": [],
           "children": [
             {
               "id": "92e2470a-c50f-438d-8640-014d2d187378",
               "boxTitle": "EMS",
-              "roleTitle": "Chef des secours",
-              "holderName": "Nom à définir",
+              "roleTitle": "capitaine",
+              "holderName": "gerard",
               "players": [],
-              "children": [],
+              "children": [
+                {
+                  "id": "eeb5c40e-4184-4fb5-a997-6e12b1fb6e9f",
+                  "boxTitle": "Equipe sol ",
+                  "roleTitle": "Chef",
+                  "holderName": "jean guy",
+                  "players": [],
+                  "children": [],
+                  "color": "red"
+                },
+                {
+                  "id": "fa3bb739-f58c-479f-a48f-9fcad01cb8a5",
+                  "boxTitle": "Equipe AIR",
+                  "roleTitle": "chef",
+                  "holderName": "plumo",
+                  "players": [
+                    {
+                      "post": "paul",
+                      "name": "copilote"
+                    },
+                    {
+                      "post": "franciss",
+                      "name": "medic"
+                    },
+                    {
+                      "post": "plumo",
+                      "name": "pilote"
+                    },
+                    {
+                      "post": "",
+                      "name": ""
+                    }
+                  ],
+                  "children": [],
+                  "color": "red"
+                }
+              ],
               "color": "red"
             },
             {
               "id": "cb99111e-2a4b-4187-bf64-1907d83e0412",
               "boxTitle": "Pompiers",
               "roleTitle": "Chef des pompiers",
-              "holderName": "Nom à définir",
+              "holderName": "Saint barbe",
               "players": [],
               "children": [],
               "color": "red"
@@ -191,6 +237,10 @@
                         {
                           "post": "annette gutave",
                           "name": "serveuse"
+                        },
+                        {
+                          "post": "jean mouloud",
+                          "name": "rouleur de cigar"
                         }
                       ],
                       "children": [],
