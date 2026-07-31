@@ -1,7 +1,7 @@
 {
   "serverName": "NOVARISRP",
   "serverSubtitle": "Organigramme officiel du gouvernement",
-  "zoom": 0.73,
+  "zoom": 0.65,
   "roots": [
     {
       "id": "916bd7a2-7a5a-4386-b04d-57f8f862f50e",
@@ -240,7 +240,7 @@
                       "id": "628ae760-f97e-4ade-8932-addda121f41a",
                       "boxTitle": "Gerant",
                       "roleTitle": "PMU",
-                      "holderName": "Gilbert  adress 012 /026",
+                      "holderName": "Gilbert Marc   adress 012 /026",
                       "players": [],
                       "children": [],
                       "color": "green",
@@ -250,7 +250,7 @@
                       "id": "1d7326dd-ae19-4f8f-8b6b-e4c54d8e3a99",
                       "boxTitle": "Remond  landre",
                       "roleTitle": "TABAC",
-                      "holderName": "adresse: 014/025     radio (59) ",
+                      "holderName": "adresse: 014/025             radio (59) ",
                       "players": [
                         {
                           "post": "Serveuse           =",
@@ -273,7 +273,7 @@
                       "id": "dc2b1bb9-3061-4654-abf0-588284a1c344",
                       "boxTitle": "Jean mouloud",
                       "roleTitle": "Transport aerien et autre ",
-                      "holderName": "aeroport novaris radio 50)",
+                      "holderName": "aeroport novaris           radio (50)",
                       "players": [],
                       "children": [],
                       "color": "green",
@@ -281,9 +281,9 @@
                     },
                     {
                       "id": "90a88172-5d01-42e1-ba85-14bc4886a644",
-                      "boxTitle": "uber",
-                      "roleTitle": "usine a shit ",
-                      "holderName": "suivre odeur ",
+                      "boxTitle": "UBER TRANSPORT",
+                      "roleTitle": "jean rosé",
+                      "holderName": "les doc ",
                       "players": [],
                       "children": [],
                       "color": "green",
