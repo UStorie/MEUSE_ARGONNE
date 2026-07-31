@@ -3,7 +3,7 @@
   const EMPTY = new Set(["", "Nom à définir", "Fonction à définir", "Poste à définir", "Nouvelle case", "Nouveau poste", "Nouvelle personne", "Nouveau joueur"]);
   const clean = value => typeof value === "string" ? value.trim() : "";
   const visible = value => { const text = clean(value); return EMPTY.has(text) ? "" : text; };
-  const normalizePlayer = raw => {
+  const normalizePlayerEntry = raw => {
     if (typeof raw === "string") {
       const name = clean(raw);
       return { post: "", name: /^Joueur\s+\d+$/i.test(name) ? "" : name };
@@ -13,79 +13,61 @@
   };
 
   document.getElementById("splashScreen")?.remove();
-  const viewport = document.getElementById("treeViewport");
-  if (viewport) {
-    const old = document.getElementById("schemeBackground");
-    old?.remove();
-    const image = document.createElement("img");
-    image.id = "schemeBackground";
-    image.className = "scheme-background";
-    image.src = "./novaris-background.svg?v=20260731-1220";
-    image.alt = "";
-    image.setAttribute("aria-hidden", "true");
-    image.onerror = () => {
-      const status = document.getElementById("saveStatus");
-      if (status) {
-        status.textContent = "Fond NOVARIS introuvable";
-        status.className = "save-status error";
-      }
-    };
-    viewport.prepend(image);
-  }
+  document.getElementById("schemeBackground")?.remove();
 
   const style = document.createElement("style");
   style.textContent = `
-    .splash-screen{display:none!important}
-    .tree-viewport{position:relative!important;isolation:isolate!important;background:#07040b!important;padding-bottom:170px!important}
-    .scheme-background{position:absolute!important;z-index:0!important;inset:0!important;width:100%!important;height:100%!important;min-height:100%!important;object-fit:cover!important;object-position:center top!important;opacity:1!important;pointer-events:none!important;user-select:none!important}
-    .tree-viewport::after{content:""!important;position:absolute!important;z-index:0!important;inset:0!important;background:rgba(4,1,7,.05)!important;pointer-events:none!important}
+    .splash-screen,.scheme-background{display:none!important}
+    .tree-viewport{
+      position:relative!important;isolation:isolate!important;
+      background:radial-gradient(circle at 50% 8%,rgba(126,34,206,.16),transparent 34rem),linear-gradient(180deg,#120a1d,#09060f)!important
+    }
+    .tree-viewport::after{display:none!important}
     .forest{position:relative!important;z-index:1!important}
 
-    body.client-view .forest{gap:16px!important;padding:14px 6px 220px!important;align-items:flex-start!important}
-    body.client-view .branch{min-width:146px!important}
-    body.client-view .forest>.branch{margin-inline:18px!important}
-    body.client-view .visitor-card{width:140px!important;min-height:80px!important;padding:8px 6px!important;gap:3px!important;border-radius:10px!important;background:color-mix(in srgb,var(--card-a) 20%,rgba(9,5,14,.84))!important;backdrop-filter:blur(1px)!important}
-    body.client-view .visitor-card.root{width:174px!important}
-    body.client-view .visitor-box-title{font-size:.74rem!important;font-weight:950!important;line-height:1.08!important}
-    body.client-view .visitor-function{font-size:.64rem!important;line-height:1.08!important}
-    body.client-view .visitor-name{margin-top:0!important;font-size:.63rem!important;line-height:1.1!important}
+    body.client-view .forest{gap:18px!important;padding:10px 6px 140px!important;align-items:flex-start!important}
+    body.client-view .forest>.branch{margin-inline:24px!important}
+    body.client-view .branch{min-width:158px!important}
+    body.client-view .children{position:relative!important;display:flex!important;flex-direction:row!important;align-items:flex-start!important;justify-content:center!important;gap:4px!important;padding-top:72px!important}
+    body.client-view .forest>.branch>.children{gap:36px!important}
+    body.client-view .children::before{content:""!important;position:absolute!important;top:35px!important;left:50%!important;width:calc(100% - 158px)!important;min-width:2px!important;height:2px!important;transform:translateX(-50%)!important;background:#a855f7!important;opacity:1!important}
+    body.client-view .children::after{content:""!important;position:absolute!important;top:0!important;left:50%!important;width:2px!important;height:36px!important;transform:translateX(-50%)!important;background:#a855f7!important;opacity:1!important}
+    body.client-view .children>.branch::before{content:""!important;position:absolute!important;top:-37px!important;left:50%!important;width:2px!important;height:38px!important;transform:translateX(-50%)!important;background:#a855f7!important;opacity:1!important}
+
+    body.client-view .visitor-card{width:152px!important;min-height:84px!important;padding:9px 7px!important;gap:3px!important;border-radius:11px!important;text-align:center!important;background:color-mix(in srgb,var(--card-a) 18%,rgba(12,8,18,.94))!important}
+    body.client-view .visitor-card.root{width:184px!important}
+    body.client-view .visitor-box-title{font-size:.76rem!important;font-weight:950!important;line-height:1.08!important}
+    body.client-view .visitor-function{font-size:.66rem!important;line-height:1.08!important}
+    body.client-view .visitor-name{margin-top:0!important;font-size:.65rem!important;line-height:1.1!important}
     body.client-view .visitor-players{display:grid!important;gap:3px!important;width:100%!important;margin-top:4px!important;padding-top:4px!important;border-top:1px solid rgba(255,255,255,.18)!important}
-    body.client-view .visitor-player-item{padding:3px!important;border:1px solid rgba(255,255,255,.14)!important;border-radius:6px!important;background:rgba(0,0,0,.22)!important}
-    body.client-view .visitor-player-post{font-size:.57rem!important;font-weight:850!important}
-    body.client-view .visitor-player-name{margin-top:1px!important;font-size:.60rem!important;font-weight:750!important}
-
-    body.client-view .forest>.branch>.children{position:relative!important;display:flex!important;flex-direction:row!important;align-items:flex-start!important;gap:76px!important;padding-top:104px!important}
-    body.client-view .forest>.branch>.children::before{content:""!important;position:absolute!important;top:50px!important;left:50%!important;width:calc(100% - 146px)!important;height:3px!important;transform:translateX(-50%)!important;background:#c77cff!important;opacity:1!important}
-    body.client-view .forest>.branch>.children::after{content:""!important;position:absolute!important;top:0!important;left:50%!important;width:3px!important;height:53px!important;transform:translateX(-50%)!important;background:#c77cff!important;opacity:1!important}
-    body.client-view .forest>.branch>.children>.branch::before{content:""!important;position:absolute!important;top:-55px!important;left:50%!important;width:3px!important;height:56px!important;transform:translateX(-50%)!important;background:#c77cff!important;opacity:1!important}
-
-    body.client-view .forest>.branch>.children .children{position:relative!important;display:flex!important;flex-direction:column!important;align-items:center!important;gap:94px!important;padding-top:92px!important}
-    body.client-view .forest>.branch>.children .children::before{content:""!important;position:absolute!important;top:0!important;bottom:0!important;left:50%!important;width:3px!important;height:auto!important;transform:translateX(-50%)!important;background:#c77cff!important;opacity:1!important}
-    body.client-view .forest>.branch>.children .children::after{display:none!important}
-    body.client-view .forest>.branch>.children .children>.branch::before{content:""!important;position:absolute!important;top:-48px!important;left:50%!important;width:3px!important;height:49px!important;transform:translateX(-50%)!important;background:#c77cff!important;opacity:1!important}
+    body.client-view .visitor-player-item{padding:3px!important;border:1px solid rgba(255,255,255,.13)!important;border-radius:6px!important;background:rgba(0,0,0,.22)!important}
+    body.client-view .visitor-player-post{font-size:.59rem!important;font-weight:850!important}
+    body.client-view .visitor-player-name{margin-top:1px!important;font-size:.62rem!important;font-weight:750!important}
 
     .player-fields{display:grid!important;gap:5px!important}
     .players{grid-template-columns:1fr!important}
-    #editCurrentButton{border-color:rgba(59,130,246,.62)!important;background:linear-gradient(135deg,#1d4ed8,#3b82f6)!important;font-weight:800!important}
+    #editCurrentButton{border-color:rgba(59,130,246,.58)!important;background:linear-gradient(135deg,#1d4ed8,#3b82f6)!important;font-weight:800!important}
+
     @media(max-width:850px){
-      body.client-view .branch{min-width:132px!important}
-      body.client-view .visitor-card{width:126px!important}
-      body.client-view .visitor-card.root{width:158px!important}
-      body.client-view .forest>.branch>.children{gap:32px!important}
-      body.client-view .forest>.branch>.children::before{width:calc(100% - 132px)!important}
+      body.client-view .forest>.branch{margin-inline:10px!important}
+      body.client-view .branch{min-width:146px!important}
+      body.client-view .visitor-card{width:140px!important}
+      body.client-view .visitor-card.root{width:170px!important}
+      body.client-view .children::before{width:calc(100% - 146px)!important}
+      body.client-view .forest>.branch>.children{gap:18px!important}
     }
   `;
   document.head.append(style);
   document.body.classList.add("client-view");
 
   const core = document.createElement("script");
-  core.src = "app-core.js?v=8";
+  core.src = "app-core.js?v=10";
   core.onload = () => {
     const originalNormalizeNode = normalizeNode;
     normalizeNode = function(raw, used) {
       const node = originalNormalizeNode(raw, used);
       node.holderName = typeof raw?.holderName === "string" ? raw.holderName : "";
-      node.players = Array.isArray(raw?.players) ? raw.players.slice(0, 200).map(normalizePlayer) : [];
+      node.players = Array.isArray(raw?.players) ? raw.players.slice(0, 200).map(normalizePlayerEntry) : [];
       return node;
     };
 
@@ -109,7 +91,7 @@
       const list = document.createElement("div");
       list.className = "players";
       node.players.forEach((raw, index) => {
-        const entry = normalizePlayer(raw);
+        const entry = normalizePlayerEntry(raw);
         node.players[index] = entry;
         const row = document.createElement("div");
         row.className = "player-row admin-player-row";
@@ -146,7 +128,8 @@
       appendLine(card, "visitor-box-title", node.boxTitle);
       appendLine(card, "visitor-function", node.roleTitle);
       appendLine(card, "visitor-name", node.holderName);
-      const players = (node.players || []).map(normalizePlayer).filter(item => visible(item.post) || visible(item.name));
+
+      const players = (node.players || []).map(normalizePlayerEntry).filter(item => visible(item.post) || visible(item.name));
       if (players.length) {
         const list = document.createElement("div");
         list.className = "visitor-players";
@@ -159,6 +142,7 @@
         });
         if (list.childElementCount) card.append(list);
       }
+
       branch.append(card);
       if (node.children.length) {
         const children = document.createElement("div");
@@ -213,12 +197,4 @@
 
     loadOfficial();
   };
-  core.onerror = () => {
-    const status = document.getElementById("saveStatus");
-    if (status) {
-      status.textContent = "Erreur chargement moteur";
-      status.className = "save-status error";
-    }
-  };
-  document.body.append(core);
 })();
