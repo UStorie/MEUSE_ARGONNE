@@ -24,6 +24,28 @@
   const core = document.createElement("script");
   core.src = "app-core.js?v=3";
   core.onload = () => {
+    const applyLayout = () => {
+      const viewport = document.getElementById("treeViewport");
+      const forest = document.getElementById("forest");
+      if (viewport && splashSource) {
+        viewport.style.backgroundImage = `linear-gradient(rgba(9,7,14,.74),rgba(9,7,14,.74)),url("${splashSource}")`;
+        viewport.style.backgroundRepeat = "no-repeat";
+        viewport.style.backgroundPosition = "center 24%";
+        viewport.style.backgroundSize = "min(1280px,94vw) auto";
+      }
+      if (forest) { forest.style.gap = "28px"; forest.style.padding = "8px 14px 90px"; }
+      document.querySelectorAll(".branch").forEach(item => item.style.minWidth = "260px");
+      document.querySelectorAll(".children").forEach(item => { item.style.gap = "14px"; item.style.paddingTop = "42px"; });
+      document.querySelectorAll(".node-card").forEach(card => card.style.width = card.classList.contains("root") ? "300px" : "260px");
+      document.querySelectorAll(".visitor-card").forEach(card => { card.style.minHeight = "94px"; card.style.padding = "12px 11px"; card.style.display = "grid"; card.style.gap = "5px"; card.style.textAlign = "center"; });
+      document.querySelectorAll(".visitor-box-title").forEach(item => { item.style.fontWeight = "950"; item.style.fontSize = ".84rem"; });
+      document.querySelectorAll(".visitor-function").forEach(item => item.style.fontSize = ".78rem");
+      document.querySelectorAll(".visitor-name").forEach(item => { item.style.marginTop = "0"; item.style.fontSize = ".74rem"; });
+      document.querySelectorAll(".visitor-players").forEach(item => { item.style.display = "grid"; item.style.gap = "6px"; item.style.marginTop = "5px"; item.style.paddingTop = "6px"; item.style.borderTop = "1px solid rgba(255,255,255,.15)"; });
+      document.querySelectorAll(".visitor-player-item").forEach(item => { item.style.padding = "5px"; item.style.border = "1px solid rgba(255,255,255,.12)"; item.style.borderRadius = "8px"; });
+      document.querySelectorAll(".players").forEach(item => item.style.gridTemplateColumns = "1fr");
+      document.querySelectorAll(".player-fields").forEach(item => { item.style.display = "grid"; item.style.gap = "5px"; });
+    };
     const oldNormalizeNode = normalizeNode;
     normalizeNode = function (raw, used) {
       const node = oldNormalizeNode(raw, used);
@@ -114,7 +136,10 @@
       return branch;
     };
 
+    const originalRender = render;
+    render = function () { originalRender(); requestAnimationFrame(applyLayout); };
     loadOfficial();
+    requestAnimationFrame(applyLayout);
   };
   core.onerror = () => {
     const status = document.getElementById("saveStatus");
