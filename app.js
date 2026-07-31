@@ -18,63 +18,72 @@
     return { post: clean(raw.post), name: clean(raw.name) };
   };
 
-  document.getElementById("splashScreen")?.remove();
+  const splash = document.getElementById("splashScreen");
+  const splashSource = splash?.querySelector(".splash-image")?.getAttribute("src") || "";
 
   const viewport = document.getElementById("treeViewport");
   if (viewport && !document.getElementById("schemeBackground")) {
     const image = document.createElement("img");
     image.id = "schemeBackground";
     image.className = "scheme-background";
-    image.src = "novaris-background.svg?v=1";
+    image.src = splashSource || "novaris-background.svg?v=3";
     image.alt = "";
     image.setAttribute("aria-hidden", "true");
+    image.addEventListener("error", () => {
+      const status = document.getElementById("saveStatus");
+      if (status) {
+        status.textContent = "Fond image introuvable";
+        status.className = "save-status error";
+      }
+    });
     viewport.prepend(image);
   }
+  splash?.remove();
 
   const style = document.createElement("style");
   style.textContent = `
     .splash-screen{display:none!important}
-    .tree-viewport{position:relative!important;isolation:isolate;background:#0d0813!important}
+    .tree-viewport{position:relative!important;isolation:isolate;background:#07040b!important}
     .scheme-background{
-      position:absolute;z-index:0;top:28px;left:50%;width:min(1280px,92vw);height:auto;
-      transform:translateX(-50%);opacity:.26;pointer-events:none;user-select:none;
-      filter:saturate(1.2) contrast(1.08);object-fit:contain
+      position:absolute!important;z-index:0!important;top:0!important;left:50%!important;
+      width:min(1600px,100%)!important;height:auto!important;min-height:100%!important;
+      transform:translateX(-50%)!important;opacity:1!important;pointer-events:none!important;
+      user-select:none!important;object-fit:cover!important;object-position:center top!important
     }
-    .forest{position:relative;z-index:1}
+    .tree-viewport::after{
+      content:""!important;position:absolute!important;z-index:0!important;inset:0!important;
+      background:rgba(5,2,8,.10)!important;pointer-events:none!important
+    }
+    .forest{position:relative!important;z-index:1!important}
 
     body.client-view .forest{
-      gap:18px!important;padding:10px 6px 140px!important;align-items:flex-start!important
+      gap:18px!important;padding:12px 6px 150px!important;align-items:flex-start!important
     }
-    body.client-view .forest>.branch{margin-inline:24px!important}
+    body.client-view .forest>.branch{margin-inline:28px!important}
     body.client-view .branch{min-width:158px!important}
-
-    body.client-view .children{
-      gap:4px!important;padding-top:72px!important;position:relative!important
-    }
-    body.client-view .forest>.branch>.children{
-      gap:36px!important
-    }
+    body.client-view .children{gap:4px!important;padding-top:72px!important;position:relative!important}
+    body.client-view .forest>.branch>.children{gap:42px!important}
     body.client-view .children::before{
       content:""!important;position:absolute!important;top:35px!important;left:50%!important;
       width:calc(100% - 158px)!important;min-width:2px!important;height:2px!important;
-      transform:translateX(-50%)!important;
-      background:linear-gradient(90deg,rgba(168,85,247,.2),#a855f7,rgba(168,85,247,.2))!important;
-      opacity:1!important
+      transform:translateX(-50%)!important;background:#b96cff!important;opacity:1!important
     }
     body.client-view .children::after{
       content:""!important;position:absolute!important;top:0!important;left:50%!important;
       width:2px!important;height:36px!important;transform:translateX(-50%)!important;
-      background:linear-gradient(#a855f7,#a855f7)!important;opacity:1!important
+      background:#b96cff!important;opacity:1!important
     }
     body.client-view .children>.branch::before{
       content:""!important;position:absolute!important;top:-37px!important;left:50%!important;
       width:2px!important;height:38px!important;transform:translateX(-50%)!important;
-      background:linear-gradient(#a855f7,#a855f7)!important;opacity:1!important
+      background:#b96cff!important;opacity:1!important
     }
 
     body.client-view .visitor-card{
       width:152px!important;min-height:84px!important;padding:9px 7px!important;
-      gap:3px!important;border-radius:11px!important;text-align:center!important
+      gap:3px!important;border-radius:11px!important;text-align:center!important;
+      background:color-mix(in srgb,var(--card-a) 18%,rgba(12,8,18,.90))!important;
+      backdrop-filter:blur(1px)!important
     }
     body.client-view .visitor-card.root{width:184px!important}
     body.client-view .visitor-box-title{font-size:.76rem!important;font-weight:950!important;line-height:1.08!important}
@@ -86,7 +95,7 @@
     }
     body.client-view .visitor-player-item{
       padding:3px!important;border:1px solid rgba(255,255,255,.13)!important;
-      border-radius:6px!important;background:rgba(0,0,0,.16)!important
+      border-radius:6px!important;background:rgba(0,0,0,.22)!important
     }
     body.client-view .visitor-player-post{font-size:.59rem!important;font-weight:850!important}
     body.client-view .visitor-player-name{margin-top:1px!important;font-size:.62rem!important;font-weight:750!important}
@@ -98,20 +107,20 @@
       background:linear-gradient(135deg,#1d4ed8,#3b82f6)!important;font-weight:800!important
     }
     @media(max-width:850px){
-      .scheme-background{top:70px;width:96vw;opacity:.24}
+      .scheme-background{width:100%!important;min-height:100%!important;object-fit:cover!important}
       body.client-view .forest>.branch{margin-inline:10px!important}
       body.client-view .branch{min-width:146px!important}
       body.client-view .visitor-card{width:140px!important}
       body.client-view .visitor-card.root{width:170px!important}
       body.client-view .children::before{width:calc(100% - 146px)!important}
-      body.client-view .forest>.branch>.children{gap:18px!important}
+      body.client-view .forest>.branch>.children{gap:20px!important}
     }
   `;
   document.head.append(style);
   document.body.classList.add("client-view");
 
   const core = document.createElement("script");
-  core.src = "app-core.js?v=6";
+  core.src = "app-core.js?v=7";
   core.onload = () => {
     const originalNormalizeNode = normalizeNode;
     normalizeNode = function(raw, used) {
