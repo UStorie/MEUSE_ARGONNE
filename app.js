@@ -25,7 +25,10 @@
   const style = document.createElement("style");
   style.textContent = `
     .splash-screen{display:none!important}
-    .tree-viewport{position:relative!important;isolation:isolate;background:#07040b!important}
+    .tree-viewport{
+      position:relative!important;isolation:isolate!important;
+      background:radial-gradient(circle at 50% 8%,rgba(126,34,206,.22),transparent 34rem),linear-gradient(180deg,#160b24 0%,#100817 48%,#09060f 100%)!important
+    }
     .tree-viewport::after{display:none!important}
     .forest{position:relative!important;z-index:1!important}
 
