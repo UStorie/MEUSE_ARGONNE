@@ -1,7 +1,7 @@
 {
   "serverName": "NOVARISRP",
   "serverSubtitle": "Organigramme officiel du gouvernement",
-  "zoom": 0.8099999999999999,
+  "zoom": 0.73,
   "roots": [
     {
       "id": "916bd7a2-7a5a-4386-b04d-57f8f862f50e",
@@ -29,7 +29,7 @@
           "children": [
             {
               "id": "9074529b-2c3c-42cf-9f92-76b976087051",
-              "boxTitle": "Gendarmerie",
+              "boxTitle": "Gendarmerie radio(56)",
               "roleTitle": "COLONEL",
               "holderName": "Marley bob ",
               "players": [],
@@ -145,7 +145,7 @@
           "children": [
             {
               "id": "92e2470a-c50f-438d-8640-014d2d187378",
-              "boxTitle": "EMS",
+              "boxTitle": "EMS  radio (54)",
               "roleTitle": "capitaine",
               "holderName": "Gerard tulipe",
               "players": [],
@@ -248,9 +248,9 @@
                     },
                     {
                       "id": "1d7326dd-ae19-4f8f-8b6b-e4c54d8e3a99",
-                      "boxTitle": "Gerant",
+                      "boxTitle": "Remond  landre",
                       "roleTitle": "TABAC",
-                      "holderName": "remond 016/25",
+                      "holderName": "adresse: 014/025     radio (59) ",
                       "players": [
                         {
                           "post": "Serveuse           =",
@@ -271,9 +271,9 @@
                     },
                     {
                       "id": "dc2b1bb9-3061-4654-abf0-588284a1c344",
-                      "boxTitle": "NICO HELICO",
+                      "boxTitle": "Jean mouloud",
                       "roleTitle": "Transport aerien et autre ",
-                      "holderName": "aeroport",
+                      "holderName": "aeroport novaris radio 50)",
                       "players": [],
                       "children": [],
                       "color": "green",
