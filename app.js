@@ -99,11 +99,12 @@
       background:linear-gradient(135deg,#1d4ed8,#3b82f6)!important;font-weight:800!important
     }
     .schema-footer{
-      position:sticky;left:0;z-index:2;display:flex;align-items:center;justify-content:center;
-      flex-wrap:wrap;gap:8px;width:100%;min-width:100%;padding:16px 10px 12px;
-      color:#fff!important;border-top:1px solid rgba(216,180,254,.14);
-      background:linear-gradient(180deg,transparent,rgba(9,6,15,.36));
-      text-align:center;font-size:.72rem;font-weight:800;letter-spacing:.03em
+      position:fixed;z-index:500;display:flex;align-items:center;justify-content:center;
+      flex-wrap:wrap;gap:8px;min-height:38px;padding:9px 12px;
+      color:#fff!important;border:1px solid rgba(216,180,254,.24);border-radius:0 0 12px 12px;
+      background:rgba(14,8,22,.96);box-shadow:0 -7px 22px rgba(0,0,0,.34);
+      backdrop-filter:blur(10px);text-align:center;font-size:.72rem;font-weight:800;
+      letter-spacing:.03em;pointer-events:none
     }
     .schema-footer .schema-footer-separator{color:rgba(255,255,255,.38)}
     .schema-footer .visitor-counter,.schema-footer .site-copyright{color:#fff!important}
@@ -335,28 +336,44 @@
       if (schemaForest && schemaForest.parentElement === schemaViewport) schemaForest.after(footer);
       else schemaViewport.append(footer);
 
-      fetch("https://visitor.6developer.com/visit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          domain: "barnaber55.github.io/NOVARISRP-",
-          page_path: "/NOVARISRP-/"
-        })
+      const syncSchemaFooter = () => {
+        const rect = schemaViewport.getBoundingClientRect();
+        const left = Math.max(0, rect.left);
+        const right = Math.min(window.innerWidth, rect.right);
+        const visibleWidth = Math.max(0, right - left);
+        const bottom = Math.min(window.innerHeight, rect.bottom);
+        footer.style.display = rect.bottom > 0 && rect.top < window.innerHeight && visibleWidth > 0 ? "flex" : "none";
+        footer.style.left = left + "px";
+        footer.style.width = visibleWidth + "px";
+        footer.style.top = Math.max(rect.top, bottom - footer.offsetHeight) + "px";
+      };
+
+      window.addEventListener("resize", syncSchemaFooter, { passive: true });
+      window.addEventListener("scroll", syncSchemaFooter, { passive: true });
+      schemaViewport.addEventListener("scroll", syncSchemaFooter, { passive: true });
+      requestAnimationFrame(syncSchemaFooter);
+      setTimeout(syncSchemaFooter, 250);
+      setTimeout(syncSchemaFooter, 1200);
+
+      fetch("https://api.counterapi.dev/v1/novarisrp-barnaber55/site-entries/up?nocache=" + Date.now(), {
+        method: "GET",
+        mode: "cors",
+        cache: "no-store"
       })
         .then(response => {
           if (!response.ok) throw new Error("HTTP " + response.status);
           return response.json();
         })
         .then(data => {
+          const rawCount = data?.count ?? data?.value ?? data?.data?.count ?? data?.data?.value ?? data?.data;
+          const count = Number(rawCount);
           const value = document.getElementById("visitorCount");
-          if (value) value.textContent = Number.isFinite(Number(data.totalCount))
-            ? Number(data.totalCount).toLocaleString("fr-FR")
-            : "—";
+          if (value) value.textContent = Number.isFinite(count) ? count.toLocaleString("fr-FR") : "—";
         })
         .catch(error => {
           console.warn("Compteur de visites indisponible", error);
           const value = document.getElementById("visitorCount");
-          if (value) value.textContent = "—";
+          if (value) value.textContent = "indisponible";
         });
     }
 
