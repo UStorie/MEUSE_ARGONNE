@@ -1,7 +1,7 @@
 {
   "serverName": "NOVARISRP",
   "serverSubtitle": "Organigramme officiel du gouvernement",
-  "zoom": 0.25,
+  "zoom": 0.73,
   "roots": [
     {
       "id": "916bd7a2-7a5a-4386-b04d-57f8f862f50e",
@@ -253,12 +253,12 @@
                       "holderName": "adresse: 014/025             radio (59) ",
                       "players": [
                         {
-                          "post": "Serveuse           =",
-                          "name": "Anette g"
+                          "post": "   Anette G =serveuse",
+                          "name": "."
                         },
                         {
-                          "post": "rouleur de cigar=",
-                          "name": "Jean mouloud"
+                          "post": "vente cigarette ,tabac ,accesoire tabac",
+                          "name": ""
                         }
                       ],
                       "children": [],
