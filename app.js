@@ -24,13 +24,14 @@
 
   const style = document.createElement("style");
   style.textContent = `
-    .splash-screen{display:none!important}
+    .splash-screen,.scheme-background{display:none!important}
     .tree-viewport{
       position:relative!important;isolation:isolate!important;
       background:radial-gradient(circle at 50% 8%,rgba(126,34,206,.22),transparent 34rem),linear-gradient(180deg,#160b24 0%,#100817 48%,#09060f 100%)!important
     }
     .tree-viewport::after{display:none!important}
     .forest{position:relative!important;z-index:1!important}
+    .node-card[data-color="gold"]{--card-a:#f6c453;--card-b:#8a5a00}
 
     body.client-view .forest{
       gap:18px!important;padding:12px 6px 150px!important;align-items:flex-start!important
@@ -97,6 +98,9 @@
   const core = document.createElement("script");
   core.src = "app-core.js?v=7";
   core.onload = () => {
+    if (!COLORS.includes("gold")) COLORS.push("gold");
+    COLOR_LABELS.gold = "Jaune or";
+
     const originalNormalizeNode = normalizeNode;
     normalizeNode = function(raw, used) {
       const node = originalNormalizeNode(raw, used);
