@@ -17,10 +17,13 @@
     raw = raw && typeof raw === "object" ? raw : {};
     return { post: clean(raw.post), name: clean(raw.name) };
   };
+  const normalizeExtraHeight = value => {
+    const number = Number(value);
+    return Number.isFinite(number) ? Math.max(0, Math.min(1200, Math.round(number))) : 0;
+  };
 
-  const splash = document.getElementById("splashScreen");
+  document.getElementById("splashScreen")?.remove();
   document.getElementById("schemeBackground")?.remove();
-  splash?.remove();
 
   const style = document.createElement("style");
   style.textContent = `
@@ -79,9 +82,25 @@
 
     .player-fields{display:grid!important;gap:5px!important}
     .players{grid-template-columns:1fr!important}
+    .height-control{
+      display:grid;grid-template-columns:minmax(0,1fr) 92px;align-items:end;gap:7px;
+      padding:9px 10px;border-top:1px solid rgba(216,180,254,.14);background:rgba(0,0,0,.08)
+    }
+    .height-control label{display:grid;gap:2px;color:var(--muted);font-size:.68rem;font-weight:800}
+    .height-control label span{font-size:.62rem;font-weight:650;opacity:.78}
+    .height-input{
+      min-height:33px;padding:6px 7px;color:var(--text);border:1px solid var(--line);
+      border-radius:8px;outline:none;background:rgba(255,255,255,.045);text-align:center;font-weight:850;user-select:text
+    }
+    .height-input:focus{border-color:rgba(168,85,247,.72);box-shadow:0 0 0 2px rgba(168,85,247,.11)}
+    .node-height-spacer{width:100%;min-height:0;pointer-events:none}
     #editCurrentButton{
       border-color:rgba(59,130,246,.58)!important;
       background:linear-gradient(135deg,#1d4ed8,#3b82f6)!important;font-weight:800!important
+    }
+    .site-copyright{
+      padding:12px 8px 4px;color:rgba(235,220,255,.72);text-align:center;
+      font-size:.72rem;font-weight:750;letter-spacing:.04em
     }
     @media(max-width:850px){
       body.client-view .forest>.branch{margin-inline:10px!important}
@@ -96,7 +115,7 @@
   document.body.classList.add("client-view");
 
   const core = document.createElement("script");
-  core.src = "app-core.js?v=7";
+  core.src = "app-core.js?v=8";
   core.onload = () => {
     if (!COLORS.includes("gold")) COLORS.push("gold");
     COLOR_LABELS.gold = "Jaune or";
@@ -106,6 +125,7 @@
       const node = originalNormalizeNode(raw, used);
       node.holderName = typeof raw?.holderName === "string" ? raw.holderName : "";
       node.players = Array.isArray(raw?.players) ? raw.players.slice(0, 200).map(normalizePlayer) : [];
+      node.cardExtraHeight = normalizeExtraHeight(raw?.cardExtraHeight);
       return node;
     };
 
@@ -148,6 +168,51 @@
       return list;
     };
 
+    const createHeightSpacer = node => {
+      const height = normalizeExtraHeight(node.cardExtraHeight);
+      if (!height) return null;
+      const spacer = document.createElement("div");
+      spacer.className = "node-height-spacer";
+      spacer.style.height = height + "px";
+      spacer.setAttribute("aria-hidden", "true");
+      return spacer;
+    };
+
+    const originalRenderAdminNode = renderAdminNode;
+    renderAdminNode = function(node, isRoot) {
+      const branch = originalRenderAdminNode(node, isRoot);
+      const card = Array.from(branch.children).find(element => element.classList?.contains("node-card"));
+      if (!card) return branch;
+
+      const actions = Array.from(card.children).find(element => element.classList?.contains("node-actions")) || null;
+      const control = document.createElement("div");
+      control.className = "height-control";
+
+      const label = document.createElement("label");
+      label.innerHTML = "Hauteur supplémentaire<span>0 à 1200 px</span>";
+
+      const input = document.createElement("input");
+      input.type = "number";
+      input.className = "height-input";
+      input.min = "0";
+      input.max = "1200";
+      input.step = "20";
+      input.value = String(normalizeExtraHeight(node.cardExtraHeight));
+      input.setAttribute("aria-label", "Hauteur supplémentaire de la case en pixels");
+      input.onchange = () => {
+        node.cardExtraHeight = normalizeExtraHeight(input.value);
+        saveDraft();
+        render();
+      };
+
+      control.append(label, input);
+      card.insertBefore(control, actions);
+
+      const spacer = createHeightSpacer(node);
+      if (spacer) card.insertBefore(spacer, actions);
+      return branch;
+    };
+
     const appendLine = (parent, className, value) => {
       const text = shown(value);
       if (!text) return;
@@ -182,6 +247,8 @@
         if (list.childElementCount) card.append(list);
       }
 
+      const spacer = createHeightSpacer(node);
+      if (spacer) card.append(spacer);
       branch.append(card);
       if (node.children.length) {
         const children = document.createElement("div");
@@ -234,6 +301,14 @@
       originalRender();
       requestAnimationFrame(() => document.body.classList.toggle("client-view", !isAdmin));
     };
+
+    if (!document.getElementById("siteCopyright")) {
+      const footer = document.createElement("footer");
+      footer.id = "siteCopyright";
+      footer.className = "site-copyright";
+      footer.textContent = "Copyright barnber55";
+      (document.querySelector(".page") || document.body).append(footer);
+    }
 
     loadOfficial();
   };
