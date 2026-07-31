@@ -1,7 +1,7 @@
 {
   "serverName": "NOVARISRP",
   "serverSubtitle": "Organigramme officiel du gouvernement",
-  "zoom": 0.5,
+  "zoom": 1.13,
   "roots": [
     {
       "id": "916bd7a2-7a5a-4386-b04d-57f8f862f50e",
@@ -23,7 +23,40 @@
               "roleTitle": "Chef gendarme",
               "holderName": "Nom à définir",
               "players": [],
-              "children": []
+              "children": [
+                {
+                  "id": "63e8ec87-26e7-4042-ad7e-b67f886427b9",
+                  "boxTitle": "equipe1",
+                  "roleTitle": "Nouveau poste",
+                  "holderName": "fred",
+                  "players": [
+                    "Joueur 1",
+                    "Joueur 2",
+                    "Joueur 3",
+                    "Joueur 4",
+                    "Joueur 5",
+                    "Joueur 6",
+                    "Joueur 7",
+                    "Joueur 8",
+                    "Joueur 9",
+                    "Joueur 10",
+                    "Joueur 11",
+                    "Joueur 12"
+                  ],
+                  "children": [],
+                  "color": "blue"
+                },
+                {
+                  "id": "f3fce633-8ca8-4219-820d-73e523f5eb66",
+                  "boxTitle": "equipe2",
+                  "roleTitle": "Nouveau poste",
+                  "holderName": "henri",
+                  "players": [],
+                  "children": [],
+                  "color": "blue"
+                }
+              ],
+              "color": "blue"
             },
             {
               "id": "db760a2f-d1af-4c8a-838d-43978f17d369",
@@ -31,7 +64,8 @@
               "roleTitle": "Chef de la police",
               "holderName": "Nom à définir",
               "players": [],
-              "children": []
+              "children": [],
+              "color": "blue"
             },
             {
               "id": "a3997148-50e8-4dca-884b-247b42485204",
@@ -39,9 +73,11 @@
               "roleTitle": "Chef des armées",
               "holderName": "Nom à définir",
               "players": [],
-              "children": []
+              "children": [],
+              "color": "blue"
             }
-          ]
+          ],
+          "color": "blue"
         },
         {
           "id": "93980cba-f77b-45be-a5d9-5c57718010cf",
@@ -56,7 +92,8 @@
               "roleTitle": "Chef des secours",
               "holderName": "Nom à définir",
               "players": [],
-              "children": []
+              "children": [],
+              "color": "red"
             },
             {
               "id": "cb99111e-2a4b-4187-bf64-1907d83e0412",
@@ -64,7 +101,8 @@
               "roleTitle": "Chef des pompiers",
               "holderName": "Nom à définir",
               "players": [],
-              "children": []
+              "children": [],
+              "color": "red"
             },
             {
               "id": "2d74c820-b7ca-4e10-8ab5-b6e3b9fcb5ac",
@@ -72,9 +110,11 @@
               "roleTitle": "Chef de la voirie",
               "holderName": "Nom à définir",
               "players": [],
-              "children": []
+              "children": [],
+              "color": "red"
             }
-          ]
+          ],
+          "color": "red"
         },
         {
           "id": "29d09905-16f0-49e4-a781-cad1e5769a36",
@@ -85,11 +125,87 @@
           "children": [
             {
               "id": "2b15bf39-36c8-4b51-9e9f-d674548f76ce",
-              "boxTitle": "Fiscalité",
+              "boxTitle": "CONTROLEUR FISCAL",
               "roleTitle": "Chef de la fiscalité",
               "holderName": "Nom à définir",
               "players": [],
-              "children": []
+              "children": [
+                {
+                  "id": "af067567-05b7-4d37-ad35-1e45bc216356",
+                  "boxTitle": "ENTREPRISE PERSONEL",
+                  "roleTitle": "REPERTOIR ENTREPRISE DECLAREE",
+                  "holderName": "Nom à définir",
+                  "players": [],
+                  "children": [
+                    {
+                      "id": "628ae760-f97e-4ade-8932-addda121f41a",
+                      "boxTitle": "PMU",
+                      "roleTitle": "Nouveau poste",
+                      "holderName": "Nom à définir",
+                      "players": [],
+                      "children": [],
+                      "color": "green"
+                    },
+                    {
+                      "id": "1d7326dd-ae19-4f8f-8b6b-e4c54d8e3a99",
+                      "boxTitle": "TABAC",
+                      "roleTitle": "Nouveau poste",
+                      "holderName": "Nom à définir",
+                      "players": [],
+                      "children": [],
+                      "color": "green"
+                    },
+                    {
+                      "id": "dc2b1bb9-3061-4654-abf0-588284a1c344",
+                      "boxTitle": "NICO HELICO",
+                      "roleTitle": "Nouveau poste",
+                      "holderName": "Nom à définir",
+                      "players": [],
+                      "children": [],
+                      "color": "green"
+                    },
+                    {
+                      "id": "90a88172-5d01-42e1-ba85-14bc4886a644",
+                      "boxTitle": "Nouvelle case",
+                      "roleTitle": "Nouveau poste",
+                      "holderName": "Nom à définir",
+                      "players": [],
+                      "children": [],
+                      "color": "green"
+                    }
+                  ],
+                  "color": "green"
+                },
+                {
+                  "id": "fdb39db0-1cc7-49d9-acd2-bbb198679e9f",
+                  "boxTitle": "ENTREPRISE GOUVERNEMENT",
+                  "roleTitle": "ENTREPRISE GOUVERNEMENTAL",
+                  "holderName": "Nom à définir",
+                  "players": [],
+                  "children": [
+                    {
+                      "id": "9ad1976b-ae2f-4a64-90f1-628842823827",
+                      "boxTitle": "CASINO",
+                      "roleTitle": "Nouveau poste",
+                      "holderName": "Nom à définir",
+                      "players": [],
+                      "children": [],
+                      "color": "purple"
+                    },
+                    {
+                      "id": "9f629820-0b2b-4c0e-a573-3084129f5f48",
+                      "boxTitle": "PAINTBALL",
+                      "roleTitle": "Nouveau poste",
+                      "holderName": "Nom à définir",
+                      "players": [],
+                      "children": [],
+                      "color": "purple"
+                    }
+                  ],
+                  "color": "purple"
+                }
+              ],
+              "color": "purple"
             },
             {
               "id": "442ec031-1790-4b67-bc76-45733fb832d7",
@@ -97,11 +213,14 @@
               "roleTitle": "Directeur de la banque d'État",
               "holderName": "Nom à définir",
               "players": [],
-              "children": []
+              "children": [],
+              "color": "purple"
             }
-          ]
+          ],
+          "color": "purple"
         }
-      ]
+      ],
+      "color": "purple"
     }
   ]
 }
