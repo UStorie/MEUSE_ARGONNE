@@ -20,23 +20,23 @@
             {
               "id": "9074529b-2c3c-42cf-9f92-76b976087051",
               "boxTitle": "Gendarmerie",
-              "roleTitle": "Chef gendarme",
-              "holderName": "colonel Marley bob ",
+              "roleTitle": "COLONEL",
+              "holderName": "Marley bob ",
               "players": [],
               "children": [
                 {
                   "id": "63e8ec87-26e7-4042-ad7e-b67f886427b9",
                   "boxTitle": "peloton 01 ",
-                  "roleTitle": "VOIRIE",
-                  "holderName": "Capitaine fred le gros ",
+                  "roleTitle": "Capitaine",
+                  "holderName": " Fred le gros ",
                   "players": [
                     {
-                      "post": "sergent Remond",
-                      "name": "radar chef"
+                      "post": "Remond bill",
+                      "name": "sergent (specialité radar) "
                     },
                     {
-                      "post": "",
-                      "name": ""
+                      "post": "alphone brown",
+                      "name": "1er classe (pilote) "
                     },
                     {
                       "post": "",
