@@ -1,61 +1,124 @@
 "use strict";
-const REPO_OWNER="barnaber55",REPO_NAME="NOVARISRP-",DATA_PATH="data.json",BRANCH="main";
-const LOCAL_KEY="NOVARISRP_admin_draft_v2",TOKEN_KEY="NOVARISRP_GITHUB_TOKEN_SESSION";
-const ADMIN_PASSWORD_HASH="c2385250186d29ac49370c0d87d40cfc0b434bdba9ae2e74e9a94c1cda87d667";
-const MIN_ZOOM=.25,MAX_ZOOM=1.5,ZOOM_STEP=.08;
-const COLORS=["purple","pink","green","blue","red","chrome","orange-red"];
-const COLOR_LABELS={purple:"Violet",pink:"Rose",green:"Vert",blue:"Bleu",red:"Rouge",chrome:"Gris chrome","orange-red":"Orange rouge"};
-let state=null,isAdmin=false,saveTimer=null,isPanning=false,panPointerId=null,panStartX=0,panStartY=0,panScrollLeft=0,panScrollTop=0;
-const $=id=>document.getElementById(id);
-const els={serverName:$("serverName"),serverSubtitle:$("serverSubtitle"),saveStatus:$("saveStatus"),adminBadge:$("adminBadge"),zoomValue:$("zoomValue"),forest:$("forest"),viewport:$("treeViewport"),instructions:$("instructions"),passwordModal:$("passwordModal"),passwordInput:$("passwordInput"),passwordError:$("passwordError"),adminTokenBar:$("adminTokenBar"),adminTokenInput:$("adminTokenInput"),tokenInlineError:$("tokenInlineError"),splash:$("splashScreen")};
-function createId(){return globalThis.crypto?.randomUUID?.()||"node-"+Date.now()+"-"+Math.random().toString(16).slice(2)}
-function createNode(boxTitle,roleTitle,holderName,children=[],color="purple"){return{id:createId(),boxTitle,roleTitle,holderName,players:[],children,color}}
-function createDefaultState(){return{serverName:"NOVARISRP",serverSubtitle:"Organigramme officiel du gouvernement",zoom:.7,roots:[createNode("Présidence","Président","Nom à définir",[createNode("Ministère des Armées","Ministre des Armées","Nom à définir",[createNode("Gendarmerie","Chef gendarme","Nom à définir"),createNode("Police","Chef de la police","Nom à définir"),createNode("Armée","Chef des armées","Nom à définir")]),createNode("Ministère des Services publics","Ministre des Services publics","Nom à définir",[createNode("EMS","Chef des secours","Nom à définir"),createNode("Pompiers","Chef des pompiers","Nom à définir"),createNode("Voirie","Chef de la voirie","Nom à définir")]),createNode("Ministère des Affaires gouvernementales","Ministre des Affaires gouvernementales","Nom à définir",[createNode("Fiscalité","Chef de la fiscalité","Nom à définir"),createNode("Banque d'État","Directeur de la banque d'État","Nom à définir")])])]}}
-function normalizeZoom(value){const n=Number(value);return Number.isFinite(n)?Math.max(MIN_ZOOM,Math.min(MAX_ZOOM,n)):.7}
-function normalizeColor(value){return COLORS.includes(value)?value:"purple"}
-function normalizeNode(raw,used){raw=raw&&typeof raw==="object"?raw:{};let id=typeof raw.id==="string"&&raw.id?raw.id:createId();while(used.has(id))id=createId();used.add(id);return{id,boxTitle:typeof raw.boxTitle==="string"?raw.boxTitle:"Nouvelle case",roleTitle:typeof raw.roleTitle==="string"?raw.roleTitle:"Nouveau poste",holderName:typeof raw.holderName==="string"?raw.holderName:"Nom à définir",players:Array.isArray(raw.players)?raw.players.slice(0,200).map(v=>typeof v==="string"?v:""):[],children:Array.isArray(raw.children)?raw.children.map(c=>normalizeNode(c,used)):[],color:normalizeColor(raw.color)}}
-function normalizeState(raw){const d=createDefaultState(),used=new Set(),roots=Array.isArray(raw?.roots)?raw.roots:(raw?.root?[raw.root]:d.roots);return{serverName:typeof raw?.serverName==="string"?raw.serverName:d.serverName,serverSubtitle:typeof raw?.serverSubtitle==="string"?raw.serverSubtitle:d.serverSubtitle,zoom:normalizeZoom(raw?.zoom),roots:roots.map(r=>normalizeNode(r,used))}}
-function mark(text,mode=""){els.saveStatus.textContent=text;els.saveStatus.className="save-status"+(mode?" "+mode:"")}
-async function loadOfficial(){mark("Chargement officiel…");try{const response=await fetch(DATA_PATH+"?v="+Date.now(),{cache:"no-store"});if(!response.ok)throw new Error("HTTP "+response.status);state=normalizeState(await response.json());mark("Officiel chargé ✓","ok")}catch(error){console.error(error);state=createDefaultState();mark("Secours local","error")}render()}
-function saveDraft(show=false){try{localStorage.setItem(LOCAL_KEY,JSON.stringify({savedAt:Date.now(),state}));mark(show?"Brouillon enregistré ✓":"Brouillon auto ✓","ok");return true}catch(error){console.error(error);mark("Brouillon impossible","error");return false}}
-function scheduleDraft(){if(!isAdmin)return;clearTimeout(saveTimer);mark("Non publié…");saveTimer=setTimeout(()=>saveDraft(false),350)}
-function restoreDraft(){try{const raw=localStorage.getItem(LOCAL_KEY);if(!raw)return false;const parsed=JSON.parse(raw);state=normalizeState(parsed.state||parsed);render();mark("Brouillon restauré","ok");return true}catch{return false}}
-function setZoom(value,saveIt=true){if(!state)return;state.zoom=normalizeZoom(value);els.forest.style.zoom=String(state.zoom);els.zoomValue.textContent=Math.round(state.zoom*100)+" %";if(saveIt&&isAdmin)scheduleDraft()}
-function zoomAtPointer(value,clientX,clientY){const old=state.zoom,newZoom=normalizeZoom(value);if(old===newZoom)return;const rect=els.viewport.getBoundingClientRect(),localX=clientX-rect.left,localY=clientY-rect.top,contentX=(els.viewport.scrollLeft+localX)/old,contentY=(els.viewport.scrollTop+localY)/old;setZoom(newZoom,isAdmin);els.viewport.scrollLeft=contentX*newZoom-localX;els.viewport.scrollTop=contentY*newZoom-localY}
-function fitToScreen(){els.forest.style.zoom="1";requestAnimationFrame(()=>{const natural=Math.max(els.forest.scrollWidth,els.forest.getBoundingClientRect().width),available=Math.max(300,els.viewport.clientWidth-24);setZoom(natural>0?Math.max(MIN_ZOOM,Math.min(1,available/natural)):state.zoom,isAdmin);els.viewport.scrollLeft=0;els.viewport.scrollTop=0})}
-function setAdminMode(enabled){isAdmin=enabled;document.querySelectorAll(".admin-only").forEach(el=>el.classList.toggle("hidden",!enabled));$("loginButton").classList.toggle("hidden",enabled);els.adminBadge.classList.toggle("hidden",!enabled);els.instructions.innerHTML=enabled?"<strong>Mode administrateur :</strong> token en haut, modifie les cases puis clique sur <strong>Publier</strong>. Roulette = zoom, glisser le fond = déplacer.":"<strong>Mode visiteur :</strong> noms et fonctions uniquement. Roulette = zoom, cliquer-glisser sur le fond = déplacer.";if(enabled){els.adminTokenInput.value=sessionStorage.getItem(TOKEN_KEY)||""}else{els.adminTokenInput.value="";els.tokenInlineError.textContent=""}render()}
-async function sha256(text){const bytes=new TextEncoder().encode(text),hash=await crypto.subtle.digest("SHA-256",bytes);return [...new Uint8Array(hash)].map(b=>b.toString(16).padStart(2,"0")).join("")}
-async function tryLogin(){els.passwordError.textContent="";if(await sha256(els.passwordInput.value)!==ADMIN_PASSWORD_HASH){els.passwordError.textContent="Mot de passe incorrect.";return}els.passwordInput.value="";els.passwordModal.classList.add("hidden");setAdminMode(true);restoreDraft()}
-function logout(){setAdminMode(false);sessionStorage.removeItem(TOKEN_KEY);mark("Mode visiteur","ok")}
-function textInput(cls,value,label,onInput){const input=document.createElement("input");input.type="text";input.className="field "+cls;input.value=value;input.disabled=!isAdmin;input.setAttribute("aria-label",label);input.addEventListener("input",()=>{if(!isAdmin)return;onInput(input.value);scheduleDraft()});return input}
-function locateInChildren(id,parent){for(let i=0;i<parent.children.length;i++){const child=parent.children[i];if(child.id===id)return{node:child,collection:parent.children,index:i};const nested=locateInChildren(id,child);if(nested)return nested}return null}
-function locateNode(id){for(let i=0;i<state.roots.length;i++){const root=state.roots[i];if(root.id===id)return{node:root,collection:state.roots,index:i};const nested=locateInChildren(id,root);if(nested)return nested}return null}
-function updatePlayerCount(node,value){if(!isAdmin)return;let n=parseInt(value,10);n=Number.isFinite(n)?Math.max(0,Math.min(200,n)):0;while(node.players.length<n)node.players.push("Joueur "+(node.players.length+1));if(node.players.length>n)node.players.splice(n);saveDraft();render()}
-function addPresident(){if(!isAdmin)return;state.roots.push(createNode("Présidence","Président","Nom à définir"));saveDraft();render()}
-function addChild(parentId){if(!isAdmin)return;const loc=locateNode(parentId);if(!loc)return;loc.node.children.push(createNode("Nouvelle case","Nouveau poste","Nom à définir"));saveDraft();render()}
-function countDescendants(node){return node.children.reduce((total,child)=>total+1+countDescendants(child),0)}
-function deleteNode(id){if(!isAdmin)return;const loc=locateNode(id);if(!loc)return;const d=countDescendants(loc.node),msg=d?'Supprimer « '+loc.node.boxTitle+' » et ses '+d+' sous-case(s) ?':'Supprimer « '+loc.node.boxTitle+' » ?';if(!confirm(msg))return;const fresh=locateNode(id);if(!fresh)return;fresh.collection.splice(fresh.index,1);saveDraft();render()}
-function moveNode(id,direction){if(!isAdmin)return;const loc=locateNode(id);if(!loc)return;const target=loc.index+direction;if(target<0||target>=loc.collection.length)return;const moved=loc.collection.splice(loc.index,1)[0];loc.collection.splice(target,0,moved);saveDraft();render()}
-function renderPlayers(node){if(!node.players.length){const e=document.createElement("div");e.className="players-empty";e.textContent="0 joueur dans cette case";return e}const players=document.createElement("div");players.className="players";node.players.forEach((name,index)=>{const row=document.createElement("div");row.className="player-row";const number=document.createElement("div");number.className="player-number";number.textContent=String(index+1).padStart(2,"0");row.append(number,textInput("player-input",name,"Nom du joueur",value=>node.players[index]=value));players.append(row)});return players}
-function button(text,cls,handler){const b=document.createElement("button");b.type="button";b.className=cls;b.textContent=text;b.onclick=handler;return b}
-function colorSelect(node){const wrap=document.createElement("div");wrap.className="color-control";const label=document.createElement("label");label.textContent="Couleur de la case";const select=document.createElement("select");select.className="color-select";select.setAttribute("aria-label","Couleur de la case");COLORS.forEach(color=>{const option=document.createElement("option");option.value=color;option.textContent=COLOR_LABELS[color];option.selected=node.color===color;select.append(option)});select.onchange=()=>{node.color=normalizeColor(select.value);saveDraft();render()};wrap.append(label,select);return wrap}
-function renderVisitorNode(node,isRoot){const branch=document.createElement("div");branch.className="branch";const card=document.createElement("article");card.className="node-card visitor-card"+(isRoot?" root":"");card.dataset.color=node.color;const role=document.createElement("div");role.className="visitor-function";role.textContent=node.roleTitle||"Fonction à définir";const holder=document.createElement("div");holder.className="visitor-name";holder.textContent=node.holderName||"Nom à définir";card.append(role,holder);branch.append(card);if(node.children.length){const children=document.createElement("div");children.className="children";node.children.forEach(child=>children.append(renderVisitorNode(child,false)));branch.append(children)}return branch}
-function renderAdminNode(node,isRoot){const branch=document.createElement("div");branch.className="branch";branch.dataset.nodeId=node.id;const card=document.createElement("article");card.className="node-card"+(isRoot?" root":"");card.dataset.color=node.color;const header=document.createElement("div");header.className="node-header";const type=document.createElement("div");type.className="node-type";type.textContent=isRoot?"Président / sommet":"Poste dépendant";header.append(type,textInput("box-title",node.boxTitle,"Nom de la case",v=>node.boxTitle=v),textInput("role-title",node.roleTitle,"Nom de la fonction",v=>node.roleTitle=v),textInput("holder-name",node.holderName,"Nom de la personne",v=>node.holderName=v),colorSelect(node));const body=document.createElement("div");body.className="node-body";const control=document.createElement("div");control.className="player-control";const label=document.createElement("label");label.className="control-label";label.innerHTML="Nombre de joueurs<span>0 à 200</span>";const count=document.createElement("input");count.type="number";count.className="count-input";count.min="0";count.max="200";count.value=String(node.players.length);count.onchange=()=>updatePlayerCount(node,count.value);control.append(label,count);body.append(control,renderPlayers(node));const actions=document.createElement("div");actions.className="node-actions";actions.append(button("＋ Ajouter une case dessous","button primary add-child",()=>addChild(node.id)),button("← Gauche","button",()=>moveNode(node.id,-1)),button("Droite →","button",()=>moveNode(node.id,1)),button(isRoot?"🗑 Supprimer ce président":"🗑 Supprimer ce poste","button danger delete-node",()=>deleteNode(node.id)));card.append(header,body,actions);branch.append(card);if(node.children.length){const children=document.createElement("div");children.className="children";node.children.forEach(child=>children.append(renderAdminNode(child,false)));branch.append(children)}return branch}
-function render(){if(!state)return;els.serverName.value=state.serverName;els.serverSubtitle.value=state.serverSubtitle;els.serverName.disabled=!isAdmin;els.serverSubtitle.disabled=!isAdmin;els.forest.replaceChildren();if(!state.roots.length){const empty=document.createElement("div");empty.className="empty-state";empty.innerHTML="<strong>Aucun président</strong>Connecte-toi en administrateur pour en ajouter un.";els.forest.append(empty)}else state.roots.forEach(root=>els.forest.append(isAdmin?renderAdminNode(root,true):renderVisitorNode(root,true)));setZoom(state.zoom,false)}
-function utf8ToBase64(text){const bytes=new TextEncoder().encode(text);let binary="";const chunk=8192;for(let i=0;i<bytes.length;i+=chunk)binary+=String.fromCharCode(...bytes.subarray(i,i+chunk));return btoa(binary)}
-function getAdminToken(){const token=els.adminTokenInput.value.trim();if(token){sessionStorage.setItem(TOKEN_KEY,token);return token}return sessionStorage.getItem(TOKEN_KEY)||""}
-async function publishWithToken(token){els.tokenInlineError.textContent="";mark("Publication GitHub…");const api=`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${DATA_PATH}`;try{const common={"Accept":"application/vnd.github+json","Authorization":"Bearer "+token,"X-GitHub-Api-Version":"2022-11-28"};const current=await fetch(api+"?ref="+encodeURIComponent(BRANCH),{headers:common,cache:"no-store"});if(!current.ok)throw new Error(current.status===401?"Clé invalide.":current.status===403?"Autorisation Contents: Read and write manquante.":"Lecture GitHub impossible ("+current.status+").");const info=await current.json();const update=await fetch(api,{method:"PUT",headers:{...common,"Content-Type":"application/json"},body:JSON.stringify({message:"Met à jour la hiérarchie NOVARISRP",content:utf8ToBase64(JSON.stringify(state,null,2)),sha:info.sha,branch:BRANCH})});if(!update.ok){let detail="";try{detail=(await update.json()).message||""}catch{}throw new Error("Publication refusée ("+update.status+") "+detail)}sessionStorage.setItem(TOKEN_KEY,token);localStorage.removeItem(LOCAL_KEY);mark("Publié pour tous ✓","ok");alert("Hiérarchie publiée. GitHub Pages peut prendre environ 1 à 2 minutes pour afficher la nouvelle version.")}catch(error){console.error(error);els.tokenInlineError.textContent=error.message;mark("Publication échouée","error")}}
-function requestPublish(){if(!isAdmin)return;const token=getAdminToken();if(!token){els.tokenInlineError.textContent="Colle d’abord une nouvelle clé GitHub dans le champ.";els.adminTokenInput.focus();return}publishWithToken(token)}
-function exportJson(){saveDraft();const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="NOVARISRP-data.json";a.click();URL.revokeObjectURL(url)}
-function importJson(file){const reader=new FileReader();reader.onload=e=>{try{state=normalizeState(JSON.parse(String(e.target.result)));saveDraft(true);render()}catch{alert("Le fichier JSON est invalide.")}};reader.readAsText(file,"utf-8")}
-function canStartPan(target){return !target.closest(".node-card,button,input,select,label,a")}
-function startPan(e){if(e.button!==0||!canStartPan(e.target))return;isPanning=true;panPointerId=e.pointerId;panStartX=e.clientX;panStartY=e.clientY;panScrollLeft=els.viewport.scrollLeft;panScrollTop=els.viewport.scrollTop;els.viewport.classList.add("panning");els.viewport.setPointerCapture?.(e.pointerId);e.preventDefault()}
-function movePan(e){if(!isPanning||e.pointerId!==panPointerId)return;els.viewport.scrollLeft=panScrollLeft-(e.clientX-panStartX);els.viewport.scrollTop=panScrollTop-(e.clientY-panStartY);e.preventDefault()}
-function stopPan(e){if(!isPanning||e.pointerId!==panPointerId)return;isPanning=false;panPointerId=null;els.viewport.classList.remove("panning");try{els.viewport.releasePointerCapture?.(e.pointerId)}catch{}}
-function wheelZoom(e){if(e.target.closest("input,select,textarea"))return;e.preventDefault();const direction=e.deltaY<0?1:-1;zoomAtPointer(state.zoom+direction*ZOOM_STEP,e.clientX,e.clientY)}
-els.serverName.addEventListener("input",e=>{if(isAdmin){state.serverName=e.target.value;scheduleDraft()}});els.serverSubtitle.addEventListener("input",e=>{if(isAdmin){state.serverSubtitle=e.target.value;scheduleDraft()}});
-$("zoomOutButton").onclick=()=>setZoom(state.zoom-ZOOM_STEP);$("zoomInButton").onclick=()=>setZoom(state.zoom+ZOOM_STEP);$("fitButton").onclick=fitToScreen;$("loginButton").onclick=()=>{els.passwordModal.classList.remove("hidden");els.passwordError.textContent="";setTimeout(()=>els.passwordInput.focus(),50)};$("cancelPassword").onclick=()=>els.passwordModal.classList.add("hidden");$("validatePassword").onclick=tryLogin;els.passwordInput.addEventListener("keydown",e=>{if(e.key==="Enter")tryLogin()});$("logoutButton").onclick=logout;$("publishButton").onclick=requestPublish;$("addPresidentButton").onclick=addPresident;$("draftButton").onclick=()=>saveDraft(true);$("exportButton").onclick=exportJson;$("importButton").onclick=()=>$("importFile").click();$("importFile").onchange=e=>{const file=e.target.files?.[0];if(file)importJson(file);e.target.value=""};$("resetButton").onclick=()=>{if(confirm("Réinitialiser le brouillon ?")){state=createDefaultState();saveDraft(true);render()}};
-els.adminTokenInput.addEventListener("input",()=>{els.tokenInlineError.textContent="";const token=els.adminTokenInput.value.trim();if(token)sessionStorage.setItem(TOKEN_KEY,token);else sessionStorage.removeItem(TOKEN_KEY)});$("toggleTokenButton").onclick=()=>{const show=els.adminTokenInput.type==="password";els.adminTokenInput.type=show?"text":"password";$("toggleTokenButton").textContent=show?"Masquer":"Afficher"};$("clearTokenButton").onclick=()=>{els.adminTokenInput.value="";sessionStorage.removeItem(TOKEN_KEY);els.tokenInlineError.textContent="Clé effacée de cet onglet."};
-els.viewport.addEventListener("pointerdown",startPan);els.viewport.addEventListener("pointermove",movePan);els.viewport.addEventListener("pointerup",stopPan);els.viewport.addEventListener("pointercancel",stopPan);els.viewport.addEventListener("wheel",wheelZoom,{passive:false});
-setTimeout(()=>els.splash?.classList.add("hide"),4000);setTimeout(()=>els.splash?.remove(),4700);
-loadOfficial();
+(() => {
+  const hidden = new Set(["", "Nom à définir", "Fonction à définir", "Poste à définir", "Nouvelle case", "Nouveau poste", "Nouvelle personne", "Nouveau joueur"]);
+  const clean = value => typeof value === "string" ? value.trim() : "";
+  const shown = value => {
+    const text = clean(value);
+    return hidden.has(text) ? "" : text;
+  };
+  const player = raw => {
+    if (typeof raw === "string") {
+      const text = clean(raw);
+      return { post: "", name: /^Joueur\s+\d+$/i.test(text) ? "" : text };
+    }
+    raw = raw && typeof raw === "object" ? raw : {};
+    return { post: clean(raw.post), name: clean(raw.name) };
+  };
+
+  const splash = document.getElementById("splashScreen");
+  const splashImage = splash?.querySelector(".splash-image");
+  const splashSource = splashImage?.getAttribute("src") || "";
+  if (splashSource) document.documentElement.style.setProperty("--hero-bg", `url("${splashSource}")`);
+  splash?.remove();
+
+  const core = document.createElement("script");
+  core.src = "app-core.js?v=3";
+  core.onload = () => {
+    const oldNormalizeNode = normalizeNode;
+    normalizeNode = function (raw, used) {
+      const node = oldNormalizeNode(raw, used);
+      node.holderName = typeof raw?.holderName === "string" ? raw.holderName : "";
+      node.players = Array.isArray(raw?.players) ? raw.players.slice(0, 200).map(player) : [];
+      return node;
+    };
+
+    updatePlayerCount = function (node, value) {
+      if (!isAdmin) return;
+      let count = parseInt(value, 10);
+      count = Number.isFinite(count) ? Math.max(0, Math.min(200, count)) : 0;
+      while (node.players.length < count) node.players.push({ post: "", name: "" });
+      if (node.players.length > count) node.players.splice(count);
+      saveDraft();
+      render();
+    };
+
+    renderPlayers = function (node) {
+      if (!node.players.length) {
+        const empty = document.createElement("div");
+        empty.className = "players-empty";
+        empty.textContent = "0 joueur dans cette case";
+        return empty;
+      }
+      const list = document.createElement("div");
+      list.className = "players";
+      node.players.forEach((raw, index) => {
+        const entry = player(raw);
+        node.players[index] = entry;
+        const row = document.createElement("div");
+        row.className = "player-row admin-player-row";
+        const number = document.createElement("div");
+        number.className = "player-number";
+        number.textContent = String(index + 1).padStart(2, "0");
+        const fields = document.createElement("div");
+        fields.className = "player-fields";
+        fields.append(
+          textInput("player-post-input", entry.post, "Poste du joueur", value => entry.post = value),
+          textInput("player-name-input", entry.name, "Nom du joueur", value => entry.name = value)
+        );
+        row.append(number, fields);
+        list.append(row);
+      });
+      return list;
+    };
+
+    const append = (parent, className, value) => {
+      const text = shown(value);
+      if (!text) return;
+      const line = document.createElement("div");
+      line.className = className;
+      line.textContent = text;
+      parent.append(line);
+    };
+
+    renderVisitorNode = function (node, isRoot) {
+      const branch = document.createElement("div");
+      branch.className = "branch";
+      const card = document.createElement("article");
+      card.className = "node-card visitor-card" + (isRoot ? " root" : "");
+      card.dataset.color = node.color;
+      append(card, "visitor-box-title", node.boxTitle);
+      append(card, "visitor-function", node.roleTitle);
+      append(card, "visitor-name", node.holderName);
+
+      const validPlayers = (node.players || []).map(player).filter(item => shown(item.post) || shown(item.name));
+      if (validPlayers.length) {
+        const players = document.createElement("div");
+        players.className = "visitor-players";
+        validPlayers.forEach(item => {
+          const row = document.createElement("div");
+          row.className = "visitor-player-item";
+          append(row, "visitor-player-post", item.post);
+          append(row, "visitor-player-name", item.name);
+          if (row.childElementCount) players.append(row);
+        });
+        if (players.childElementCount) card.append(players);
+      }
+
+      branch.append(card);
+      if (node.children.length) {
+        const children = document.createElement("div");
+        children.className = "children";
+        node.children.forEach(child => children.append(renderVisitorNode(child, false)));
+        branch.append(children);
+      }
+      return branch;
+    };
+
+    loadOfficial();
+  };
+  core.onerror = () => {
+    const status = document.getElementById("saveStatus");
+    if (status) status.textContent = "Erreur chargement moteur";
+  };
+  document.body.append(core);
+})();
