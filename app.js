@@ -1,7 +1,7 @@
 "use strict";
 const REPO_OWNER="barnaber55",REPO_NAME="NOVARISRP-",DATA_PATH="data.json",BRANCH="main";
 const LOCAL_KEY="NOVARISRP_admin_draft_v2",TOKEN_KEY="NOVARISRP_GITHUB_TOKEN_SESSION";
-const ADMIN_PASSWORD_HASH="bfce24cb4d09ecdbf93681071da5d7f08cbbe45608b56e1560a89255bf178133";
+const ADMIN_PASSWORD_HASH="c2385250186d29ac49370c0d87d40cfc0b434bdba9ae2e74e9a94c1cda87d667";
 const MIN_ZOOM=.25,MAX_ZOOM=1.5,ZOOM_STEP=.08;
 const COLORS=["purple","pink","green","blue","red","chrome","orange-red"];
 const COLOR_LABELS={purple:"Violet",pink:"Rose",green:"Vert",blue:"Bleu",red:"Rouge",chrome:"Gris chrome","orange-red":"Orange rouge"};
