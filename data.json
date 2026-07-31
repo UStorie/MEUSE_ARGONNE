@@ -1,0 +1,107 @@
+{
+  "serverName": "NOVARISRP",
+  "serverSubtitle": "Organigramme officiel du gouvernement",
+  "zoom": 0.7,
+  "roots": [
+    {
+      "id": "916bd7a2-7a5a-4386-b04d-57f8f862f50e",
+      "boxTitle": "Présidence",
+      "roleTitle": "Président",
+      "holderName": "Nom à définir",
+      "players": [],
+      "children": [
+        {
+          "id": "3ec7cc98-86d6-4f71-a8c7-03e60156b676",
+          "boxTitle": "Ministère des Armées",
+          "roleTitle": "Ministre des Armées",
+          "holderName": "Nom à définir",
+          "players": [],
+          "children": [
+            {
+              "id": "9074529b-2c3c-42cf-9f92-76b976087051",
+              "boxTitle": "Gendarmerie",
+              "roleTitle": "Chef gendarme",
+              "holderName": "Nom à définir",
+              "players": [],
+              "children": []
+            },
+            {
+              "id": "db760a2f-d1af-4c8a-838d-43978f17d369",
+              "boxTitle": "Police",
+              "roleTitle": "Chef de la police",
+              "holderName": "Nom à définir",
+              "players": [],
+              "children": []
+            },
+            {
+              "id": "a3997148-50e8-4dca-884b-247b42485204",
+              "boxTitle": "Armée",
+              "roleTitle": "Chef des armées",
+              "holderName": "Nom à définir",
+              "players": [],
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "93980cba-f77b-45be-a5d9-5c57718010cf",
+          "boxTitle": "Ministère des Services publics",
+          "roleTitle": "Ministre des Services publics",
+          "holderName": "Nom à définir",
+          "players": [],
+          "children": [
+            {
+              "id": "92e2470a-c50f-438d-8640-014d2d187378",
+              "boxTitle": "EMS",
+              "roleTitle": "Chef des secours",
+              "holderName": "Nom à définir",
+              "players": [],
+              "children": []
+            },
+            {
+              "id": "cb99111e-2a4b-4187-bf64-1907d83e0412",
+              "boxTitle": "Pompiers",
+              "roleTitle": "Chef des pompiers",
+              "holderName": "Nom à définir",
+              "players": [],
+              "children": []
+            },
+            {
+              "id": "2d74c820-b7ca-4e10-8ab5-b6e3b9fcb5ac",
+              "boxTitle": "Voirie",
+              "roleTitle": "Chef de la voirie",
+              "holderName": "Nom à définir",
+              "players": [],
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "29d09905-16f0-49e4-a781-cad1e5769a36",
+          "boxTitle": "Ministère des Affaires gouvernementales",
+          "roleTitle": "Ministre des Affaires gouvernementales",
+          "holderName": "Nom à définir",
+          "players": [],
+          "children": [
+            {
+              "id": "2b15bf39-36c8-4b51-9e9f-d674548f76ce",
+              "boxTitle": "Fiscalité",
+              "roleTitle": "Chef de la fiscalité",
+              "holderName": "Nom à définir",
+              "players": [],
+              "children": []
+            },
+            {
+              "id": "442ec031-1790-4b67-bc76-45733fb832d7",
+              "boxTitle": "Banque d'État",
+              "roleTitle": "Directeur de la banque d'État",
+              "holderName": "Nom à définir",
+              "players": [],
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
