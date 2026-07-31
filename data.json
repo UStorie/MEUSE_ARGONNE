@@ -1,7 +1,7 @@
 {
   "serverName": "NOVARISRP",
   "serverSubtitle": "Organigramme officiel du gouvernement",
-  "zoom": 1.21,
+  "zoom": 0.25,
   "roots": [
     {
       "id": "916bd7a2-7a5a-4386-b04d-57f8f862f50e",
@@ -385,12 +385,7 @@
                   "boxTitle": "ENTREPRISE GOUVERNEMENT",
                   "roleTitle": "ENTREPRISE GOUVERNEMENTAL",
                   "holderName": "",
-                  "players": [
-                    {
-                      "post": "En gerance ",
-                      "name": "ou a la location "
-                    }
-                  ],
+                  "players": [],
                   "children": [
                     {
                       "id": "9ad1976b-ae2f-4a64-90f1-628842823827",
@@ -426,7 +421,7 @@
           "holderName": "Sigfried salomon",
           "players": [],
           "children": [],
-          "color": "purple"
+          "color": "orange-red"
         }
       ],
       "color": "purple"
