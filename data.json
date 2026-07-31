@@ -1,7 +1,7 @@
 {
   "serverName": "NOVARISRP",
   "serverSubtitle": "Organigramme officiel du gouvernement",
-  "zoom": 0.73,
+  "zoom": 0.25,
   "roots": [
     {
       "id": "916bd7a2-7a5a-4386-b04d-57f8f862f50e",
@@ -203,7 +203,7 @@
                       "holderName": "Nom à définir",
                       "players": [],
                       "children": [],
-                      "color": "purple"
+                      "color": "green"
                     },
                     {
                       "id": "6d35a3fb-c323-4a98-98b9-a8c2596362b6",
@@ -212,7 +212,7 @@
                       "holderName": "Nom à définir",
                       "players": [],
                       "children": [],
-                      "color": "purple"
+                      "color": "green"
                     },
                     {
                       "id": "0cb75da1-abe9-49c0-8239-3bc903fdaca8",
@@ -221,7 +221,88 @@
                       "holderName": "Nom à définir",
                       "players": [],
                       "children": [],
-                      "color": "purple"
+                      "color": "green"
+                    },
+                    {
+                      "id": "8c9814ef-2351-4ab2-8e5c-b6174b3da760",
+                      "boxTitle": "Nouvelle case",
+                      "roleTitle": "Nouveau poste",
+                      "holderName": "Nom à définir",
+                      "players": [],
+                      "children": [],
+                      "color": "green"
+                    },
+                    {
+                      "id": "366a5977-f38d-44b8-be7c-661766ec1576",
+                      "boxTitle": "Nouvelle case",
+                      "roleTitle": "Nouveau poste",
+                      "holderName": "Nom à définir",
+                      "players": [],
+                      "children": [],
+                      "color": "green"
+                    },
+                    {
+                      "id": "45088f39-8858-452d-9fa9-62be46b947a8",
+                      "boxTitle": "Nouvelle case",
+                      "roleTitle": "Nouveau poste",
+                      "holderName": "Nom à définir",
+                      "players": [],
+                      "children": [],
+                      "color": "green"
+                    },
+                    {
+                      "id": "50ae9d0d-4558-45cb-982d-67c465110559",
+                      "boxTitle": "Nouvelle case",
+                      "roleTitle": "Nouveau poste",
+                      "holderName": "Nom à définir",
+                      "players": [],
+                      "children": [],
+                      "color": "green"
+                    },
+                    {
+                      "id": "2f9fe822-1631-43b9-a242-13ffecbf48ed",
+                      "boxTitle": "Nouvelle case",
+                      "roleTitle": "Nouveau poste",
+                      "holderName": "Nom à définir",
+                      "players": [],
+                      "children": [],
+                      "color": "green"
+                    },
+                    {
+                      "id": "8a5f0ea0-23e5-4a58-956c-cf8cb247244f",
+                      "boxTitle": "Nouvelle case",
+                      "roleTitle": "Nouveau poste",
+                      "holderName": "Nom à définir",
+                      "players": [],
+                      "children": [],
+                      "color": "green"
+                    },
+                    {
+                      "id": "d1b1047a-1049-4d5a-908a-3270c9f746af",
+                      "boxTitle": "Nouvelle case",
+                      "roleTitle": "Nouveau poste",
+                      "holderName": "Nom à définir",
+                      "players": [],
+                      "children": [],
+                      "color": "green"
+                    },
+                    {
+                      "id": "a382ac34-d968-46b7-8f21-3c88ed23402b",
+                      "boxTitle": "Nouvelle case",
+                      "roleTitle": "Nouveau poste",
+                      "holderName": "Nom à définir",
+                      "players": [],
+                      "children": [],
+                      "color": "green"
+                    },
+                    {
+                      "id": "9c295af5-2220-4b92-9bd6-f2fa62b3b6de",
+                      "boxTitle": "Nouvelle case",
+                      "roleTitle": "Nouveau poste",
+                      "holderName": "Nom à définir",
+                      "players": [],
+                      "children": [],
+                      "color": "green"
                     }
                   ],
                   "color": "green"
