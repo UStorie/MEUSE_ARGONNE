@@ -98,10 +98,16 @@
       border-color:rgba(59,130,246,.58)!important;
       background:linear-gradient(135deg,#1d4ed8,#3b82f6)!important;font-weight:800!important
     }
-    .site-copyright{
-      padding:12px 8px 4px;color:rgba(235,220,255,.72);text-align:center;
-      font-size:.72rem;font-weight:750;letter-spacing:.04em
+    .schema-footer{
+      position:sticky;left:0;z-index:2;display:flex;align-items:center;justify-content:center;
+      flex-wrap:wrap;gap:8px;width:100%;min-width:100%;padding:16px 10px 12px;
+      color:#fff!important;border-top:1px solid rgba(216,180,254,.14);
+      background:linear-gradient(180deg,transparent,rgba(9,6,15,.36));
+      text-align:center;font-size:.72rem;font-weight:800;letter-spacing:.03em
     }
+    .schema-footer .schema-footer-separator{color:rgba(255,255,255,.38)}
+    .schema-footer .visitor-counter,.schema-footer .site-copyright{color:#fff!important}
+    .schema-footer .visitor-counter-value{font-weight:950;color:#fff!important}
     @media(max-width:850px){
       body.client-view .forest>.branch{margin-inline:10px!important}
       body.client-view .branch{min-width:146px!important}
@@ -302,12 +308,56 @@
       requestAnimationFrame(() => document.body.classList.toggle("client-view", !isAdmin));
     };
 
-    if (!document.getElementById("siteCopyright")) {
+    document.getElementById("siteCopyright")?.remove();
+    document.getElementById("schemaFooter")?.remove();
+
+    const schemaViewport = document.getElementById("treeViewport");
+    const schemaForest = document.getElementById("forest");
+    if (schemaViewport) {
       const footer = document.createElement("footer");
-      footer.id = "siteCopyright";
-      footer.className = "site-copyright";
-      footer.textContent = "Copyright barnber55";
-      (document.querySelector(".page") || document.body).append(footer);
+      footer.id = "schemaFooter";
+      footer.className = "schema-footer";
+
+      const counter = document.createElement("span");
+      counter.className = "visitor-counter";
+      counter.innerHTML = 'Entrées sur le site : <span id="visitorCount" class="visitor-counter-value">…</span>';
+
+      const separator = document.createElement("span");
+      separator.className = "schema-footer-separator";
+      separator.textContent = "•";
+      separator.setAttribute("aria-hidden", "true");
+
+      const copyright = document.createElement("span");
+      copyright.className = "site-copyright";
+      copyright.textContent = "Copyright barnaber55";
+
+      footer.append(counter, separator, copyright);
+      if (schemaForest && schemaForest.parentElement === schemaViewport) schemaForest.after(footer);
+      else schemaViewport.append(footer);
+
+      fetch("https://visitor.6developer.com/visit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          domain: "barnaber55.github.io/NOVARISRP-",
+          page_path: "/NOVARISRP-/"
+        })
+      })
+        .then(response => {
+          if (!response.ok) throw new Error("HTTP " + response.status);
+          return response.json();
+        })
+        .then(data => {
+          const value = document.getElementById("visitorCount");
+          if (value) value.textContent = Number.isFinite(Number(data.totalCount))
+            ? Number(data.totalCount).toLocaleString("fr-FR")
+            : "—";
+        })
+        .catch(error => {
+          console.warn("Compteur de visites indisponible", error);
+          const value = document.getElementById("visitorCount");
+          if (value) value.textContent = "—";
+        });
     }
 
     loadOfficial();
