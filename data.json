@@ -1,7 +1,7 @@
 {
   "serverName": "NOVARISRP",
   "serverSubtitle": "Organigramme officiel du gouvernement",
-  "zoom": 0.8899999999999999,
+  "zoom": 0.73,
   "roots": [
     {
       "id": "916bd7a2-7a5a-4386-b04d-57f8f862f50e",
@@ -41,12 +41,12 @@
                   "holderName": " Fred le gros ",
                   "players": [
                     {
-                      "post": "sergent (specialité radar)",
-                      "name": "remond y"
+                      "post": "sergent     =",
+                      "name": "Remond y"
                     },
                     {
-                      "post": "1er classe (pilote)",
-                      "name": "francois f"
+                      "post": "1er classe =",
+                      "name": "Francois f"
                     },
                     {
                       "post": "",
@@ -99,7 +99,7 @@
                   "holderName": "henri ford ",
                   "players": [
                     {
-                      "post": "recrue (pilote)",
+                      "post": "Recrue =",
                       "name": "jeremi petipas"
                     }
                   ],
@@ -167,11 +167,11 @@
                       "holderName": "remond 016/25",
                       "players": [
                         {
-                          "post": "Serveuse",
+                          "post": "Serveuse           =",
                           "name": "Anette g"
                         },
                         {
-                          "post": "rouleur de cigar",
+                          "post": "rouleur de cigar=",
                           "name": "Jean mouloud"
                         }
                       ],
