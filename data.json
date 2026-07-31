@@ -1,7 +1,7 @@
 {
   "serverName": "NOVARISRP",
   "serverSubtitle": "Organigramme officiel du gouvernement",
-  "zoom": 0.65,
+  "zoom": 1.0499999999999998,
   "roots": [
     {
       "id": "916bd7a2-7a5a-4386-b04d-57f8f862f50e",
@@ -222,7 +222,48 @@
                   "boxTitle": "ENTREPRISE PERSONEL",
                   "roleTitle": "REPERTOIRE ENTREPRISE DECLAREE",
                   "holderName": "",
-                  "players": [],
+                  "players": [
+                    {
+                      "post": "",
+                      "name": ""
+                    },
+                    {
+                      "post": "",
+                      "name": ""
+                    },
+                    {
+                      "post": "",
+                      "name": ""
+                    },
+                    {
+                      "post": "",
+                      "name": ""
+                    },
+                    {
+                      "post": "",
+                      "name": ""
+                    },
+                    {
+                      "post": "",
+                      "name": ""
+                    },
+                    {
+                      "post": "",
+                      "name": ""
+                    },
+                    {
+                      "post": "",
+                      "name": ""
+                    },
+                    {
+                      "post": "",
+                      "name": ""
+                    },
+                    {
+                      "post": "",
+                      "name": ""
+                    }
+                  ],
                   "children": [
                     {
                       "id": "628ae760-f97e-4ade-8932-addda121f41a",
