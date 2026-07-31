@@ -1,13 +1,13 @@
 {
   "serverName": "NOVARISRP",
   "serverSubtitle": "Organigramme officiel du gouvernement",
-  "zoom": 0.7,
+  "zoom": 0.5,
   "roots": [
     {
       "id": "916bd7a2-7a5a-4386-b04d-57f8f862f50e",
       "boxTitle": "Présidence",
       "roleTitle": "Président",
-      "holderName": "Nom à définir",
+      "holderName": "John Rambo",
       "players": [],
       "children": [
         {
