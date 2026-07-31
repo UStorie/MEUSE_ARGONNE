@@ -5,13 +5,13 @@
   "roots": [
     {
       "id": "916bd7a2-7a5a-4386-b04d-57f8f862f50e",
-      "boxTitle": "Présidence",
-      "roleTitle": "Président",
+      "boxTitle": "MAIRE",
+      "roleTitle": "MAIRE NOVARIS",
       "holderName": "John Rambo",
       "players": [
         {
-          "post": "Rachide Abdoul",
-          "name": "secraitaire"
+          "post": "secraitaire",
+          "name": "rachid abdoul"
         }
       ],
       "children": [
@@ -131,6 +131,145 @@
           "color": "blue"
         },
         {
+          "id": "29d09905-16f0-49e4-a781-cad1e5769a36",
+          "boxTitle": "Ministère des Affaires gouvernementales",
+          "roleTitle": "Ministre des Affaires gouvernementales",
+          "holderName": "Sylvain montmiraille",
+          "players": [],
+          "children": [
+            {
+              "id": "2b15bf39-36c8-4b51-9e9f-d674548f76ce",
+              "boxTitle": "Soumis a fiscalitée",
+              "roleTitle": "",
+              "holderName": "",
+              "players": [],
+              "children": [
+                {
+                  "id": "af067567-05b7-4d37-ad35-1e45bc216356",
+                  "boxTitle": "ENTREPRISE PERSONEL",
+                  "roleTitle": "REPERTOIRE ENTREPRISE DECLAREE",
+                  "holderName": "",
+                  "players": [],
+                  "children": [
+                    {
+                      "id": "628ae760-f97e-4ade-8932-addda121f41a",
+                      "boxTitle": "Gerant",
+                      "roleTitle": "PMU",
+                      "holderName": "Gilbert  adress 012 /026",
+                      "players": [],
+                      "children": [],
+                      "color": "green"
+                    },
+                    {
+                      "id": "1d7326dd-ae19-4f8f-8b6b-e4c54d8e3a99",
+                      "boxTitle": "Gerant",
+                      "roleTitle": "TABAC",
+                      "holderName": "remond 016/25",
+                      "players": [
+                        {
+                          "post": "Serveuse",
+                          "name": "Anette g"
+                        },
+                        {
+                          "post": "rouleur de cigar",
+                          "name": "Jean mouloud"
+                        }
+                      ],
+                      "children": [],
+                      "color": "green"
+                    },
+                    {
+                      "id": "dc2b1bb9-3061-4654-abf0-588284a1c344",
+                      "boxTitle": "NICO HELICO",
+                      "roleTitle": "Transport aerien et autre ",
+                      "holderName": "aeroport",
+                      "players": [],
+                      "children": [],
+                      "color": "green"
+                    },
+                    {
+                      "id": "90a88172-5d01-42e1-ba85-14bc4886a644",
+                      "boxTitle": "uber",
+                      "roleTitle": "usine a shit ",
+                      "holderName": "suivre odeur ",
+                      "players": [],
+                      "children": [],
+                      "color": "green"
+                    },
+                    {
+                      "id": "3b80e08d-a1ee-4b7c-9aa1-c8380e9650f7",
+                      "boxTitle": "Nouvelle case",
+                      "roleTitle": "Nouveau poste",
+                      "holderName": "Nom à définir",
+                      "players": [],
+                      "children": [],
+                      "color": "purple"
+                    },
+                    {
+                      "id": "6d35a3fb-c323-4a98-98b9-a8c2596362b6",
+                      "boxTitle": "Nouvelle case",
+                      "roleTitle": "Nouveau poste",
+                      "holderName": "Nom à définir",
+                      "players": [],
+                      "children": [],
+                      "color": "purple"
+                    },
+                    {
+                      "id": "0cb75da1-abe9-49c0-8239-3bc903fdaca8",
+                      "boxTitle": "Nouvelle case",
+                      "roleTitle": "Nouveau poste",
+                      "holderName": "Nom à définir",
+                      "players": [],
+                      "children": [],
+                      "color": "purple"
+                    }
+                  ],
+                  "color": "green"
+                },
+                {
+                  "id": "fdb39db0-1cc7-49d9-acd2-bbb198679e9f",
+                  "boxTitle": "ENTREPRISE GOUVERNEMENT",
+                  "roleTitle": "ENTREPRISE GOUVERNEMENTAL",
+                  "holderName": "",
+                  "players": [],
+                  "children": [
+                    {
+                      "id": "9ad1976b-ae2f-4a64-90f1-628842823827",
+                      "boxTitle": "gerant",
+                      "roleTitle": "Casino",
+                      "holderName": "Paulo",
+                      "players": [],
+                      "children": [],
+                      "color": "purple"
+                    },
+                    {
+                      "id": "c25cf0e1-bc73-4354-b57e-ccdcea90b4b9",
+                      "boxTitle": "gerant",
+                      "roleTitle": "Paintball",
+                      "holderName": "rachid",
+                      "players": [],
+                      "children": [],
+                      "color": "purple"
+                    }
+                  ],
+                  "color": "purple"
+                }
+              ],
+              "color": "purple"
+            },
+            {
+              "id": "442ec031-1790-4b67-bc76-45733fb832d7",
+              "boxTitle": "BANK",
+              "roleTitle": "Directeur BANK gouvernement",
+              "holderName": "Rostchild Jean",
+              "players": [],
+              "children": [],
+              "color": "purple"
+            }
+          ],
+          "color": "purple"
+        },
+        {
           "id": "93980cba-f77b-45be-a5d9-5c57718010cf",
           "boxTitle": "Ministère des Services publics",
           "roleTitle": "Ministre du service publique ",
@@ -202,118 +341,6 @@
             }
           ],
           "color": "red"
-        },
-        {
-          "id": "29d09905-16f0-49e4-a781-cad1e5769a36",
-          "boxTitle": "Ministère des Affaires gouvernementales",
-          "roleTitle": "Ministre des Affaires gouvernementales",
-          "holderName": "Sylvain montmiraille",
-          "players": [],
-          "children": [
-            {
-              "id": "2b15bf39-36c8-4b51-9e9f-d674548f76ce",
-              "boxTitle": "COµNTROL FISCAL ",
-              "roleTitle": "Controleur fiscal",
-              "holderName": "Napeur claudio",
-              "players": [],
-              "children": [
-                {
-                  "id": "af067567-05b7-4d37-ad35-1e45bc216356",
-                  "boxTitle": "ENTREPRISE PERSONEL",
-                  "roleTitle": "REPERTOIRE ENTREPRISE DECLAREE",
-                  "holderName": "",
-                  "players": [],
-                  "children": [
-                    {
-                      "id": "628ae760-f97e-4ade-8932-addda121f41a",
-                      "boxTitle": "Gerant",
-                      "roleTitle": "PMU",
-                      "holderName": "Gilbert  adress 012 /026",
-                      "players": [],
-                      "children": [],
-                      "color": "green"
-                    },
-                    {
-                      "id": "1d7326dd-ae19-4f8f-8b6b-e4c54d8e3a99",
-                      "boxTitle": "Gerant",
-                      "roleTitle": "TABAC",
-                      "holderName": "remond 016/25",
-                      "players": [
-                        {
-                          "post": "Serveuse",
-                          "name": "Anette g"
-                        },
-                        {
-                          "post": "rouleur de cigar",
-                          "name": "Jean mouloud"
-                        }
-                      ],
-                      "children": [],
-                      "color": "green"
-                    },
-                    {
-                      "id": "dc2b1bb9-3061-4654-abf0-588284a1c344",
-                      "boxTitle": "NICO HELICO",
-                      "roleTitle": "Transport aerien et autre ",
-                      "holderName": "aeroport",
-                      "players": [],
-                      "children": [],
-                      "color": "green"
-                    },
-                    {
-                      "id": "90a88172-5d01-42e1-ba85-14bc4886a644",
-                      "boxTitle": "uber",
-                      "roleTitle": "usine a shit ",
-                      "holderName": "suivre odeur ",
-                      "players": [],
-                      "children": [],
-                      "color": "green"
-                    }
-                  ],
-                  "color": "green"
-                },
-                {
-                  "id": "fdb39db0-1cc7-49d9-acd2-bbb198679e9f",
-                  "boxTitle": "ENTREPRISE GOUVERNEMENT",
-                  "roleTitle": "ENTREPRISE GOUVERNEMENTAL",
-                  "holderName": "",
-                  "players": [],
-                  "children": [
-                    {
-                      "id": "9ad1976b-ae2f-4a64-90f1-628842823827",
-                      "boxTitle": "gerant",
-                      "roleTitle": "Casino",
-                      "holderName": "Paulo",
-                      "players": [],
-                      "children": [],
-                      "color": "purple"
-                    },
-                    {
-                      "id": "c25cf0e1-bc73-4354-b57e-ccdcea90b4b9",
-                      "boxTitle": "gerant",
-                      "roleTitle": "Paintball",
-                      "holderName": "rachid",
-                      "players": [],
-                      "children": [],
-                      "color": "purple"
-                    }
-                  ],
-                  "color": "purple"
-                }
-              ],
-              "color": "purple"
-            },
-            {
-              "id": "442ec031-1790-4b67-bc76-45733fb832d7",
-              "boxTitle": "Banque d'État",
-              "roleTitle": "Directeur de la banque d'État",
-              "holderName": "Rostchild Jean",
-              "players": [],
-              "children": [],
-              "color": "purple"
-            }
-          ],
-          "color": "purple"
         }
       ],
       "color": "purple"
