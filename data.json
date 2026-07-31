@@ -1,7 +1,7 @@
 {
   "serverName": "NOVARISRP",
   "serverSubtitle": "Organigramme officiel du gouvernement",
-  "zoom": 0.33,
+  "zoom": 0.8099999999999999,
   "roots": [
     {
       "id": "916bd7a2-7a5a-4386-b04d-57f8f862f50e",
@@ -90,7 +90,8 @@
                     }
                   ],
                   "children": [],
-                  "color": "blue"
+                  "color": "blue",
+                  "cardExtraHeight": 0
                 },
                 {
                   "id": "f3fce633-8ca8-4219-820d-73e523f5eb66",
@@ -104,10 +105,12 @@
                     }
                   ],
                   "children": [],
-                  "color": "blue"
+                  "color": "blue",
+                  "cardExtraHeight": 0
                 }
               ],
-              "color": "blue"
+              "color": "blue",
+              "cardExtraHeight": 0
             },
             {
               "id": "db760a2f-d1af-4c8a-838d-43978f17d369",
@@ -116,7 +119,8 @@
               "holderName": "Nom à définir",
               "players": [],
               "children": [],
-              "color": "blue"
+              "color": "blue",
+              "cardExtraHeight": 0
             },
             {
               "id": "a3997148-50e8-4dca-884b-247b42485204",
@@ -125,10 +129,12 @@
               "holderName": "Nom à définir",
               "players": [],
               "children": [],
-              "color": "blue"
+              "color": "blue",
+              "cardExtraHeight": 0
             }
           ],
-          "color": "blue"
+          "color": "blue",
+          "cardExtraHeight": 0
         },
         {
           "id": "93980cba-f77b-45be-a5d9-5c57718010cf",
@@ -151,7 +157,8 @@
                   "holderName": "jean guy",
                   "players": [],
                   "children": [],
-                  "color": "red"
+                  "color": "red",
+                  "cardExtraHeight": 0
                 },
                 {
                   "id": "fa3bb739-f58c-479f-a48f-9fcad01cb8a5",
@@ -177,10 +184,12 @@
                     }
                   ],
                   "children": [],
-                  "color": "red"
+                  "color": "red",
+                  "cardExtraHeight": 0
                 }
               ],
-              "color": "red"
+              "color": "red",
+              "cardExtraHeight": 0
             },
             {
               "id": "cb99111e-2a4b-4187-bf64-1907d83e0412",
@@ -189,7 +198,8 @@
               "holderName": "Saint barbe",
               "players": [],
               "children": [],
-              "color": "red"
+              "color": "red",
+              "cardExtraHeight": 0
             },
             {
               "id": "2d74c820-b7ca-4e10-8ab5-b6e3b9fcb5ac",
@@ -198,10 +208,12 @@
               "holderName": "Nom à définir",
               "players": [],
               "children": [],
-              "color": "red"
+              "color": "red",
+              "cardExtraHeight": 0
             }
           ],
-          "color": "red"
+          "color": "red",
+          "cardExtraHeight": 0
         },
         {
           "id": "29d09905-16f0-49e4-a781-cad1e5769a36",
@@ -215,64 +227,14 @@
               "boxTitle": "Soumis a fiscalitée",
               "roleTitle": "",
               "holderName": "",
-              "players": [
-                {
-                  "post": ".",
-                  "name": "."
-                },
-                {
-                  "post": ".",
-                  "name": "."
-                }
-              ],
+              "players": [],
               "children": [
                 {
                   "id": "af067567-05b7-4d37-ad35-1e45bc216356",
                   "boxTitle": "ENTREPRISE PERSONEL",
                   "roleTitle": "REPERTOIRE ENTREPRISE DECLAREE",
                   "holderName": "",
-                  "players": [
-                    {
-                      "post": ".",
-                      "name": "."
-                    },
-                    {
-                      "post": ".",
-                      "name": "."
-                    },
-                    {
-                      "post": ".",
-                      "name": "."
-                    },
-                    {
-                      "post": ".",
-                      "name": "."
-                    },
-                    {
-                      "post": ".",
-                      "name": "."
-                    },
-                    {
-                      "post": ".",
-                      "name": "."
-                    },
-                    {
-                      "post": ".",
-                      "name": "."
-                    },
-                    {
-                      "post": ".",
-                      "name": "."
-                    },
-                    {
-                      "post": ".",
-                      "name": "."
-                    },
-                    {
-                      "post": ".",
-                      "name": ""
-                    }
-                  ],
+                  "players": [],
                   "children": [
                     {
                       "id": "628ae760-f97e-4ade-8932-addda121f41a",
@@ -281,7 +243,8 @@
                       "holderName": "Gilbert  adress 012 /026",
                       "players": [],
                       "children": [],
-                      "color": "green"
+                      "color": "green",
+                      "cardExtraHeight": 0
                     },
                     {
                       "id": "1d7326dd-ae19-4f8f-8b6b-e4c54d8e3a99",
@@ -291,19 +254,20 @@
                       "players": [
                         {
                           "post": "Serveuse           =",
-                          "name": "        Anette g"
+                          "name": "Anette g"
                         },
                         {
                           "post": "rouleur de cigar=",
-                          "name": "        Jean mouloud"
+                          "name": "Jean mouloud"
                         },
                         {
-                          "post": "       = ",
-                          "name": "      "
+                          "post": "=",
+                          "name": ""
                         }
                       ],
                       "children": [],
-                      "color": "green"
+                      "color": "green",
+                      "cardExtraHeight": 0
                     },
                     {
                       "id": "dc2b1bb9-3061-4654-abf0-588284a1c344",
@@ -312,7 +276,8 @@
                       "holderName": "aeroport",
                       "players": [],
                       "children": [],
-                      "color": "green"
+                      "color": "green",
+                      "cardExtraHeight": 0
                     },
                     {
                       "id": "90a88172-5d01-42e1-ba85-14bc4886a644",
@@ -321,7 +286,8 @@
                       "holderName": "suivre odeur ",
                       "players": [],
                       "children": [],
-                      "color": "green"
+                      "color": "green",
+                      "cardExtraHeight": 0
                     },
                     {
                       "id": "3b80e08d-a1ee-4b7c-9aa1-c8380e9650f7",
@@ -330,7 +296,8 @@
                       "holderName": "Nom à définir",
                       "players": [],
                       "children": [],
-                      "color": "green"
+                      "color": "green",
+                      "cardExtraHeight": 0
                     },
                     {
                       "id": "6d35a3fb-c323-4a98-98b9-a8c2596362b6",
@@ -339,7 +306,8 @@
                       "holderName": "Nom à définir",
                       "players": [],
                       "children": [],
-                      "color": "green"
+                      "color": "green",
+                      "cardExtraHeight": 0
                     },
                     {
                       "id": "0cb75da1-abe9-49c0-8239-3bc903fdaca8",
@@ -348,7 +316,8 @@
                       "holderName": "Nom à définir",
                       "players": [],
                       "children": [],
-                      "color": "green"
+                      "color": "green",
+                      "cardExtraHeight": 0
                     },
                     {
                       "id": "8c9814ef-2351-4ab2-8e5c-b6174b3da760",
@@ -357,7 +326,8 @@
                       "holderName": "Nom à définir",
                       "players": [],
                       "children": [],
-                      "color": "green"
+                      "color": "green",
+                      "cardExtraHeight": 0
                     },
                     {
                       "id": "366a5977-f38d-44b8-be7c-661766ec1576",
@@ -366,7 +336,8 @@
                       "holderName": "Nom à définir",
                       "players": [],
                       "children": [],
-                      "color": "green"
+                      "color": "green",
+                      "cardExtraHeight": 0
                     },
                     {
                       "id": "45088f39-8858-452d-9fa9-62be46b947a8",
@@ -375,7 +346,8 @@
                       "holderName": "Nom à définir",
                       "players": [],
                       "children": [],
-                      "color": "green"
+                      "color": "green",
+                      "cardExtraHeight": 0
                     },
                     {
                       "id": "50ae9d0d-4558-45cb-982d-67c465110559",
@@ -384,7 +356,8 @@
                       "holderName": "Nom à définir",
                       "players": [],
                       "children": [],
-                      "color": "green"
+                      "color": "green",
+                      "cardExtraHeight": 0
                     },
                     {
                       "id": "2f9fe822-1631-43b9-a242-13ffecbf48ed",
@@ -393,7 +366,8 @@
                       "holderName": "Nom à définir",
                       "players": [],
                       "children": [],
-                      "color": "green"
+                      "color": "green",
+                      "cardExtraHeight": 0
                     },
                     {
                       "id": "8a5f0ea0-23e5-4a58-956c-cf8cb247244f",
@@ -402,7 +376,8 @@
                       "holderName": "Nom à définir",
                       "players": [],
                       "children": [],
-                      "color": "green"
+                      "color": "green",
+                      "cardExtraHeight": 0
                     },
                     {
                       "id": "d1b1047a-1049-4d5a-908a-3270c9f746af",
@@ -411,7 +386,8 @@
                       "holderName": "Nom à définir",
                       "players": [],
                       "children": [],
-                      "color": "green"
+                      "color": "green",
+                      "cardExtraHeight": 0
                     },
                     {
                       "id": "a382ac34-d968-46b7-8f21-3c88ed23402b",
@@ -420,7 +396,8 @@
                       "holderName": "Nom à définir",
                       "players": [],
                       "children": [],
-                      "color": "green"
+                      "color": "green",
+                      "cardExtraHeight": 0
                     },
                     {
                       "id": "9c295af5-2220-4b92-9bd6-f2fa62b3b6de",
@@ -429,26 +406,19 @@
                       "holderName": "Nom à définir",
                       "players": [],
                       "children": [],
-                      "color": "green"
+                      "color": "green",
+                      "cardExtraHeight": 0
                     }
                   ],
-                  "color": "green"
+                  "color": "green",
+                  "cardExtraHeight": 250
                 },
                 {
                   "id": "fdb39db0-1cc7-49d9-acd2-bbb198679e9f",
                   "boxTitle": "ENTREPRISE GOUVERNEMENT",
                   "roleTitle": "ENTREPRISE GOUVERNEMENTAL",
                   "holderName": "",
-                  "players": [
-                    {
-                      "post": "en gerance",
-                      "name": "ou"
-                    },
-                    {
-                      "post": "a",
-                      "name": "la location"
-                    }
-                  ],
+                  "players": [],
                   "children": [
                     {
                       "id": "9ad1976b-ae2f-4a64-90f1-628842823827",
@@ -457,7 +427,8 @@
                       "holderName": "Paulo",
                       "players": [],
                       "children": [],
-                      "color": "purple"
+                      "color": "purple",
+                      "cardExtraHeight": 0
                     },
                     {
                       "id": "c25cf0e1-bc73-4354-b57e-ccdcea90b4b9",
@@ -466,16 +437,20 @@
                       "holderName": "rachid",
                       "players": [],
                       "children": [],
-                      "color": "purple"
+                      "color": "purple",
+                      "cardExtraHeight": 0
                     }
                   ],
-                  "color": "purple"
+                  "color": "purple",
+                  "cardExtraHeight": 0
                 }
               ],
-              "color": "purple"
+              "color": "purple",
+              "cardExtraHeight": 200
             }
           ],
-          "color": "purple"
+          "color": "purple",
+          "cardExtraHeight": 50
         },
         {
           "id": "9931f4c3-bbb6-46d7-be4e-9f137ddff711",
@@ -484,10 +459,12 @@
           "holderName": "Sigfried salomon",
           "players": [],
           "children": [],
-          "color": "orange-red"
+          "color": "orange-red",
+          "cardExtraHeight": 0
         }
       ],
-      "color": "purple"
+      "color": "purple",
+      "cardExtraHeight": 0
     }
   ]
 }
