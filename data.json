@@ -1,7 +1,7 @@
 {
   "serverName": "NOVARISRP",
   "serverSubtitle": "Organigramme officiel du gouvernement",
-  "zoom": 0.25,
+  "zoom": 0.33,
   "roots": [
     {
       "id": "916bd7a2-7a5a-4386-b04d-57f8f862f50e",
@@ -291,11 +291,15 @@
                       "players": [
                         {
                           "post": "Serveuse           =",
-                          "name": "Anette g"
+                          "name": "        Anette g"
                         },
                         {
                           "post": "rouleur de cigar=",
-                          "name": "Jean mouloud"
+                          "name": "        Jean mouloud"
+                        },
+                        {
+                          "post": "       = ",
+                          "name": "      "
                         }
                       ],
                       "children": [],
