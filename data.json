@@ -1,7 +1,7 @@
 {
   "serverName": "NOVARISRP",
   "serverSubtitle": "Organigramme officiel du gouvernement",
-  "zoom": 0.65,
+  "zoom": 0.8899999999999999,
   "roots": [
     {
       "id": "916bd7a2-7a5a-4386-b04d-57f8f862f50e",
@@ -11,14 +11,14 @@
       "players": [
         {
           "post": "Rachide Abdoul",
-          "name": "secraitaire "
+          "name": "secraitaire"
         }
       ],
       "children": [
         {
           "id": "3ec7cc98-86d6-4f71-a8c7-03e60156b676",
           "boxTitle": "Ministère des Armées",
-          "roleTitle": "GENERAL ARMEE",
+          "roleTitle": "GENERAL des ARMEES",
           "holderName": "wilson mouloud",
           "players": [
             {
@@ -41,12 +41,12 @@
                   "holderName": " Fred le gros ",
                   "players": [
                     {
-                      "post": "Remond bill",
-                      "name": "sergent (specialité radar)"
+                      "post": "sergent (specialité radar)",
+                      "name": "remond y"
                     },
                     {
-                      "post": "alphone brown",
-                      "name": "1er classe (pilote)"
+                      "post": "1er classe (pilote)",
+                      "name": "francois f"
                     },
                     {
                       "post": "",
@@ -94,10 +94,15 @@
                 },
                 {
                   "id": "f3fce633-8ca8-4219-820d-73e523f5eb66",
-                  "boxTitle": "equipe2",
-                  "roleTitle": "equipe2",
-                  "holderName": "henri",
-                  "players": [],
+                  "boxTitle": "peloton 02",
+                  "roleTitle": "lietnant",
+                  "holderName": "henri ford ",
+                  "players": [
+                    {
+                      "post": "recrue (pilote)",
+                      "name": "jeremi petipas"
+                    }
+                  ],
                   "children": [],
                   "color": "blue"
                 }
@@ -128,7 +133,7 @@
         {
           "id": "93980cba-f77b-45be-a5d9-5c57718010cf",
           "boxTitle": "Ministère des Services publics",
-          "roleTitle": "colonel",
+          "roleTitle": "Ministre du service publique ",
           "holderName": "Flexxi moumoute",
           "players": [],
           "children": [
@@ -136,13 +141,13 @@
               "id": "92e2470a-c50f-438d-8640-014d2d187378",
               "boxTitle": "EMS",
               "roleTitle": "capitaine",
-              "holderName": "gerard",
+              "holderName": "Gerard tulipe",
               "players": [],
               "children": [
                 {
                   "id": "eeb5c40e-4184-4fb5-a997-6e12b1fb6e9f",
                   "boxTitle": "Equipe sol ",
-                  "roleTitle": "Chef",
+                  "roleTitle": "Chef corp",
                   "holderName": "jean guy",
                   "players": [],
                   "children": [],
@@ -151,20 +156,20 @@
                 {
                   "id": "fa3bb739-f58c-479f-a48f-9fcad01cb8a5",
                   "boxTitle": "Equipe AIR",
-                  "roleTitle": "chef",
+                  "roleTitle": "Chef aero",
                   "holderName": "plumo",
                   "players": [
                     {
-                      "post": "paul",
-                      "name": "copilote"
+                      "post": "copilote",
+                      "name": "alfred"
                     },
                     {
-                      "post": "franciss",
-                      "name": "medic"
+                      "post": "medic",
+                      "name": "pascal"
                     },
                     {
-                      "post": "plumo",
-                      "name": "pilote"
+                      "post": "pilote",
+                      "name": "plumo"
                     },
                     {
                       "post": "",
@@ -202,12 +207,12 @@
           "id": "29d09905-16f0-49e4-a781-cad1e5769a36",
           "boxTitle": "Ministère des Affaires gouvernementales",
           "roleTitle": "Ministre des Affaires gouvernementales",
-          "holderName": "Nom à définir",
+          "holderName": "Sylvain montmiraille",
           "players": [],
           "children": [
             {
               "id": "2b15bf39-36c8-4b51-9e9f-d674548f76ce",
-              "boxTitle": "Fiscalitée ",
+              "boxTitle": "COµNTROL FISCAL ",
               "roleTitle": "Controleur fiscal",
               "holderName": "Napeur claudio",
               "players": [],
@@ -221,7 +226,7 @@
                   "children": [
                     {
                       "id": "628ae760-f97e-4ade-8932-addda121f41a",
-                      "boxTitle": "PMU",
+                      "boxTitle": "Gerant",
                       "roleTitle": "PMU",
                       "holderName": "Gilbert  adress 012 /026",
                       "players": [],
@@ -230,17 +235,17 @@
                     },
                     {
                       "id": "1d7326dd-ae19-4f8f-8b6b-e4c54d8e3a99",
-                      "boxTitle": "TABAC",
+                      "boxTitle": "Gerant",
                       "roleTitle": "TABAC",
                       "holderName": "remond 016/25",
                       "players": [
                         {
-                          "post": "annette gutave",
-                          "name": "serveuse"
+                          "post": "Serveuse",
+                          "name": "Anette g"
                         },
                         {
-                          "post": "jean mouloud",
-                          "name": "rouleur de cigar"
+                          "post": "rouleur de cigar",
+                          "name": "Jean mouloud"
                         }
                       ],
                       "children": [],
@@ -249,7 +254,7 @@
                     {
                       "id": "dc2b1bb9-3061-4654-abf0-588284a1c344",
                       "boxTitle": "NICO HELICO",
-                      "roleTitle": "Nouveau poste",
+                      "roleTitle": "Transport aerien et autre ",
                       "holderName": "aeroport",
                       "players": [],
                       "children": [],
@@ -276,8 +281,8 @@
                   "children": [
                     {
                       "id": "9ad1976b-ae2f-4a64-90f1-628842823827",
-                      "boxTitle": "CASINO",
-                      "roleTitle": "GERANT",
+                      "boxTitle": "gerant",
+                      "roleTitle": "Casino",
                       "holderName": "Paulo",
                       "players": [],
                       "children": [],
@@ -285,8 +290,8 @@
                     },
                     {
                       "id": "c25cf0e1-bc73-4354-b57e-ccdcea90b4b9",
-                      "boxTitle": "Paintball",
-                      "roleTitle": "GERANT",
+                      "boxTitle": "gerant",
+                      "roleTitle": "Paintball",
                       "holderName": "rachid",
                       "players": [],
                       "children": [],
