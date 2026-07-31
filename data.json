@@ -1,7 +1,7 @@
 {
   "serverName": "NOVARISRP",
   "serverSubtitle": "Organigramme officiel du gouvernement",
-  "zoom": 0.73,
+  "zoom": 1.13,
   "roots": [
     {
       "id": "916bd7a2-7a5a-4386-b04d-57f8f862f50e",
@@ -253,12 +253,12 @@
                       "holderName": "014/025             radio (59) ",
                       "players": [
                         {
-                          "post": "employer : Anette G =serveuse",
-                          "name": "Activité= "
+                          "post": "Employers : ",
+                          "name": " Anette G =  serveuse"
                         },
                         {
-                          "post": "vente cigarette ,tabac ,accesoire tabac",
-                          "name": ""
+                          "post": ".",
+                          "name": "Activité :vente cigarette ,tabac ,accesoire tabac"
                         }
                       ],
                       "children": [],
