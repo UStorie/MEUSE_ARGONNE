@@ -131,6 +131,79 @@
           "color": "blue"
         },
         {
+          "id": "93980cba-f77b-45be-a5d9-5c57718010cf",
+          "boxTitle": "Ministère des Services publics",
+          "roleTitle": "Ministre du service publique ",
+          "holderName": "Flexxi moumoute",
+          "players": [],
+          "children": [
+            {
+              "id": "92e2470a-c50f-438d-8640-014d2d187378",
+              "boxTitle": "EMS",
+              "roleTitle": "capitaine",
+              "holderName": "Gerard tulipe",
+              "players": [],
+              "children": [
+                {
+                  "id": "eeb5c40e-4184-4fb5-a997-6e12b1fb6e9f",
+                  "boxTitle": "Equipe sol ",
+                  "roleTitle": "Chef corp",
+                  "holderName": "jean guy",
+                  "players": [],
+                  "children": [],
+                  "color": "red"
+                },
+                {
+                  "id": "fa3bb739-f58c-479f-a48f-9fcad01cb8a5",
+                  "boxTitle": "Equipe AIR",
+                  "roleTitle": "Chef aero",
+                  "holderName": "plumo",
+                  "players": [
+                    {
+                      "post": "copilote",
+                      "name": "alfred"
+                    },
+                    {
+                      "post": "medic",
+                      "name": "pascal"
+                    },
+                    {
+                      "post": "pilote",
+                      "name": "plumo"
+                    },
+                    {
+                      "post": "",
+                      "name": ""
+                    }
+                  ],
+                  "children": [],
+                  "color": "red"
+                }
+              ],
+              "color": "red"
+            },
+            {
+              "id": "cb99111e-2a4b-4187-bf64-1907d83e0412",
+              "boxTitle": "Pompiers",
+              "roleTitle": "Chef des pompiers",
+              "holderName": "Saint barbe",
+              "players": [],
+              "children": [],
+              "color": "red"
+            },
+            {
+              "id": "2d74c820-b7ca-4e10-8ab5-b6e3b9fcb5ac",
+              "boxTitle": "Voirie",
+              "roleTitle": "Chef de la voirie",
+              "holderName": "Nom à définir",
+              "players": [],
+              "children": [],
+              "color": "red"
+            }
+          ],
+          "color": "red"
+        },
+        {
           "id": "29d09905-16f0-49e4-a781-cad1e5769a36",
           "boxTitle": "Ministère des Affaires gouvernementales",
           "roleTitle": "Ministre des Affaires gouvernementales",
@@ -337,91 +410,18 @@
                 }
               ],
               "color": "purple"
-            },
-            {
-              "id": "442ec031-1790-4b67-bc76-45733fb832d7",
-              "boxTitle": "BANK",
-              "roleTitle": "Directeur BANK gouvernement",
-              "holderName": "Rostchild Jean",
-              "players": [],
-              "children": [],
-              "color": "purple"
             }
           ],
           "color": "purple"
         },
         {
-          "id": "93980cba-f77b-45be-a5d9-5c57718010cf",
-          "boxTitle": "Ministère des Services publics",
-          "roleTitle": "Ministre du service publique ",
-          "holderName": "Flexxi moumoute",
+          "id": "9931f4c3-bbb6-46d7-be4e-9f137ddff711",
+          "boxTitle": "BANK",
+          "roleTitle": "DIRECTEUR BANK NOVARIS",
+          "holderName": "Sigfried salomon",
           "players": [],
-          "children": [
-            {
-              "id": "92e2470a-c50f-438d-8640-014d2d187378",
-              "boxTitle": "EMS",
-              "roleTitle": "capitaine",
-              "holderName": "Gerard tulipe",
-              "players": [],
-              "children": [
-                {
-                  "id": "eeb5c40e-4184-4fb5-a997-6e12b1fb6e9f",
-                  "boxTitle": "Equipe sol ",
-                  "roleTitle": "Chef corp",
-                  "holderName": "jean guy",
-                  "players": [],
-                  "children": [],
-                  "color": "red"
-                },
-                {
-                  "id": "fa3bb739-f58c-479f-a48f-9fcad01cb8a5",
-                  "boxTitle": "Equipe AIR",
-                  "roleTitle": "Chef aero",
-                  "holderName": "plumo",
-                  "players": [
-                    {
-                      "post": "copilote",
-                      "name": "alfred"
-                    },
-                    {
-                      "post": "medic",
-                      "name": "pascal"
-                    },
-                    {
-                      "post": "pilote",
-                      "name": "plumo"
-                    },
-                    {
-                      "post": "",
-                      "name": ""
-                    }
-                  ],
-                  "children": [],
-                  "color": "red"
-                }
-              ],
-              "color": "red"
-            },
-            {
-              "id": "cb99111e-2a4b-4187-bf64-1907d83e0412",
-              "boxTitle": "Pompiers",
-              "roleTitle": "Chef des pompiers",
-              "holderName": "Saint barbe",
-              "players": [],
-              "children": [],
-              "color": "red"
-            },
-            {
-              "id": "2d74c820-b7ca-4e10-8ab5-b6e3b9fcb5ac",
-              "boxTitle": "Voirie",
-              "roleTitle": "Chef de la voirie",
-              "holderName": "Nom à définir",
-              "players": [],
-              "children": [],
-              "color": "red"
-            }
-          ],
-          "color": "red"
+          "children": [],
+          "color": "purple"
         }
       ],
       "color": "purple"
