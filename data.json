@@ -1,7 +1,7 @@
 {
   "serverName": "NOVARISRP",
   "serverSubtitle": "Organigramme officiel du gouvernement",
-  "zoom": 1.13,
+  "zoom": 0.65,
   "roots": [
     {
       "id": "916bd7a2-7a5a-4386-b04d-57f8f862f50e",
@@ -14,7 +14,7 @@
           "id": "3ec7cc98-86d6-4f71-a8c7-03e60156b676",
           "boxTitle": "Ministère des Armées",
           "roleTitle": "Ministre des Armées",
-          "holderName": "Nom à définir",
+          "holderName": "wilson",
           "players": [],
           "children": [
             {
@@ -27,10 +27,10 @@
                 {
                   "id": "63e8ec87-26e7-4042-ad7e-b67f886427b9",
                   "boxTitle": "equipe1",
-                  "roleTitle": "Nouveau poste",
+                  "roleTitle": "equipe 1 ",
                   "holderName": "fred",
                   "players": [
-                    "Joueur 1",
+                    "remond sgt ",
                     "Joueur 2",
                     "Joueur 3",
                     "Joueur 4",
@@ -49,7 +49,7 @@
                 {
                   "id": "f3fce633-8ca8-4219-820d-73e523f5eb66",
                   "boxTitle": "equipe2",
-                  "roleTitle": "Nouveau poste",
+                  "roleTitle": "equipe2",
                   "holderName": "henri",
                   "players": [],
                   "children": [],
@@ -134,14 +134,14 @@
                   "id": "af067567-05b7-4d37-ad35-1e45bc216356",
                   "boxTitle": "ENTREPRISE PERSONEL",
                   "roleTitle": "REPERTOIR ENTREPRISE DECLAREE",
-                  "holderName": "Nom à définir",
+                  "holderName": "",
                   "players": [],
                   "children": [
                     {
                       "id": "628ae760-f97e-4ade-8932-addda121f41a",
                       "boxTitle": "PMU",
-                      "roleTitle": "Nouveau poste",
-                      "holderName": "Nom à définir",
+                      "roleTitle": "PMU",
+                      "holderName": "Gilbert  adress 012 /026",
                       "players": [],
                       "children": [],
                       "color": "green"
@@ -149,9 +149,11 @@
                     {
                       "id": "1d7326dd-ae19-4f8f-8b6b-e4c54d8e3a99",
                       "boxTitle": "TABAC",
-                      "roleTitle": "Nouveau poste",
-                      "holderName": "Nom à définir",
-                      "players": [],
+                      "roleTitle": "TABAC",
+                      "holderName": "remond",
+                      "players": [
+                        "annette serveuse "
+                      ],
                       "children": [],
                       "color": "green"
                     },
@@ -180,7 +182,7 @@
                   "id": "fdb39db0-1cc7-49d9-acd2-bbb198679e9f",
                   "boxTitle": "ENTREPRISE GOUVERNEMENT",
                   "roleTitle": "ENTREPRISE GOUVERNEMENTAL",
-                  "holderName": "Nom à définir",
+                  "holderName": "",
                   "players": [],
                   "children": [
                     {
