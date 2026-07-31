@@ -1,7 +1,7 @@
 {
   "serverName": "NOVARISRP",
   "serverSubtitle": "Organigramme officiel du gouvernement",
-  "zoom": 1.0499999999999998,
+  "zoom": 0.8099999999999999,
   "roots": [
     {
       "id": "916bd7a2-7a5a-4386-b04d-57f8f862f50e",
@@ -224,8 +224,16 @@
                   "holderName": "",
                   "players": [
                     {
-                      "post": "",
-                      "name": ""
+                      "post": "entreprise civil",
+                      "name": "."
+                    },
+                    {
+                      "post": ".",
+                      "name": "."
+                    },
+                    {
+                      "post": ".",
+                      "name": "."
                     },
                     {
                       "post": "",
@@ -253,15 +261,7 @@
                     },
                     {
                       "post": "",
-                      "name": ""
-                    },
-                    {
-                      "post": "",
-                      "name": ""
-                    },
-                    {
-                      "post": "",
-                      "name": ""
+                      "name": "declarée et soumis a control "
                     }
                   ],
                   "children": [
