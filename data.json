@@ -1,7 +1,7 @@
 {
   "serverName": "NOVARISRP",
   "serverSubtitle": "Organigramme officiel du gouvernement",
-  "zoom": 0.73,
+  "zoom": 0.25,
   "roots": [
     {
       "id": "916bd7a2-7a5a-4386-b04d-57f8f862f50e",
@@ -259,10 +259,6 @@
                         {
                           "post": "rouleur de cigar=",
                           "name": "Jean mouloud"
-                        },
-                        {
-                          "post": "=",
-                          "name": ""
                         }
                       ],
                       "children": [],
@@ -272,9 +268,18 @@
                     {
                       "id": "dc2b1bb9-3061-4654-abf0-588284a1c344",
                       "boxTitle": "Jean mouloud",
-                      "roleTitle": "Transport aerien et autre ",
+                      "roleTitle": "NIVO HELICO",
                       "holderName": "aeroport novaris           radio (50)",
-                      "players": [],
+                      "players": [
+                        {
+                          "post": "vol helico",
+                          "name": "bapteme"
+                        },
+                        {
+                          "post": "evenement",
+                          "name": "entrainement privé"
+                        }
+                      ],
                       "children": [],
                       "color": "green",
                       "cardExtraHeight": 0
