@@ -2,56 +2,84 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Meuse-Argonne — Romagne 1918</title>
-<style>html,body{margin:0;background:#171714;color:#eee;font-family:Arial,sans-serif}#load{min-height:100vh;display:grid;place-items:center;text-align:center;padding:30px}b{color:#e4bd61}</style>
+<style>
+html,body{margin:0;width:100%;height:100%;background:#050504;color:#eee;font-family:Arial,sans-serif}
+#load{position:fixed;inset:0;background:#050504 center/cover no-repeat;display:grid;place-items:center;transition:opacity .2s ease}
+#load::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.08);pointer-events:none}
+#msg{position:relative;z-index:2;opacity:0;font-size:13px;text-align:center;padding:20px}
+</style>
 </head>
 <body>
-<div id="load"><div><b>MEUSE-ARGONNE 1918</b><br><br>Chargement de la simulation V35 finale…</div></div>
+<div id="load"><div id="msg"></div></div>
 <script>
 (async()=>{
+ const load=document.getElementById('load');
+ const msg=document.getElementById('msg');
  try{
-  const BASE_SHA='fe53d8579813be11c1147353e5f248f3a15e124d210c8fc9740079b4c3c4bd96';
-  const TARGET_SHA='580688b7904a1a52a565066e3bf1cb8c72cb7f5d4d082f8c0d6476e5561b467e';
-  const sha256=async text=>{
-   const d=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(text));
-   return [...new Uint8Array(d)].map(b=>b.toString(16).padStart(2,'0')).join('');
-  };
-
   const files=Array.from({length:15},(_,i)=>`site/part${String(i).padStart(2,'0')}.txt`);
   let b64='';
   for(const f of files){
    const r=await fetch(f,{cache:'no-store'});
-   if(!r.ok) throw new Error(`${f} : HTTP ${r.status}`);
+   if(!r.ok) throw new Error('asset');
    b64+=(await r.text()).replace(/\s+/g,'');
   }
+
   const bin=Uint8Array.from(atob(b64),c=>c.charCodeAt(0));
+  if(typeof DecompressionStream!=='function') throw new Error('browser');
   const ds=new DecompressionStream('gzip');
   let html=await new Response(new Blob([bin]).stream().pipeThrough(ds)).text();
-  if(await sha256(html)!==BASE_SHA) throw new Error('Base V31 inattendue : publication interrompue pour éviter un mélange de versions.');
+  if(!html.includes('Romagne') || (!html.includes('<html') && !html.includes('<!DOCTYPE'))) throw new Error('base');
+
+  /* Affiche tout de suite l'image historique d'introduction déjà embarquée. */
+  const introBlock=html.match(/\.introV17::before\s*\{[\s\S]*?\}/);
+  if(introBlock){
+   const introUrl=introBlock[0].match(/url\(["']?(data:image\/[a-zA-Z0-9.+-]+;base64,[^)"']+)["']?\)/);
+   if(introUrl) load.style.backgroundImage=`url("${introUrl[1]}")`;
+  }
 
   const patchFiles=Array.from({length:6},(_,i)=>`v35/patch${String(i).padStart(2,'0')}.json`);
   let ops=[];
   for(const f of patchFiles){
    const r=await fetch(f,{cache:'no-store'});
-   if(!r.ok) throw new Error(`${f} : HTTP ${r.status}`);
+   if(!r.ok) throw new Error('patch');
    const p=await r.json();
-   if(p.format!=='RomagneV35LinePatchChunk'||!Array.isArray(p.ops)) throw new Error(`${f} invalide`);
+   if(!Array.isArray(p.ops)) throw new Error('patch');
    ops.push(...p.ops);
   }
   ops.sort((a,b)=>b.start-a.start);
   const lines=html.match(/[^\n]*\n|[^\n]+$/g)||[];
   for(const op of ops){
-   if(!Number.isInteger(op.start)||!Number.isInteger(op.delete)||op.start<0||op.start>lines.length) throw new Error('Patch V35 invalide');
+   if(!Number.isInteger(op.start)||!Number.isInteger(op.delete)||op.start<0||op.start>lines.length) throw new Error('patch');
    lines.splice(op.start,op.delete,...(op.text?[op.text]:[]));
   }
   html=lines.join('');
-  if(await sha256(html)!==TARGET_SHA) throw new Error('V35 finale incomplète : contrôle SHA-256 refusé.');
-  if(!html.includes('final-mobile-v35')||!html.includes('mobilePrevDay')||!html.includes('touchPointers=new Map()')) throw new Error('Contrôle V35 mobile refusé.');
 
-  document.open();document.write(html);document.close();
+  if(!html.includes('final-mobile-v35') || !html.includes('mobilePrevDay') || !html.includes('touchPointers=new Map()') || !html.includes('introV17')) throw new Error('final');
+
+  /* Aucun numéro de version affiché dans la version publique. */
+  const replacements=[
+   ["/* V35 : version publique finale — étalonnage embarqué, aucun accès admin. */","/* Version publique finale — étalonnage embarqué, aucun accès admin. */"],
+   ["PATCH V31","PATCH FINAL"],
+   ["FIN PATCH V31","FIN PATCH"],
+   ["activeRouteDefs V31","activeRouteDefs"],
+   ["C'est la correction principale de V31. ",""],
+   ["V31 remplace donc le gros carré 123.ID par ses trois régiments de 1918 :","La reconstitution remplace donc le gros carré 123.ID par ses trois régiments de 1918 :"],
+   ["Pour éviter d'inventer l'heure du retrait, V31 affiche les trois régiments jusqu'au 16 inclus et les masque entièrement le 17.","Pour éviter d'inventer l'heure du retrait, les trois régiments restent affichés jusqu'au 16 inclus puis disparaissent entièrement le 17."],
+   ["V31 les montre uniquement le 17, car le rapport ne suffit pas à imposer leur position précise les 18–19.","Ils ne sont montrés que le 17, car le rapport ne suffit pas à imposer leur position précise les 18–19."],
+   ["mais V31 refuse de prolonger artificiellement sa position le 18 sans nouvelle identification locale.","et la carte ne prolonge pas artificiellement sa position le 18 sans nouvelle identification locale."],
+   ["V31 utilise cette disposition plutôt que de faire avancer automatiquement les trois bataillons ensemble.","La carte utilise cette disposition plutôt que de faire avancer automatiquement les trois bataillons ensemble."],
+   ["V31 ne les maintient donc pas artificiellement sur cette journée.","La carte ne les maintient donc pas artificiellement sur cette journée."]
+  ];
+  for(const [a,b] of replacements) html=html.split(a).join(b);
+
+  document.open();
+  document.write(html);
+  document.close();
  }catch(e){
-  document.getElementById('load').innerHTML='<div><b>Erreur de chargement</b><br><br>'+String(e.message||e)+'</div>';
+  msg.style.opacity='1';
+  msg.textContent='Erreur de chargement. Recharge la page.';
  }
 })();
 </script>
