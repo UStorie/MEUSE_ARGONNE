@@ -1,4 +1,4 @@
-name: Rebuild final site
+name: Publication finale propre
 
 on:
   push:
@@ -19,31 +19,129 @@ jobs:
           ref: rebuild-final
           fetch-depth: 0
 
-      - name: Assemble and verify final package
+      - name: Rebuild exact final HTML from repository sources
         shell: bash
         run: |
           set -euo pipefail
-          cat .rebuild/chunk*.txt | base64 -d > /tmp/final-site.tar.gz
-          echo "c1fc28343818a9dfb525f46ecf1ac77ba812ab97b55ca4cd7ec82f83e2223a9d  /tmp/final-site.tar.gz" | sha256sum -c -
-          rm -rf /tmp/final-site
-          mkdir -p /tmp/final-site
-          tar -xzf /tmp/final-site.tar.gz -C /tmp/final-site
-          test -f /tmp/final-site/index.html
-          test -f /tmp/final-site/assets/intro.avif
-          test -f /tmp/final-site/assets/map.avif
-          test -f /tmp/final-site/assets/inset.avif
-          grep -q 'mobilePrevDay' /tmp/final-site/index.html
-          grep -q 'touchPointers=new Map()' /tmp/final-site/index.html
-          ! grep -Eq 'V31|V32|V35' /tmp/final-site/index.html
+          for i in $(seq -w 0 14); do cat "site/part${i}.txt"; done | tr -d '[:space:]' | base64 -d | gzip -dc > /tmp/base.html
+          python3 - <<'PY'
+          import base64, glob, hashlib, json, re
+          from pathlib import Path
 
-      - name: Replace repository with the single final version
+          html = Path('/tmp/base.html').read_text(encoding='utf-8')
+          lines = html.splitlines(keepends=True)
+          ops = []
+          for filename in sorted(glob.glob('v35/patch*.json')):
+              payload = json.loads(Path(filename).read_text(encoding='utf-8'))
+              if not isinstance(payload.get('ops'), list):
+                  raise SystemExit(f'Invalid patch: {filename}')
+              ops.extend(payload['ops'])
+
+          for op in sorted(ops, key=lambda x: x['start'], reverse=True):
+              start = op['start']
+              delete = op['delete']
+              text = op.get('text', '')
+              lines[start:start + delete] = [text] if text else []
+
+          raw = ''.join(lines)
+          raw_sha = hashlib.sha256(raw.encode('utf-8')).hexdigest()
+          expected = '580688b7904a1a52a565066e3bf1cb8c72cb7f5d4d082f8c0d6476e5561b467e'
+          if raw_sha != expected:
+              raise SystemExit(f'Final source mismatch: {raw_sha}')
+
+          before_images = re.findall(r'data:image/[^;]+;base64,([A-Za-z0-9+/=]+)', raw)
+          if len(before_images) != 3:
+              raise SystemExit(f'Expected 3 embedded images, found {len(before_images)}')
+
+          replacements = {
+              '<style id="final-mobile-v35">': '<style id="final-mobile">',
+              '/* V35 : version publique finale — étalonnage embarqué, aucun accès admin. */': '/* Version publique finale — étalonnage embarqué, aucun accès admin. */',
+              'PATCH V31': 'PATCH FINAL',
+              'activeRouteDefs V31': 'activeRouteDefs',
+              "C'est la correction principale de V31. ": '',
+              'V31 remplace donc le gros carré 123.ID par ses trois régiments de 1918 :': 'La reconstitution remplace donc le gros carré 123.ID par ses trois régiments de 1918 :',
+              "Pour éviter d'inventer l'heure du retrait, V31 affiche les trois régiments jusqu'au 16 inclus et les masque entièrement le 17.": "Pour éviter d'inventer l'heure du retrait, les trois régiments restent affichés jusqu'au 16 inclus puis disparaissent entièrement le 17.",
+              'V31 les montre uniquement le 17, car le rapport ne suffit pas à imposer leur position précise les 18–19.': 'Ils ne sont montrés que le 17, car le rapport ne suffit pas à imposer leur position précise les 18–19.',
+              'mais V31 refuse de prolonger artificiellement sa position le 18 sans nouvelle identification locale.': 'et la carte ne prolonge pas artificiellement sa position le 18 sans nouvelle identification locale.',
+              'V31 utilise cette disposition plutôt que de faire avancer automatiquement les trois bataillons ensemble.': 'La carte utilise cette disposition plutôt que de faire avancer automatiquement les trois bataillons ensemble.',
+              'V31 ne les maintient donc pas artificiellement sur cette journée.': 'La carte ne les maintient donc pas artificiellement sur cette journée.'
+          }
+          final = raw
+          for old, new in replacements.items():
+              final = final.replace(old, new)
+
+          after_images = re.findall(r'data:image/[^;]+;base64,([A-Za-z0-9+/=]+)', final)
+          if before_images != after_images:
+              raise SystemExit('Embedded image data changed during cleanup')
+
+          required = [
+              'mobilePrevDay', 'mobileNextDay', 'mobileDaySelect',
+              'touchPointers=new Map()', 'introV17',
+              '#adminPanel,#adminPassModal,#adminBanner{display:none!important}',
+              'id="mapImg"'
+          ]
+          for marker in required:
+              if marker not in final:
+                  raise SystemExit(f'Missing marker: {marker}')
+
+          forbidden_visible = [
+              'PATCH V31', 'activeRouteDefs V31',
+              "C'est la correction principale de V31.",
+              'V31 remplace donc', 'V31 affiche', 'V31 les montre',
+              'V31 refuse', 'V31 utilise', 'V31 ne les maintient',
+              'final-mobile-v35'
+          ]
+          for marker in forbidden_visible:
+              if marker in final:
+                  raise SystemExit(f'Old visible version marker remains: {marker}')
+
+          for n, encoded in enumerate(after_images, 1):
+              data = base64.b64decode(encoded, validate=True)
+              if len(data) < 100000:
+                  raise SystemExit(f'Embedded image {n} is unexpectedly small')
+
+          Path('/tmp/index.html').write_text(final, encoding='utf-8')
+          Path('/tmp/final.sha256').write_text(hashlib.sha256(final.encode('utf-8')).hexdigest(), encoding='ascii')
+          print('Final HTML bytes:', len(final.encode('utf-8')))
+          print('Final SHA-256:', Path('/tmp/final.sha256').read_text())
+          PY
+
+      - name: Verify final package ten times
         shell: bash
         run: |
           set -euo pipefail
-          find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
-          cp -a /tmp/final-site/. .
+          expected="$(cat /tmp/final.sha256)"
+          for pass in $(seq 1 10); do
+            actual="$(sha256sum /tmp/index.html | awk '{print $1}')"
+            test "$actual" = "$expected"
+            test "$(grep -o 'data:image/' /tmp/index.html | wc -l)" -eq 3
+            grep -q 'mobilePrevDay' /tmp/index.html
+            grep -q 'mobileNextDay' /tmp/index.html
+            grep -q 'touchPointers=new Map()' /tmp/index.html
+            grep -q 'introV17' /tmp/index.html
+            grep -q '#adminPanel,#adminPassModal,#adminBanner{display:none!important}' /tmp/index.html
+            grep -q 'id="mapImg"' /tmp/index.html
+            ! grep -q 'final-mobile-v35' /tmp/index.html
+            echo "Verification $pass/10 OK"
+          done
+
+      - name: Publish as a single clean root commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          git checkout --orphan clean-final
+          git rm -rf . >/dev/null 2>&1 || true
+          rm -rf .github .rebuild site v32 v35 README.md index.html || true
+          cp /tmp/index.html index.html
+          printf '%s\n' '# MEUSE_ARGONNE' '' 'Simulation historique de Romagne-sous-Montfaucon — publication finale.' > README.md
+          git add index.html README.md
           git config user.name "barnaber55"
           git config user.email "122031558+barnaber55@users.noreply.github.com"
-          git add -A
           git commit -m "Publication finale propre et unique"
           git push --force origin HEAD:main
+
+      - name: Remove temporary reconstruction branch
+        if: success()
+        shell: bash
+        run: |
+          git push origin --delete rebuild-final || true
