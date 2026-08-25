@@ -19,7 +19,7 @@ jobs:
           ref: rebuild-final
           fetch-depth: 0
 
-      - name: Rebuild exact final HTML from repository sources
+      - name: Rebuild and compare code plus embedded images
         shell: bash
         run: |
           set -euo pipefail
@@ -29,6 +29,7 @@ jobs:
           from pathlib import Path
 
           html = Path('/tmp/base.html').read_text(encoding='utf-8')
+          print('Base SHA-256:', hashlib.sha256(html.encode('utf-8')).hexdigest())
           lines = html.splitlines(keepends=True)
           ops = []
           for filename in sorted(glob.glob('v35/patch*.json')):
@@ -44,14 +45,29 @@ jobs:
               lines[start:start + delete] = [text] if text else []
 
           raw = ''.join(lines)
-          raw_sha = hashlib.sha256(raw.encode('utf-8')).hexdigest()
-          expected = '580688b7904a1a52a565066e3bf1cb8c72cb7f5d4d082f8c0d6476e5561b467e'
-          if raw_sha != expected:
-              raise SystemExit(f'Final source mismatch: {raw_sha}')
+          print('Rebuilt SHA-256:', hashlib.sha256(raw.encode('utf-8')).hexdigest())
 
-          before_images = re.findall(r'data:image/[^;]+;base64,([A-Za-z0-9+/=]+)', raw)
-          if len(before_images) != 3:
-              raise SystemExit(f'Expected 3 embedded images, found {len(before_images)}')
+          pat = re.compile(r'(data:image/[^;]+;base64,)([A-Za-z0-9+/=]+)')
+          images = []
+          def strip_image(match):
+              images.append(match.group(2))
+              return match.group(1) + f'__IMG{len(images)}__'
+          stripped = pat.sub(strip_image, raw)
+          stripped_sha = hashlib.sha256(stripped.encode('utf-8')).hexdigest()
+          image_shas = [hashlib.sha256(x.encode('ascii')).hexdigest() for x in images]
+          print('Code-without-image-data SHA-256:', stripped_sha)
+          print('Embedded image SHA-256:', image_shas)
+
+          expected_stripped = 'cd23a408747cefb57e72ab92e5a3f314ec007d95efa7e5f3acbdb447ebd453be'
+          expected_images = [
+              'bde0bb708ceae18afd13ec455858e6b3ba06ea5b8aed9cf1c3ccd64e4406f2ee',
+              '93a36aa279d4760c7e2b99de3fd816ab9ab74286ba192e031546152cda21e319',
+              '9817f90f46adcbb9bb5938536882c74f99c07857c9adc27c6245c20b74498956'
+          ]
+          if stripped_sha != expected_stripped:
+              raise SystemExit('The rebuilt application code does not match the tested final application')
+          if image_shas != expected_images:
+              raise SystemExit('One or more embedded images do not match the tested final images')
 
           replacements = {
               '<style id="final-mobile-v35">': '<style id="final-mobile">',
@@ -70,8 +86,9 @@ jobs:
           for old, new in replacements.items():
               final = final.replace(old, new)
 
-          after_images = re.findall(r'data:image/[^;]+;base64,([A-Za-z0-9+/=]+)', final)
-          if before_images != after_images:
+          after = []
+          pat.sub(lambda m: after.append(m.group(2)) or m.group(0), final)
+          if images != after:
               raise SystemExit('Embedded image data changed during cleanup')
 
           required = [
@@ -95,7 +112,7 @@ jobs:
               if marker in final:
                   raise SystemExit(f'Old visible version marker remains: {marker}')
 
-          for n, encoded in enumerate(after_images, 1):
+          for n, encoded in enumerate(after, 1):
               data = base64.b64decode(encoded, validate=True)
               if len(data) < 100000:
                   raise SystemExit(f'Embedded image {n} is unexpectedly small')
