@@ -7,10 +7,17 @@
 <style>html,body{margin:0;background:#171714;color:#eee;font-family:Arial,sans-serif}#load{min-height:100vh;display:grid;place-items:center;text-align:center;padding:30px}b{color:#e4bd61}</style>
 </head>
 <body>
-<div id="load"><div><b>MEUSE-ARGONNE 1918</b><br><br>Chargement de la simulation V31…</div></div>
+<div id="load"><div><b>MEUSE-ARGONNE 1918</b><br><br>Chargement de la simulation V35 finale…</div></div>
 <script>
 (async()=>{
  try{
+  const BASE_SHA='fe53d8579813be11c1147353e5f248f3a15e124d210c8fc9740079b4c3c4bd96';
+  const TARGET_SHA='580688b7904a1a52a565066e3bf1cb8c72cb7f5d4d082f8c0d6476e5561b467e';
+  const sha256=async text=>{
+   const d=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(text));
+   return [...new Uint8Array(d)].map(b=>b.toString(16).padStart(2,'0')).join('');
+  };
+
   const files=Array.from({length:15},(_,i)=>`site/part${String(i).padStart(2,'0')}.txt`);
   let b64='';
   for(const f of files){
@@ -20,8 +27,28 @@
   }
   const bin=Uint8Array.from(atob(b64),c=>c.charCodeAt(0));
   const ds=new DecompressionStream('gzip');
-  const html=await new Response(new Blob([bin]).stream().pipeThrough(ds)).text();
-  if(!html.includes('PATCH V31') || (!html.includes('<html') && !html.includes('<!DOCTYPE'))) throw new Error('V31 invalide ou incomplète');
+  let html=await new Response(new Blob([bin]).stream().pipeThrough(ds)).text();
+  if(await sha256(html)!==BASE_SHA) throw new Error('Base V31 inattendue : publication interrompue pour éviter un mélange de versions.');
+
+  const patchFiles=Array.from({length:6},(_,i)=>`v35/patch${String(i).padStart(2,'0')}.json`);
+  let ops=[];
+  for(const f of patchFiles){
+   const r=await fetch(f,{cache:'no-store'});
+   if(!r.ok) throw new Error(`${f} : HTTP ${r.status}`);
+   const p=await r.json();
+   if(p.format!=='RomagneV35LinePatchChunk'||!Array.isArray(p.ops)) throw new Error(`${f} invalide`);
+   ops.push(...p.ops);
+  }
+  ops.sort((a,b)=>b.start-a.start);
+  const lines=html.match(/[^\n]*\n|[^\n]+$/g)||[];
+  for(const op of ops){
+   if(!Number.isInteger(op.start)||!Number.isInteger(op.delete)||op.start<0||op.start>lines.length) throw new Error('Patch V35 invalide');
+   lines.splice(op.start,op.delete,...(op.text?[op.text]:[]));
+  }
+  html=lines.join('');
+  if(await sha256(html)!==TARGET_SHA) throw new Error('V35 finale incomplète : contrôle SHA-256 refusé.');
+  if(!html.includes('final-mobile-v35')||!html.includes('mobilePrevDay')||!html.includes('touchPointers=new Map()')) throw new Error('Contrôle V35 mobile refusé.');
+
   document.open();document.write(html);document.close();
  }catch(e){
   document.getElementById('load').innerHTML='<div><b>Erreur de chargement</b><br><br>'+String(e.message||e)+'</div>';
