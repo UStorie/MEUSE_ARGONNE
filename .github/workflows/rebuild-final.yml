@@ -1,0 +1,49 @@
+name: Rebuild final site
+
+on:
+  push:
+    branches: [rebuild-final]
+    paths:
+      - '.rebuild/READY'
+
+permissions:
+  contents: write
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout reconstruction branch
+        uses: actions/checkout@v4
+        with:
+          ref: rebuild-final
+          fetch-depth: 0
+
+      - name: Assemble and verify final package
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat .rebuild/chunk*.txt | base64 -d > /tmp/final-site.tar.gz
+          echo "c1fc28343818a9dfb525f46ecf1ac77ba812ab97b55ca4cd7ec82f83e2223a9d  /tmp/final-site.tar.gz" | sha256sum -c -
+          rm -rf /tmp/final-site
+          mkdir -p /tmp/final-site
+          tar -xzf /tmp/final-site.tar.gz -C /tmp/final-site
+          test -f /tmp/final-site/index.html
+          test -f /tmp/final-site/assets/intro.avif
+          test -f /tmp/final-site/assets/map.avif
+          test -f /tmp/final-site/assets/inset.avif
+          grep -q 'mobilePrevDay' /tmp/final-site/index.html
+          grep -q 'touchPointers=new Map()' /tmp/final-site/index.html
+          ! grep -Eq 'V31|V32|V35' /tmp/final-site/index.html
+
+      - name: Replace repository with the single final version
+        shell: bash
+        run: |
+          set -euo pipefail
+          find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          cp -a /tmp/final-site/. .
+          git config user.name "barnaber55"
+          git config user.email "122031558+barnaber55@users.noreply.github.com"
+          git add -A
+          git commit -m "Publication finale propre et unique"
+          git push --force origin HEAD:main
