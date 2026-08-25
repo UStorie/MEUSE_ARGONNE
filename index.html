@@ -7,11 +7,11 @@
 <style>html,body{margin:0;background:#171714;color:#eee;font-family:Arial,sans-serif}#load{min-height:100vh;display:grid;place-items:center;text-align:center;padding:30px}b{color:#e4bd61}</style>
 </head>
 <body>
-<div id="load"><div><b>MEUSE-ARGONNE 1918</b><br><br>Chargement de la simulation…</div></div>
+<div id="load"><div><b>MEUSE-ARGONNE 1918</b><br><br>Chargement de la simulation V31…</div></div>
 <script>
 (async()=>{
  try{
-  const files=Array.from({length:12},(_,i)=>`site/part${String(i).padStart(2,'0')}.txt`);
+  const files=Array.from({length:15},(_,i)=>`site/part${String(i).padStart(2,'0')}.txt`);
   let b64='';
   for(const f of files){
    const r=await fetch(f,{cache:'no-store'});
@@ -21,7 +21,7 @@
   const bin=Uint8Array.from(atob(b64),c=>c.charCodeAt(0));
   const ds=new DecompressionStream('gzip');
   const html=await new Response(new Blob([bin]).stream().pipeThrough(ds)).text();
-  if(!html.includes('<html') && !html.includes('<!DOCTYPE')) throw new Error('contenu HTML invalide');
+  if(!html.includes('PATCH V31') || (!html.includes('<html') && !html.includes('<!DOCTYPE'))) throw new Error('V31 invalide ou incomplète');
   document.open();document.write(html);document.close();
  }catch(e){
   document.getElementById('load').innerHTML='<div><b>Erreur de chargement</b><br><br>'+String(e.message||e)+'</div>';
