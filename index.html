@@ -4452,102 +4452,6 @@ window.addEventListener("resize",fit);
 /* ==== FIN FINAL CLEAN PATCH ==== */
 
 const calibrationSource=loadCalibration();
-
-/* ===== PATCH AÉRO COMPLÉMENTAIRE ===== */
-const AIR99_DETAIL = "<b>99th Aero Squadron.</b> Escadrille d'observation du V Corps, employée pour la photographie, la liaison avec l'infanterie et le réglage indirect de l'artillerie.<br><br><b>Rôle dans le secteur.</b> Observation du front Romagne – Bantheville, reconnaissance photographique et appui aux états-majors du V Corps.<br><br><b>Base.</b> Groupe d'observation du V Corps, avec retour vers les terrains alliés après chaque mission.";
-const AIR104_DETAIL = "<b>104th Aero Squadron.</b> Escadrille d'observation du V Corps volant sur Salmson 2A2.<br><br><b>Mission principale.</b> Survoler à basse altitude le Bois de Bantheville pour repérer les lueurs de départ des batteries allemandes cachées dans les arbres, puis transmettre par T.S.F. les coordonnées à l'artillerie du V Corps pour le contre-batterie.<br><br><b>Liaison d'infanterie.</b> Vérification des lignes et des ravins autour de Sommerance, avec recherche de contre-attaques allemandes et contrôle de la progression américaine.<br><br><b>Zone la plus dangereuse.</b> Le secteur Romagne – Cunel est signalé comme extrêmement difficile : mitrailleuses anti-aériennes et Flak y criblent régulièrement les Salmson qui reviennent souvent endommagés à Foucaucourt.<br><br><b>Rapport-type 23–24 octobre.</b> Visibilité très pauvre, brume basse ; missions de reconnaissance visuelle et photographique sur Bantheville et Ancreville ; mouvements de troupes signalés à la lisière nord du Bois de Bantheville ; barrage anti-aérien nourri depuis les hauteurs de Romagne ; un biplace ennemi est forcé de plonger dans ses lignes au-dessus du secteur de Sommerance.<br><br><b>Équipages cités.</b> George S. Clark et Edward M. Morris sont plus tard décorés pour leur ténacité au-dessus du front de Bantheville. Les missions photo répétées de Porter et Easterbrook sont également associées au secteur Romagne – Sommerance dans les récits secondaires.";
-const AIRFR_DETAIL = "<b>Escadrille française attachée au V Corps Observation Group.</b> Mission d'observation et de photographie en appui du commandement américain dans la phase de préparation et d'exploitation de l'attaque.";
-const AIRDE_DETAIL = "<b>Appareils allemands signalés.</b> Plusieurs rapports américains mentionnent des biplaces et des patrouilles ennemies opérant au-dessus du secteur, souvent à proximité de Romagne, Cunel et du triangle Bantheville – Sommerance.";
-
-function makeAir(id,label,title,side,x,y,dx,summary,opts){
-  return Object.assign({id,label,title,side,x,y,dx,summary},opts||{});
-}
-
-FINAL_AIR.d13=[
-  makeAir("air99","99th Aero","99th Aero Squadron — V Corps Observation Group","US",360,300,240,AIR99_DETAIL),
-  makeAir("air104","104th Aero","104th Aero Squadron — V Corps Observation Group","US",760,340,220,AIR104_DETAIL)
-];
-FINAL_AIR.d14=[
-  makeAir("air99b","99th Aero","99th Aero Squadron — observation du V Corps","US",330,300,230,AIR99_DETAIL),
-  makeAir("air104b","104th Aero","104th Aero Squadron — observation du V Corps","US",650,350,220,AIR104_DETAIL),
-  makeAir("air214","214e FR","214e escadrille française — V Corps Observation Group","US",980,285,-210,AIRFR_DETAIL),
-  makeAir("air215","215e FR","215e escadrille française — V Corps Observation Group","US",1190,360,-230,AIRFR_DETAIL),
-  makeAir("airDE14","Avions DE","Avions allemands signalés à basse altitude","DE",850,430,190,AIRDE_DETAIL)
-];
-FINAL_AIR.d20=[
-  makeAir("air104_20a","104th Aero","104th Aero Squadron — repérage des batteries du Bois de Bantheville","US",520,245,210,AIR104_DETAIL),
-  makeAir("air99_20","99th Aero","99th Aero Squadron — reconnaissance du secteur Romagne – Bantheville","US",390,315,180,AIR99_DETAIL)
-];
-FINAL_AIR.d21=[
-  makeAir("air104_21a","104th Aero","104th Aero Squadron — observation tactique au-dessus du Bois de Bantheville","US",570,215,240,AIR104_DETAIL),
-  makeAir("air104_21b","104th Aero","104th Aero Squadron — contrôle de la ligne Romagne – Cunel","US",880,305,-180,AIR104_DETAIL)
-];
-FINAL_AIR.d22=[
-  makeAir("air104_22a","104th Aero","104th Aero Squadron — liaison d'infanterie sur Bantheville et Sommerance","US",500,215,240,AIR104_DETAIL),
-  makeAir("air99_22","99th Aero","99th Aero Squadron — photographie du front du V Corps","US",860,270,-190,AIR99_DETAIL)
-];
-FINAL_AIR.d23=[
-  makeAir("air104_23a","104th Aero","104th Aero Squadron — reconnaissance visuelle et photo, secteur Bantheville – Ancreville","US",520,200,260,AIR104_DETAIL),
-  makeAir("air104_23b","104th Aero","104th Aero Squadron — observation du front Romagne – Cunel","US",915,280,-210,AIR104_DETAIL),
-  makeAir("crash23","Crash DE","Avion ennemi abattu près de Bantheville — 23 octobre 1918","DE",640,210,0,"<b>Combat aérien dans le secteur.</b> Le 23 octobre 1918, près de Bantheville, le lieutenant John J. Quinn (147th Aero Squadron) signale avoir envoyé un appareil ennemi s'écraser au sol. Le point exact n'est pas connu ; cette icône marque seulement un secteur probable de la chute.", {crash:true, static:true})
-];
-FINAL_AIR.d24=[
-  makeAir("air104_24a","104th Aero","104th Aero Squadron — missions par brume basse sur Bantheville et Sommerance","US",485,205,260,AIR104_DETAIL),
-  makeAir("air104_24b","104th Aero","104th Aero Squadron — réglage et observation au-dessus de Romagne","US",860,295,-190,AIR104_DETAIL),
-  makeAir("crash24","Biplace DE","Biplace ennemi forcé dans ses lignes — 23/24 octobre 1918","DE",365,205,0,"<b>Rapport-type du 104th Aero Squadron.</b> Un biplace ennemi est engagé au-dessus du secteur de Sommerance et forcé de piquer dans ses lignes. Le lieu exact n'est pas donné ; ce marqueur représente une chute ou un atterrissage forcé probable côté allemand.", {crash:true, static:true})
-];
-FINAL_AIR.d25=[
-  makeAir("air104_25a","104th Aero","104th Aero Squadron — repérage photo au-dessus de Romagne – Bantheville","US",505,190,250,AIR104_DETAIL),
-  makeAir("air99_25","99th Aero","99th Aero Squadron — complément de reconnaissance du V Corps","US",900,265,-210,AIR99_DETAIL)
-];
-
-const _origFinalDrawAirPatched = finalDrawAir;
-function drawCrashPlane(x,y,ang,sf,isDE){
-  ctx.save();
-  ctx.translate(x,y);ctx.rotate(ang+0.75);
-  ctx.globalAlpha=.95;
-  ctx.strokeStyle="#161616";ctx.lineWidth=2.2*sf;ctx.fillStyle=isDE?"#5a4438":"#6f5d45";
-  ctx.beginPath();
-  ctx.moveTo(12*sf,0);ctx.lineTo(4*sf,-2*sf);ctx.lineTo(0,-8*sf);ctx.lineTo(-3*sf,-8*sf);ctx.lineTo(-2*sf,-2*sf);
-  ctx.lineTo(-11*sf,-1*sf);ctx.lineTo(-7*sf,0);ctx.lineTo(-11*sf,3*sf);ctx.lineTo(-2*sf,2*sf);
-  ctx.lineTo(-3*sf,8*sf);ctx.lineTo(0,8*sf);ctx.lineTo(4*sf,2*sf);ctx.closePath();ctx.fill();ctx.stroke();
-  ctx.strokeStyle="#2b2b2b";ctx.lineWidth=2*sf;ctx.beginPath();ctx.moveTo(-5*sf,-5*sf);ctx.lineTo(5*sf,5*sf);ctx.moveTo(-5*sf,5*sf);ctx.lineTo(5*sf,-5*sf);ctx.stroke();
-  ctx.restore();
-  ctx.save();
-  ctx.fillStyle="rgba(0,0,0,.38)";
-  for(let i=0;i<3;i++){ctx.beginPath();ctx.arc(x-10*sf-(i*7*sf),y-8*sf-(i*6*sf),4*sf+i*1.1*sf,0,Math.PI*2);ctx.fill();}
-  ctx.fillStyle="rgba(240,140,40,.85)";ctx.beginPath();ctx.arc(x+2*sf,y+6*sf,4.2*sf,0,Math.PI*2);ctx.fill();
-  ctx.fillStyle="rgba(255,215,90,.7)";ctx.beginPath();ctx.arc(x+2*sf,y+6*sf,2.2*sf,0,Math.PI*2);ctx.fill();
-  ctx.restore();
-}
-finalDrawAir=function(){
-  finalAirHitboxes=[];
-  if(adminMode)return;
-  const arr=FINAL_AIR[currentDay]||[];
-  const sf=Math.max(1.25,1.55*iconScale());
-  const span=Math.max(1,dayEnd-dayStart);
-  const progress=(minute-dayStart)/span;
-  arr.forEach((a,i)=>{
-    const wave=a.static?0:Math.sin((minute+i*13)/18)*8;
-    const move=(a.static||!a.dx)?0:(a.dx*Math.max(0,Math.min(1,progress)));
-    const x=a.x+move;
-    const y=a.y+wave;
-    if(a.crash) drawCrashPlane(x,y,a.dx>=0?0:Math.PI,Math.max(1.0,sf*.82),a.side==="DE");
-    else finalDrawPlane(x,y,a.dx>=0?0:Math.PI,a.side==="DE",sf);
-    ctx.save();
-    ctx.font=`800 ${Math.max(11,Math.round((a.crash?11:12)*sf))}px Arial`;
-    const lab=a.crash?(a.shortLabel||a.label):a.label;
-    const tw=ctx.measureText(lab).width;
-    const bx=x+18,by=y-18;
-    ctx.fillStyle=a.crash?"rgba(45,28,22,.88)":"rgba(18,18,18,.86)";
-    if(ctx.roundRect){ctx.beginPath();ctx.roundRect(bx,by,tw+12,21,5);ctx.fill();}else ctx.fillRect(bx,by,tw+12,21);
-    ctx.fillStyle=a.crash?"#ffd9b5":"#f4ead0";ctx.textBaseline="middle";ctx.fillText(lab,bx+6,by+10.5);ctx.restore();
-    finalAirHitboxes.push({x:x-24,y:y-22,w:tw+60,h:44,a,p:{x,y}});
-  });
-};
-/* ===== FIN PATCH AÉRO COMPLÉMENTAIRE ===== */
-
-
 buildUnitList();updateDayUI();fit();recomputeUnitPoints();draw();
 
 
@@ -6790,6 +6694,26 @@ window.__romagneRefresh=function(){
 window.addEventListener("load",()=>setTimeout(window.__romagneRefresh,80));
 window.addEventListener("resize",()=>setTimeout(window.__romagneRefresh,60));
 })();
+/* ===== PATCH AÉRO COMPLÉMENTAIRE FIX ===== */
+(function(){
+const AIR99_DETAIL = "<b>99th Aero Squadron.</b> Escadrille d'observation du V Corps, employée pour la photographie, la liaison avec l'infanterie et le réglage indirect de l'artillerie.<br><br><b>Rôle dans le secteur.</b> Observation du front Romagne – Bantheville, reconnaissance photographique et appui aux états-majors du V Corps.<br><br><b>Base.</b> Groupe d'observation du V Corps, avec retour vers les terrains alliés après chaque mission.";
+const AIR104_DETAIL = "<b>104th Aero Squadron.</b> Escadrille d'observation du V Corps volant sur Salmson 2A2.<br><br><b>Mission principale.</b> Survoler à basse altitude le Bois de Bantheville pour repérer les lueurs de départ des batteries allemandes cachées dans les arbres, puis transmettre par T.S.F. les coordonnées à l'artillerie du V Corps pour le contre-batterie.<br><br><b>Liaison d'infanterie.</b> Vérification des lignes et des ravins autour de Sommerance, avec recherche de contre-attaques allemandes et contrôle de la progression américaine.<br><br><b>Zone la plus dangereuse.</b> Le secteur Romagne – Cunel est signalé comme extrêmement difficile : mitrailleuses anti-aériennes et Flak y criblent régulièrement les Salmson qui reviennent souvent endommagés à Foucaucourt.<br><br><b>Rapport-type 23–24 octobre.</b> Visibilité très pauvre, brume basse ; missions de reconnaissance visuelle et photographique sur Bantheville et Ancreville ; mouvements de troupes signalés à la lisière nord du Bois de Bantheville ; barrage anti-aérien nourri depuis les hauteurs de Romagne ; un biplace ennemi est forcé de plonger dans ses lignes au-dessus du secteur de Sommerance.<br><br><b>Équipages cités.</b> George S. Clark et Edward M. Morris sont plus tard décorés pour leur ténacité au-dessus du front de Bantheville. Les missions photo répétées de Porter et Easterbrook sont également associées au secteur Romagne – Sommerance dans les récits secondaires.";
+const AIRFR_DETAIL = "<b>Escadrille française attachée au V Corps Observation Group.</b> Mission d'observation et de photographie en appui du commandement américain dans la phase de préparation et d'exploitation de l'attaque.";
+const AIRDE_DETAIL = "<b>Appareils allemands signalés.</b> Plusieurs rapports américains mentionnent des biplaces et des patrouilles ennemies opérant au-dessus du secteur, souvent à proximité de Romagne, Cunel et du triangle Bantheville – Sommerance.";
+function makeAir(id,label,title,side,x,y,dx,summary,opts){return Object.assign({id,label,title,side,x,y,dx,summary},opts||{});} 
+FINAL_AIR.d13=[makeAir("air99","99th Aero","99th Aero Squadron — V Corps Observation Group","US",360,300,240,AIR99_DETAIL),makeAir("air104","104th Aero","104th Aero Squadron — V Corps Observation Group","US",760,340,220,AIR104_DETAIL)];
+FINAL_AIR.d14=[makeAir("air99b","99th Aero","99th Aero Squadron — observation du V Corps","US",330,300,230,AIR99_DETAIL),makeAir("air104b","104th Aero","104th Aero Squadron — observation du V Corps","US",650,350,220,AIR104_DETAIL),makeAir("air214","214e FR","214e escadrille française — V Corps Observation Group","US",980,285,-210,AIRFR_DETAIL),makeAir("air215","215e FR","215e escadrille française — V Corps Observation Group","US",1190,360,-230,AIRFR_DETAIL),makeAir("airDE14","Avions DE","Avions allemands signalés à basse altitude","DE",850,430,190,AIRDE_DETAIL)];
+FINAL_AIR.d20=[makeAir("air104_20a","104th Aero","104th Aero Squadron — repérage des batteries du Bois de Bantheville","US",520,245,210,AIR104_DETAIL),makeAir("air99_20","99th Aero","99th Aero Squadron — reconnaissance du secteur Romagne – Bantheville","US",390,315,180,AIR99_DETAIL)];
+FINAL_AIR.d21=[makeAir("air104_21a","104th Aero","104th Aero Squadron — observation tactique au-dessus du Bois de Bantheville","US",570,215,240,AIR104_DETAIL),makeAir("air104_21b","104th Aero","104th Aero Squadron — contrôle de la ligne Romagne – Cunel","US",880,305,-180,AIR104_DETAIL)];
+FINAL_AIR.d22=[makeAir("air104_22a","104th Aero","104th Aero Squadron — liaison d'infanterie sur Bantheville et Sommerance","US",500,215,240,AIR104_DETAIL),makeAir("air99_22","99th Aero","99th Aero Squadron — photographie du front du V Corps","US",860,270,-190,AIR99_DETAIL)];
+FINAL_AIR.d23=[makeAir("air104_23a","104th Aero","104th Aero Squadron — reconnaissance visuelle et photo, secteur Bantheville – Ancreville","US",520,200,260,AIR104_DETAIL),makeAir("air104_23b","104th Aero","104th Aero Squadron — observation du front Romagne – Cunel","US",915,280,-210,AIR104_DETAIL),makeAir("crash23","Crash DE","Avion ennemi abattu près de Bantheville — 23 octobre 1918","DE",640,210,0,"<b>Combat aérien dans le secteur.</b> Le 23 octobre 1918, le lieutenant John J. Quinn signale avoir envoyé un appareil ennemi s'écraser au sol près de Bantheville. Le point exact n'est pas connu ; cette icône marque seulement un secteur probable de la chute.",{crash:true,static:true})];
+FINAL_AIR.d24=[makeAir("air104_24a","104th Aero","104th Aero Squadron — missions par brume basse sur Bantheville et Sommerance","US",485,205,260,AIR104_DETAIL),makeAir("air104_24b","104th Aero","104th Aero Squadron — réglage et observation au-dessus de Romagne","US",860,295,-190,AIR104_DETAIL),makeAir("crash24","Biplace DE","Biplace ennemi forcé dans ses lignes — 23/24 octobre 1918","DE",365,205,0,"<b>Rapport-type du 104th Aero Squadron.</b> Un biplace ennemi est engagé au-dessus du secteur de Sommerance et forcé de piquer dans ses lignes. Le lieu exact n'est pas donné ; ce marqueur représente une chute ou un atterrissage forcé probable côté allemand.",{crash:true,static:true})];
+FINAL_AIR.d25=[makeAir("air104_25a","104th Aero","104th Aero Squadron — repérage photo au-dessus de Romagne – Bantheville","US",505,190,250,AIR104_DETAIL),makeAir("air99_25","99th Aero","99th Aero Squadron — complément de reconnaissance du V Corps","US",900,265,-210,AIR99_DETAIL)];
+function drawCrashPlane(x,y,ang,sf,isDE){ctx.save();ctx.translate(x,y);ctx.rotate(ang+0.75);ctx.globalAlpha=.95;ctx.strokeStyle="#161616";ctx.lineWidth=2.2*sf;ctx.fillStyle=isDE?"#5a4438":"#6f5d45";ctx.beginPath();ctx.moveTo(12*sf,0);ctx.lineTo(4*sf,-2*sf);ctx.lineTo(0,-8*sf);ctx.lineTo(-3*sf,-8*sf);ctx.lineTo(-2*sf,-2*sf);ctx.lineTo(-11*sf,-1*sf);ctx.lineTo(-7*sf,0);ctx.lineTo(-11*sf,3*sf);ctx.lineTo(-2*sf,2*sf);ctx.lineTo(-3*sf,8*sf);ctx.lineTo(0,8*sf);ctx.lineTo(4*sf,2*sf);ctx.closePath();ctx.fill();ctx.stroke();ctx.strokeStyle="#2b2b2b";ctx.lineWidth=2*sf;ctx.beginPath();ctx.moveTo(-5*sf,-5*sf);ctx.lineTo(5*sf,5*sf);ctx.moveTo(-5*sf,5*sf);ctx.lineTo(5*sf,-5*sf);ctx.stroke();ctx.restore();ctx.save();ctx.fillStyle="rgba(0,0,0,.38)";for(let i=0;i<3;i++){ctx.beginPath();ctx.arc(x-10*sf-(i*7*sf),y-8*sf-(i*6*sf),4*sf+i*1.1*sf,0,Math.PI*2);ctx.fill();}ctx.fillStyle="rgba(240,140,40,.85)";ctx.beginPath();ctx.arc(x+2*sf,y+6*sf,4.2*sf,0,Math.PI*2);ctx.fill();ctx.fillStyle="rgba(255,215,90,.7)";ctx.beginPath();ctx.arc(x+2*sf,y+6*sf,2.2*sf,0,Math.PI*2);ctx.fill();ctx.restore();}
+finalDrawAir=function(){finalAirHitboxes=[];if(adminMode)return;const arr=FINAL_AIR[currentDay]||[];const sf=Math.max(1.25,1.55*iconScale());const span=Math.max(1,dayEnd-dayStart);const progress=(minute-dayStart)/span;arr.forEach((a,i)=>{const wave=a.static?0:Math.sin((minute+i*13)/18)*8;const move=(a.static||!a.dx)?0:(a.dx*Math.max(0,Math.min(1,progress)));const x=a.x+move;const y=a.y+wave;if(a.crash) drawCrashPlane(x,y,a.dx>=0?0:Math.PI,Math.max(1.0,sf*.82),a.side==="DE"); else finalDrawPlane(x,y,a.dx>=0?0:Math.PI,a.side==="DE",sf);ctx.save();ctx.font=`800 ${Math.max(11,Math.round((a.crash?11:12)*sf))}px Arial`;const lab=a.label;const tw=ctx.measureText(lab).width;const bx=x+18,by=y-18;ctx.fillStyle=a.crash?"rgba(45,28,22,.88)":"rgba(18,18,18,.86)";if(ctx.roundRect){ctx.beginPath();ctx.roundRect(bx,by,tw+12,21,5);ctx.fill();}else ctx.fillRect(bx,by,tw+12,21);ctx.fillStyle=a.crash?"#ffd9b5":"#f4ead0";ctx.textBaseline="middle";ctx.fillText(lab,bx+6,by+10.5);ctx.restore();finalAirHitboxes.push({x:x-24,y:y-22,w:tw+60,h:44,a,p:{x,y}});});};
+})();
+/* ===== FIN PATCH AÉRO COMPLÉMENTAIRE FIX ===== */
+
 </script>
 
 
