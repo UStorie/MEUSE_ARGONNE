@@ -24,6 +24,7 @@ body{min-height:100vh}
   max-width:1700px;
   margin:0 auto;
   padding:12px;
+  padding-bottom:92px;
 }
 .header{
   display:flex;gap:12px;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;
@@ -126,8 +127,11 @@ body{min-height:100vh}
 }
 .sources{font-size:10px;color:#5e574e;line-height:1.35;border-top:1px solid #ccc2b1;padding-top:8px;margin-top:10px}
 .eventbar{
+  position:fixed;left:50%;transform:translateX(-50%);bottom:0;z-index:9998;
+  width:min(1700px, calc(100vw - 8px));
   margin-top:10px;padding:10px 12px;background:#11110f;color:#f4eee2;border:1px solid #555148;
-  display:grid;grid-template-columns:90px 1fr;gap:10px;align-items:start
+  display:grid;grid-template-columns:90px 1fr;gap:10px;align-items:start;
+  box-shadow:0 -4px 18px rgba(0,0,0,.35)
 }
 .eventbar .etime{font:700 20px "Courier New",monospace;color:#f3d691}
 .eventbar .etext{font-size:13px;line-height:1.4}
@@ -147,7 +151,7 @@ body{min-height:100vh}
   .detail{max-height:none}
 }
 @media(max-width:620px){
-  .app{padding:5px}
+  .app{padding:5px;padding-bottom:86px}
   .unit-list{grid-template-columns:1fr}
   .eventbar{grid-template-columns:65px 1fr}
   .toolbar .sep{display:none}
@@ -456,15 +460,15 @@ body{min-height:100vh}
 }
 
 /* Ajustements visuels : encarts blancs légèrement transparents */
-:root{--panel:rgba(247,242,231,.88)}
-.legend{background:rgba(245,239,226,.82);backdrop-filter:blur(2px)}
-.side{background:rgba(247,242,231,.88);backdrop-filter:blur(2px)}
-.side-head{background:rgba(231,222,204,.84)}
-.unit-list button{background:rgba(255,250,240,.84)}
-.badge{background:rgba(255,255,255,.82)}
-.detail .mission{background:rgba(235,227,213,.82)}
-.note{background:rgba(241,234,220,.82)}
-.inset{background:rgba(241,234,220,.84)}
+:root{--panel:#f7f2e7}
+.legend{background:#f5efe2;backdrop-filter:none}
+.side{background:#f7f2e7;backdrop-filter:none}
+.side-head{background:#e7decc}
+.unit-list button{background:#fffaf0}
+.badge{background:#fff}
+.detail .mission{background:#ebe3d5}
+.note{background:#f1eadc}
+.inset{background:#f1eadc}
 #ambienceBtn{min-width:146px}
 @media(max-width:720px){
   .toolbar.compact-bar{grid-template-columns:48px minmax(0,1fr) auto!important}
@@ -475,6 +479,26 @@ body{min-height:100vh}
 }
 @media(max-width:390px){
   #ambienceBtn{min-width:0!important;padding:0 8px!important;font-size:10px!important}
+}
+
+
+#play30.play-state-play{
+  background:#1fbe3a !important;
+  border-color:#0d7f23 !important;
+  color:#ffffff !important;
+  box-shadow:0 0 10px rgba(31,190,58,.45);
+}
+#play30.play-state-play:hover{
+  background:#28d748 !important;
+}
+#play30.play-state-pause{
+  background:#d91f1f !important;
+  border-color:#8d0f0f !important;
+  color:#ffffff !important;
+  box-shadow:0 0 10px rgba(217,31,31,.45);
+}
+#play30.play-state-pause:hover{
+  background:#f22828 !important;
 }
 
 </style>
@@ -556,8 +580,8 @@ body{min-height:100vh}
 </style>
 </head>
 <body>
-<audio id="bgMusic" preload="auto" loop src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Manhattan_Beach.ogg"></audio>
-<audio id="battleAmbience" preload="auto" loop src="assets/ambience.ogg"></audio>
+<audio id="bgMusic" preload="auto" loop src="https://commons.wikimedia.org/wiki/Special:Redirect/file/By_the_Light_of_the_Polar_Star_-_U.S._Marine_Band.ogg"></audio>
+<audio id="battleAmbience" preload="auto" loop src="assets/guerre.mp3"></audio>
 
 <div class="introV17" id="introV17">
   <div class="introV17box">
@@ -599,7 +623,7 @@ body{min-height:100vh}
   <div class="toolbar compact-bar">
     <button type="button" class="primary compact-play" id="play30" title="Lecture / Pause">▶</button>
     <div class="music-split" id="musicSplit">
-      <button type="button" id="musicBtn" title="Activer / couper la musique">♫ Musique ON</button>
+      <button type="button" id="musicBtn" title="Activer / couper la musique">♫ Musique OFF</button>
       <button type="button" id="musicMenuBtn" title="Choisir la musique" aria-expanded="false">▾</button>
     </div>
     <button type="button" id="ambienceBtn" title="Activer / couper l'ambiance sonore">⚔ Ambiance ON</button>
@@ -1390,9 +1414,9 @@ const routeDefs={
     {m:1365,mix:["robinette","kriemhilde",0.90],dx:6,dy:-22}
   ]
   ,"173":[
-    {m:510,mix:["dame_marie","romagne",0.55],dx:0,dy:12},
-    {m:720,mix:["dame_marie","romagne",0.57],dx:2,dy:8},
-    {m:1365,mix:["dame_marie","romagne",0.58],dx:2,dy:6}
+    {m:510,mix:["dame_marie","romagne",0.55],dx:0,dy:20},
+    {m:720,mix:["dame_marie","romagne",0.57],dx:2,dy:16},
+    {m:1365,mix:["dame_marie","romagne",0.58],dx:2,dy:14}
   ],
   "136":[
     {m:510,mix:["romagne","mamelle",0.55],dx:12,dy:24},
@@ -1447,9 +1471,9 @@ const routeDefs={
     {m:1365,mix:["romagne","dame_marie",0.12],dx:2,dy:-2}
   ],
   "169-rem":[
-    {m:510,mix:["dame_marie","romagne",0.46],dx:2,dy:-4},
-    {m:720,mix:["dame_marie","romagne",0.46],dx:2,dy:-4},
-    {m:1365,mix:["dame_marie","romagne",0.46],dx:2,dy:-4}
+    {m:510,mix:["dame_marie","romagne",0.46],dx:2,dy:2},
+    {m:720,mix:["dame_marie","romagne",0.46],dx:2,dy:2},
+    {m:1365,mix:["dame_marie","romagne",0.46],dx:2,dy:2}
   ]
 
   ,"126-M":[{m:510,a:"grange",dx:-140,dy:-5},{m:630,mix:["grange","dantrise",0.62],dx:-70,dy:28},{m:720,a:"dantrise",dx:-22,dy:28},{m:1365,a:"dantrise",dx:-22,dy:28}],
@@ -3083,35 +3107,43 @@ const MUSIC_TRACKS=[
   {name:'By the Light of the Polar Star', artist:'U.S. Marine Band', src:'https://commons.wikimedia.org/wiki/Special:Redirect/file/By_the_Light_of_the_Polar_Star_-_U.S._Marine_Band.ogg'}
 ];
 let currentMusicIndex=0;
-let musicStarted=false, musicEnabled=true;
+let musicStarted=false, musicEnabled=false;
 let ambienceStarted=false, ambienceEnabled=true;
 if(bgMusic){
   bgMusic.volume=0.36;
   bgMusic.loop=true;
 }
 if(battleAmbience){
-  battleAmbience.volume=0.18;
+  battleAmbience.volume=0;
   battleAmbience.loop=true;
 }
 function updateAmbienceUI(){
   const b=el("ambienceBtn");
   if(b){
     b.textContent=ambienceEnabled?"⚔ Ambiance ON":"⚔ Ambiance OFF";
-    b.title=ambienceEnabled?"Couper les obus / mitrailleuses de fond":"Activer les obus / mitrailleuses de fond";
+    b.title=ambienceEnabled?"Ambiance audible uniquement pendant la lecture":"Ambiance coupée (le fichier continue silencieusement en arrière-plan)";
   }
 }
-function startAmbience(){
-  if(!battleAmbience||!ambienceEnabled)return;
+function ensureAmbienceRunning(){
+  if(!battleAmbience)return;
   const p=battleAmbience.play();
   if(p&&p.catch)p.catch(()=>{});
   ambienceStarted=true;
+}
+function setAmbienceAudible(audible){
+  if(!battleAmbience)return;
+  ensureAmbienceRunning();
+  battleAmbience.volume=(audible && ambienceEnabled)?0.18:0;
   updateAmbienceUI();
+}
+function startAmbience(){
+  setAmbienceAudible(playing);
 }
 function toggleAmbience(){
   ambienceEnabled=!ambienceEnabled;
-  if(!battleAmbience){updateAmbienceUI();return;}
-  if(ambienceEnabled)startAmbience();
-  else battleAmbience.pause();
+  if(battleAmbience && ambienceStarted){
+    battleAmbience.volume=(ambienceEnabled && playing)?0.18:0;
+  }
   updateAmbienceUI();
 }
 function updateMusicUI(){
@@ -3136,10 +3168,20 @@ function startMusic(){
   updateMusicUI();
 }
 function toggleMusic(){
-  musicEnabled=!musicEnabled;
+  const turningOn=!musicEnabled;
+  musicEnabled=turningOn;
   if(!bgMusic){updateMusicUI();return;}
-  if(musicEnabled)startMusic();
-  else bgMusic.pause();
+  if(musicEnabled){
+    // Au premier ON, la playlist commence bien par la première piste.
+    if(!musicStarted && bgMusic.currentTime===0 && currentMusicIndex===0){
+      bgMusic.src=MUSIC_TRACKS[0].src;
+      bgMusic.load();
+    }
+    startMusic();
+  }else{
+    bgMusic.pause();
+    musicStarted=false;
+  }
   updateMusicUI();
 }
 function selectMusicTrack(index){
@@ -3324,10 +3366,24 @@ function drawAnchor(a,index){
   }
   ctx.font=adminMode?"700 13px Arial":"700 12px Arial";ctx.textAlign="left";ctx.textBaseline="middle";
   const tw=ctx.measureText(a.name).width;
-  ctx.fillStyle="rgba(255,255,255,0.98)";
-  ctx.fillRect(a.x+12,a.y-11,tw+10,22);
+  const rx=a.x+12, ry=a.y-11, rw=tw+10, rh=22, rr=7;
+  ctx.globalAlpha=1;
+  ctx.beginPath();
+  if(ctx.roundRect){
+    ctx.roundRect(rx,ry,rw,rh,rr);
+  }else{
+    ctx.moveTo(rx+rr,ry);
+    ctx.arcTo(rx+rw,ry,rx+rw,ry+rh,rr);
+    ctx.arcTo(rx+rw,ry+rh,rx,ry+rh,rr);
+    ctx.arcTo(rx,ry+rh,rx,ry,rr);
+    ctx.arcTo(rx,ry,rx+rw,ry,rr);
+  }
+  ctx.fillStyle="rgba(255,255,255,0.10)";
+  ctx.fill();
   ctx.lineWidth=1;
-  ctx.strokeStyle="rgba(255,255,255,0.98)";
+  ctx.strokeStyle="rgba(255,255,255,0.30)";
+  ctx.stroke();
+  ctx.strokeStyle="rgba(255,255,255,0.90)";
   ctx.strokeText(a.name,a.x+16,a.y);
   ctx.fillStyle="#111";ctx.fillText(a.name,a.x+16,a.y);
   ctx.restore();
@@ -3627,11 +3683,15 @@ function syncPlayButton(){
   if(!b)return;
   b.textContent=playing?"Ⅱ":"▶";
   b.title=playing?"Pause — cliquer pour arrêter ici":"Lecture — reprendre à l'heure actuelle";
+  b.classList.toggle("play-state-play", !playing);
+  b.classList.toggle("play-state-pause", playing);
 }
 function stopPlay(){
   playing=false;
   if(raf)cancelAnimationFrame(raf);
   raf=0;
+  // L'ambiance continue à défiler en arrière-plan, mais devient muette.
+  setAmbienceAudible(false);
   syncPlayButton();
 }
 function play30(){
@@ -3645,15 +3705,13 @@ function play30(){
   // Sinon on reprend exactement à l'heure affichée.
   if(minute>=dayEnd-0.01) minute=dayStart;
 
-  if(musicEnabled && !musicStarted) startMusic();
-  if(ambienceEnabled && !ambienceStarted) startAmbience();
-
   const fromMinute=minute;
   const fractionRemaining=Math.max(0.001,(dayEnd-fromMinute)/(dayEnd-dayStart));
   const durationRemaining=DAY_MS*fractionRemaining;
   const started=performance.now();
 
   playing=true;
+  setAmbienceAudible(true);
   syncPlayButton();
 
   function step(now){
@@ -3667,6 +3725,7 @@ function play30(){
     }else{
       playing=false;
       raf=0;
+      setAmbienceAudible(false);
       syncPlayButton();
     }
   }
@@ -3676,7 +3735,6 @@ function play30(){
 
 el("detailClose").addEventListener("click",()=>v17Hide("detailModal"));
 el("detailModal").addEventListener("click",e=>{if(e.target===el("detailModal"))v17Hide("detailModal")});
-document.addEventListener("pointerdown",()=>{if(musicEnabled&&!musicStarted){startMusic();} if(ambienceEnabled&&!ambienceStarted){startAmbience();}}, {once:true});
 
 el("day9Btn").addEventListener("click",()=>switchDay("d9"));
 el("day10Btn").addEventListener("click",()=>switchDay("d10"));
