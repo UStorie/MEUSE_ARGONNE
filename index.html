@@ -454,6 +454,29 @@ body{min-height:100vh}
   .toolbar.compact-bar{grid-template-columns:42px 116px minmax(84px,1fr)}
   .music-split #musicBtn{max-width:91px;font-size:9px}
 }
+
+/* Ajustements visuels : encarts blancs légèrement transparents */
+:root{--panel:rgba(247,242,231,.88)}
+.legend{background:rgba(245,239,226,.82);backdrop-filter:blur(2px)}
+.side{background:rgba(247,242,231,.88);backdrop-filter:blur(2px)}
+.side-head{background:rgba(231,222,204,.84)}
+.unit-list button{background:rgba(255,250,240,.84)}
+.badge{background:rgba(255,255,255,.82)}
+.detail .mission{background:rgba(235,227,213,.82)}
+.note{background:rgba(241,234,220,.82)}
+.inset{background:rgba(241,234,220,.84)}
+#ambienceBtn{min-width:146px}
+@media(max-width:720px){
+  .toolbar.compact-bar{grid-template-columns:48px minmax(0,1fr) auto!important}
+  .toolbar.compact-bar #ambienceBtn{grid-column:3!important;grid-row:1!important;height:44px!important;min-height:44px!important;padding:0 10px!important;font-size:11px!important;white-space:nowrap}
+  .mobile-day-wrap{grid-column:1 / -1!important;grid-row:2!important}
+  #timelineStart{grid-column:1!important;grid-row:3!important}
+  #timeSlider{grid-column:2 / 4!important;grid-row:3!important}
+}
+@media(max-width:390px){
+  #ambienceBtn{min-width:0!important;padding:0 8px!important;font-size:10px!important}
+}
+
 </style>
 <style id="final-mobile">
 /* Version publique finale — étalonnage embarqué. */
@@ -534,6 +557,7 @@ body{min-height:100vh}
 </head>
 <body>
 <audio id="bgMusic" preload="auto" loop src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Manhattan_Beach.ogg"></audio>
+<audio id="battleAmbience" preload="auto" loop src="assets/ambience.ogg"></audio>
 
 <div class="introV17" id="introV17">
   <div class="introV17box">
@@ -578,7 +602,7 @@ body{min-height:100vh}
       <button type="button" id="musicBtn" title="Activer / couper la musique">♫ Musique ON</button>
       <button type="button" id="musicMenuBtn" title="Choisir la musique" aria-expanded="false">▾</button>
     </div>
-
+    <button type="button" id="ambienceBtn" title="Activer / couper l'ambiance sonore">⚔ Ambiance ON</button>
 
     <div class="mobile-day-wrap" aria-label="Navigation par jour">
       <button type="button" class="mobile-day-arrow" id="mobilePrevDay" aria-label="Jour précédent">◀</button>
@@ -3050,6 +3074,7 @@ function requestAdminToggle(){
   setTimeout(()=>el("adminPasswordInput").focus(),20);
 }
 const bgMusic=document.getElementById("bgMusic");
+const battleAmbience=document.getElementById("battleAmbience");
 const MUSIC_TRACKS=[
   {name:'Manhattan Beach', artist:'U.S. Marine Band', src:'https://commons.wikimedia.org/wiki/Special:Redirect/file/Manhattan_Beach.ogg'},
   {name:'Hands Across the Sea', artist:'U.S. Navy Band', src:'https://commons.wikimedia.org/wiki/Special:Redirect/file/Hands_Across_the_Sea.ogg'},
@@ -3059,9 +3084,35 @@ const MUSIC_TRACKS=[
 ];
 let currentMusicIndex=0;
 let musicStarted=false, musicEnabled=true;
+let ambienceStarted=false, ambienceEnabled=true;
 if(bgMusic){
   bgMusic.volume=0.36;
   bgMusic.loop=true;
+}
+if(battleAmbience){
+  battleAmbience.volume=0.18;
+  battleAmbience.loop=true;
+}
+function updateAmbienceUI(){
+  const b=el("ambienceBtn");
+  if(b){
+    b.textContent=ambienceEnabled?"⚔ Ambiance ON":"⚔ Ambiance OFF";
+    b.title=ambienceEnabled?"Couper les obus / mitrailleuses de fond":"Activer les obus / mitrailleuses de fond";
+  }
+}
+function startAmbience(){
+  if(!battleAmbience||!ambienceEnabled)return;
+  const p=battleAmbience.play();
+  if(p&&p.catch)p.catch(()=>{});
+  ambienceStarted=true;
+  updateAmbienceUI();
+}
+function toggleAmbience(){
+  ambienceEnabled=!ambienceEnabled;
+  if(!battleAmbience){updateAmbienceUI();return;}
+  if(ambienceEnabled)startAmbience();
+  else battleAmbience.pause();
+  updateAmbienceUI();
 }
 function updateMusicUI(){
   const main=el("musicBtn");
@@ -3595,6 +3646,7 @@ function play30(){
   if(minute>=dayEnd-0.01) minute=dayStart;
 
   if(musicEnabled && !musicStarted) startMusic();
+  if(ambienceEnabled && !ambienceStarted) startAmbience();
 
   const fromMinute=minute;
   const fractionRemaining=Math.max(0.001,(dayEnd-fromMinute)/(dayEnd-dayStart));
@@ -3624,7 +3676,7 @@ function play30(){
 
 el("detailClose").addEventListener("click",()=>v17Hide("detailModal"));
 el("detailModal").addEventListener("click",e=>{if(e.target===el("detailModal"))v17Hide("detailModal")});
-document.addEventListener("pointerdown",()=>{if(musicEnabled&&!musicStarted){startMusic();}}, {once:true});
+document.addEventListener("pointerdown",()=>{if(musicEnabled&&!musicStarted){startMusic();} if(ambienceEnabled&&!ambienceStarted){startAmbience();}}, {once:true});
 
 el("day9Btn").addEventListener("click",()=>switchDay("d9"));
 el("day10Btn").addEventListener("click",()=>switchDay("d10"));
@@ -3661,7 +3713,9 @@ document.addEventListener("click",(ev)=>{
 });
 window.addEventListener("resize",()=>{if(el("musicChoiceMenu")?.classList.contains("open"))positionMusicMenu();});
 window.addEventListener("scroll",()=>{if(el("musicChoiceMenu")?.classList.contains("open"))positionMusicMenu();},true);
+el("ambienceBtn")?.addEventListener("click",toggleAmbience);
 updateMusicUI();
+updateAmbienceUI();
 el("play30").addEventListener("click",play30);
 el("reset").addEventListener("click",()=>{stopPlay();minute=dayStart;draw()});
 slider.addEventListener("input",()=>{stopPlay();minute=Number(slider.value);draw()});
